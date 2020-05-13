@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarWars.Tools;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,7 +11,9 @@ namespace StarWars.Entities.Interfaces
         int HP { get; set; }
         int Remaining_HP { get; set; }
         int Speed { get; set; }
-        int ForceSide { get; set; }
+
+       // CustomTypes.ForceSide side;
+
         int ActionPoints { get; set; }
         int Position { get; set; }
         int IsPlayable { get; set; }

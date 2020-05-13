@@ -7,9 +7,14 @@ namespace StarWars.Managers
     public class GameManager
     {
         #region Attributes
+        public GridManager _GridManager { get; set; }
         #endregion
 
         #region Ctor
+        public GameManager()
+        {
+
+        }
         #endregion
 
         #region Methods

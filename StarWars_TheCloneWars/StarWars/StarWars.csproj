@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Entities\Implements\Childs\" />
     <Folder Include="Managers\" />
-    <Folder Include="Entities\" />
     <Folder Include="Objects\" />
     <Folder Include="Tools\" />
   </ItemGroup>

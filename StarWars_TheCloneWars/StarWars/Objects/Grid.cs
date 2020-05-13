@@ -15,7 +15,11 @@ namespace StarWars.Objects
 		{
 			get; set;
 		}
-		public string[] Matrice;
+
+		public char[,] Matrice
+		{
+			get; set;
+		}
 
 		public Dictionary<string, char> Icons;
 		#endregion

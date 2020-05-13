@@ -51,21 +51,24 @@ namespace StarWars.Managers
 			Grid.InitIcons();
 
 			Grid.Index = index;
+			Grid.Matrice = new char[(index * 2) + 1, (index * 2) + 1];
 
-			Grid.Matrice = new string[index + 2];
-			string line = new string('_', index + 2);
-			string column = new string(' ', index);
-
+			//Grid.Matrice = 
 			//
 			// Il faut ajouter les personnages dans le string column
 			//
 
-			for (int x = 0 ; x < index + 2 ; x++)
+			for (int x = 0 ; x < (index * 2) + 1 ; x++)
 			{
-				if (x == 0 || x == index + 1)
-					Grid.Matrice[x] = line;
-				else
-					Grid.Matrice[x] = '|' + column + '|';
+				for (int y = 0 ; y < (index * 2) + 1 ; y++)
+				{
+					if (x % 2 == 0)
+						Grid.Matrice[x, y] = '—';
+					else if (x % 2 != 0 && y % 2 == 0)
+						Grid.Matrice[x, y] = '|';
+					else
+						Grid.Matrice[x, y] = ' ';
+				}
 			}
 
 			return Grid;

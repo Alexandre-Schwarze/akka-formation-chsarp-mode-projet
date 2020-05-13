@@ -6,8 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Managers\" />
-    <Folder Include="Entities\" />
     <Folder Include="Objects\" />
     <Folder Include="Tools\" />
   </ItemGroup>

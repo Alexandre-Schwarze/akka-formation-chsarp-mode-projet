@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StarWars.Entities.Implements
 {
-    public class Dark_Sidious : IForceUser
+    public class Synthetic : IBaseTroop
     {
         public int HP { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int Remaining_HP { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -18,37 +18,16 @@ namespace StarWars.Entities.Implements
         public int XP_total { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int LVL { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        public void MotherCoreSyncronizing() { }
+        public void AutoRepair() { }
+        public void Bug() { }
+
         public void BaseAttack()
         {
             throw new NotImplementedException();
         }
 
         public void BaseMove()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Bleed()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ForceGrab()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ForceJump()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ForcePush()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Heal()
         {
             throw new NotImplementedException();
         }

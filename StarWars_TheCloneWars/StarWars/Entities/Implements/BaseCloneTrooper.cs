@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace StarWars.Entities.Interfaces 
+namespace StarWars.Entities.Implements 
 {
-    interface IBaseCloneTrooper : IOrganic  
+    public class BaseCloneTrooper : Organic  
     {
 
     }

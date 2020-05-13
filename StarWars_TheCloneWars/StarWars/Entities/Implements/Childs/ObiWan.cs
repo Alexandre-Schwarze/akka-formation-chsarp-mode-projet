@@ -3,12 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace StarWars.Entities.Interfaces  
+namespace StarWars.Entities.Implements
 {
-    interface IOrganic : IBaseTroop 
+    public class ObiWan : ForceUser
     {
-
-        void Heal();
-        void Bleed();
+      
     }
 }

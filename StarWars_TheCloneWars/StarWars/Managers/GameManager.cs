@@ -4,41 +4,32 @@ using System.Text;
 
 namespace StarWars.Managers
 {
-    public class GameManager
+    public static class GameManager
     {
         #region Attributes
-        public GridManager _GridManager { get; set; }
+        public static GridManager _GridManager { get; set; }
         #endregion
 
-        #region Ctor
-        public GameManager()
-        {
-
-        }
-        #endregion
 
         #region Methods
-        public void NewGame()
+        public static void Menu_NewGame()
+        {
+            Tools.Tools.RightOffsetWriteLine("Showing Character Selection Screen ...");
+            Tools.Tools.RightOffsetWriteLine("Showing Character Stats Screen ...");
+            Tools.Tools.RightOffsetWriteLine("Starting game ...");
+        }
+
+        public static void ChooseCharacter()
         {
 
         }
 
-        public void SearchSaveGame()
+        public static void SetUpGrid()
         {
 
         }
 
-        public void LoadGame()
-        {
-
-        }
-
-        public void SaveGame()
-        {
-
-        }
-
-        public void DeleteSavedGame()
+        public static void CharacterStats()
         {
 
         }

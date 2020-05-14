@@ -22,7 +22,8 @@ namespace StarWars
 		static void Main(string[] args)
 		{
 			SetConsolePosition();
-			MenuManager menumanager = new MenuManager();
+			MainManager.Welcome();
+			MainManager.MainMenu(); 
 		}
 
 		static void SetConsolePosition()

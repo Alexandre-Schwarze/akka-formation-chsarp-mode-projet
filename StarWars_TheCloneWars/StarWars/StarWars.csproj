@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Managers\" />
     <Folder Include="Objects\" />
   </ItemGroup>
 

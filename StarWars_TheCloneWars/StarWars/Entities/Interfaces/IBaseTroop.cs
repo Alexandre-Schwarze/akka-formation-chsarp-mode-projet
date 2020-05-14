@@ -11,11 +11,9 @@ namespace StarWars.Entities.Interfaces
         int HP { get; set; }
         int Remaining_HP { get; set; }
         int Speed { get; set; }
-
-       // CustomTypes.ForceSide side;
-
+        ForceSide Forceside { get; set; }
         int ActionPoints { get; set; }
-        int Position { get; set; }
+        Tools.Position Position { get; set; }
         int IsPlayable { get; set; }
         int XP_value { get; set; }
         int XP_total { get; set; }

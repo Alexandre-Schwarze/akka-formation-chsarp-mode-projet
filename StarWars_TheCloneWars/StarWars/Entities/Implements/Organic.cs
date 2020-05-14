@@ -1,4 +1,5 @@
 ﻿using StarWars.Entities.Interfaces;
+using StarWars.Tools;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,8 @@ namespace StarWars.Entities.Implements
         public int XP_value { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int XP_total { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int LVL { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ForceSide Forceside { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        Position IBaseTroop.Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void Heal() { }
         public void Bleed() { }

@@ -5,11 +5,17 @@ using System.Text;
 
 namespace StarWars.Entities.Implements.Childs
 {
+    /// <summary>
+    /// Classe de personnage Anakin
+    /// </summary>
     public class Anakin : ForceUser
     {
         #region Attributes
         #endregion        
         #region Ctor
+        /// <summary>
+        /// Initialisation Nouveau Anakin
+        /// </summary>
         public Anakin()
         {
             this.HP = 15;
@@ -21,6 +27,10 @@ namespace StarWars.Entities.Implements.Childs
         }
         #endregion        
         #region Methods
+        /// <summary>
+        /// Attaque DjemSo 
+        /// </summary>
+        /// <param name="target">Cible de l'attaque</param>
         public void DjemSoStrike(IBaseTroop target)
         {
             int range = 2;

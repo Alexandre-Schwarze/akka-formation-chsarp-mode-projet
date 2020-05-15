@@ -21,8 +21,8 @@ namespace StarWars.Tools
     /// </summary>
     public class Position
     {
-        char absciss;
-        int ordinate;
+        public char absciss;
+        public int ordinate;
     }
 
     /// <summary>
@@ -60,7 +60,6 @@ namespace StarWars.Tools
         }
         #endregion
 
-
         #region Outillage Dossiers
         private static string UserAppFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static string GameFolder = UserAppFolderPath + "\\CloneWars";
@@ -75,5 +74,29 @@ namespace StarWars.Tools
             System.IO.Directory.CreateDirectory(DataFolder);
         }
         #endregion
+
+        #region Outillage Calcul de positions 
+        public static char[] alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        private static int GetAbscissIndex(char absciss)
+        {
+            return Array.IndexOf(alpha, absciss);
+        }
+
+        /// <summary>
+        /// Calcule si une attaque a suffisamment de portée pour atteindre sa cible
+        /// </summary>
+        /// <param name="range">portée de l'attaque</param>
+        /// <param name="target">Position cible</param>
+        /// <param name="striker">Position attaquant</param>
+        /// <returns>Cible à portée de l'attaque ou non</returns>
+        public static bool IsRangeOK(int range, Position target, Position striker)
+        {
+            if ((Math.Abs(GetAbscissIndex(target.absciss) - GetAbscissIndex(striker.absciss)) <= range) || (Math.Abs(GetAbscissIndex(striker.absciss) - GetAbscissIndex(target.absciss)) <= range) &&
+                (Math.Abs(target.ordinate - striker.ordinate) <= range) || (Math.Abs(striker.ordinate - target.ordinate) <= range))
+                return true;
+            else return false;
+        }
+
+        #endregion 
     }
 }

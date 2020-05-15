@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StarWars.Entities.Implements.Childs
 {
-    public class B2 : Synthetic
+    public class DroideB2 : Synthetic
     {
       
     }

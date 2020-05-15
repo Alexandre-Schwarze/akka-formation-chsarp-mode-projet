@@ -20,10 +20,15 @@ namespace StarWars.Managers
         /// Tous les personnages jouables
         /// </summary>
         public static List<Type> Playables;
+
         /// <summary>
         /// Tous les personnages non-jouables
         /// </summary>
         public static List<Type> Nonplayables;
+
+        public static List<Tuple<string, string>> Playablesstats;
+
+
 
         public static IEnumerable<Type> GetTypesInNamespaceEnumerable(string nameSpace)
         {
@@ -35,14 +40,18 @@ namespace StarWars.Managers
 
         public static void InitCharactersTypes()
         {
+            Playablesstats = new List<Tuple<string, string>>();
+
             XmlDocument xml = new XmlDocument();
             xml.Load(Path.Combine(Tools.Tools.DataFolder, "PJs.xml"));
             XmlNodeList list = xml.SelectNodes("PJs/PJ");
 
             List<string> playablesnames = new List<string>();
             foreach (XmlElement element in list)
+            {
                 playablesnames.Add(element["Name"].InnerText);
-
+                Playablesstats.Add(Tuple.Create(element["Name"].InnerText, element["Description"].InnerText));
+            }
             Playables = troops.Where(e => playablesnames.Contains(e.Name)).ToList();
             Nonplayables = troops.Where(e => !playablesnames.Contains(e.Name)).ToList();
         }

@@ -13,9 +13,6 @@ namespace StarWars.Managers
 
         #endregion
 
-
-
-
         #region Methods
         public static void Welcome()
         {

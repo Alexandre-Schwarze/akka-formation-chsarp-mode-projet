@@ -13,13 +13,12 @@ namespace StarWars.Entities.Implements
         public int Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int ForceSide { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int ActionPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int IsPlayable { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int XP_value { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int XP_total { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int LVL { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public ForceSide Forceside { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        Position IBaseTroop.Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Position Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void Heal() { }
         public void Bleed() { }

@@ -44,6 +44,7 @@ namespace StarWars.Tools
 
         public static void RightOffsetWriteLine(string txt)
         {
+            Console.WriteLine("\r\n");
             string offset = String.Empty;
 
             for (int i = 0; i < txtoffset; i++)
@@ -56,7 +57,6 @@ namespace StarWars.Tools
         {
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             ShowWindow(ThisConsole, MAXIMIZE);
-
         }
         #endregion
 

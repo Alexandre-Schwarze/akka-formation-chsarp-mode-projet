@@ -41,20 +41,17 @@ namespace StarWars.Managers
         public static void InitCharactersTypes()
         {
             Playablesstats = new List<Tuple<string, string>>();
-
-            XmlDocument xml = new XmlDocument();
-            xml.Load(Path.Combine(Tools.Tools.DataFolder, "PJs.xml"));
-            XmlNodeList list = xml.SelectNodes("PJs/PJ");
-
+            XDocument xml = XDocument.Parse(
+                 File.ReadAllText(Path.Combine(Tools.Tools.DataFolder, "PJs.xml"), System.Text.Encoding.UTF8));
+            XContainer list = xml.Element("PJs");         
             List<string> playablesnames = new List<string>();
-            foreach (XmlElement element in list)
+            foreach (XElement element in list.Elements())
             {
-                playablesnames.Add(element["Name"].InnerText);
-                Playablesstats.Add(Tuple.Create(element["Name"].InnerText, element["Description"].InnerText));
+                playablesnames.Add(element.Element("Name").Value);
+                Playablesstats.Add(Tuple.Create(element.Element("Name").Value.ToString(), element.Element("Description").Value.ToString()));
             }
             Playables = troops.Where(e => playablesnames.Contains(e.Name)).ToList();
             Nonplayables = troops.Where(e => !playablesnames.Contains(e.Name)).ToList();
         }
-
     }
 }

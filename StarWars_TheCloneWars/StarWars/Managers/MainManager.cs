@@ -18,7 +18,7 @@ namespace StarWars.Managers
         {
             Tools.Tools.RightOffsetWriteLine("###############################################################");
             Tools.Tools.RightOffsetWriteLine("###             STAR WARS : L'ATTAQUE DES CLONES            ###");
-            Tools.Tools.RightOffsetWriteLine("###############################################################\n");
+            Tools.Tools.RightOffsetWriteLine("###############################################################");
         }
 
         public static void MainMenu()
@@ -31,7 +31,7 @@ namespace StarWars.Managers
             switch (Console.ReadLine())
             {
                 case "1":
-                    Tools.Tools.RightOffsetWriteLine(">>> new game");
+                    Tools.Tools.RightOffsetWriteLine("######### NOUVELLE PARTIE #########");
                     GameManager.Menu_NewGame();
                     break;
                 case "2":
@@ -39,11 +39,11 @@ namespace StarWars.Managers
                     MainMenu();
                     break;
                 case "3":
-                    Tools.Tools.RightOffsetWriteLine(">>> Vous nous quittez déjà ? à bientôt alors !\n");
+                    Tools.Tools.RightOffsetWriteLine(">>> Vous nous quittez déjà ? à bientôt alors !");
                     System.Environment.Exit(1);
                     break;
                 default:
-                    Tools.Tools.RightOffsetWriteLine(">>> Choix non reconnu\n");
+                    Tools.Tools.RightOffsetWriteLine(">>> Choix non reconnu");
                     MainMenu();
                     break;
             }

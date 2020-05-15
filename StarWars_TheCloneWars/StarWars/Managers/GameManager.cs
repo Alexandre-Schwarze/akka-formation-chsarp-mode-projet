@@ -3,6 +3,7 @@ using StarWars.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace StarWars.Managers
@@ -14,7 +15,6 @@ namespace StarWars.Managers
         public static void Menu_NewGame()
         {
             game = new Game();
-            Tools.Tools.RightOffsetWriteLine("Showing Character Selection Screen ...");
             ChooseCharacter();
             Tools.Tools.RightOffsetWriteLine("Starting game ...");
         }
@@ -26,16 +26,20 @@ namespace StarWars.Managers
         public static void ChooseCharacter()
         {
             Tools.Tools.RightOffsetWriteLine("Personnages jouables disponibles ...");
-            EntitiesManager.Playablesstats.ForEach((e) => Tools.Tools.RightOffsetWriteLine("\r\n"+ e.Item1 + " : " + e.Item2 ));
+            EntitiesManager.Playablesstats.ForEach((e) => Console.WriteLine("-"+e.Item1 + " : " + e.Item2 ));
 
-            Tools.Tools.RightOffsetWriteLine("AnVeuillez saisir le nom du personnage choisi ...");
+            Tools.Tools.RightOffsetWriteLine("Veuillez saisir le nom du personnage choisi ...");
 
             var input = Console.ReadLine();
             if (EntitiesManager.Playablesstats.Select((e) => e.Item1).ToList().Contains(input))
+            {
                 game.PJ = (IBaseTroop)Activator.CreateInstance(EntitiesManager.Playables.Where((e) => e.Name.Equals(input)).FirstOrDefault());
+                Console.WriteLine("Caractéristiques personnage : PV:" + game.PJ.HP + ", Vitesse:"+game.PJ.Speed+", attaques spéciales:" );
+                game.PJ.GetType().GetTypeInfo().DeclaredMethods.ToList().ForEach((e) => Console.WriteLine("-"+e.Name));
+            }
             else
             {
-                Tools.Tools.RightOffsetWriteLine("La valeur saisie ne correspond pas...");
+                Console.WriteLine("La valeur saisie ne correspond pas...");
                 ChooseCharacter();
             }
         }

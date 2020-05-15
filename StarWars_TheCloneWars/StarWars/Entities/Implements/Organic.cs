@@ -8,17 +8,17 @@ namespace StarWars.Entities.Implements
 {
     public class Organic : IBaseTroop 
     {
-        public int HP { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int Remaining_HP { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int ForceSide { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int ActionPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int IsPlayable { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int XP_value { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int XP_total { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int LVL { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ForceSide Forceside { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Position Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int HP { get ; set; }
+        public int Remaining_HP { get; set; }
+        public int Speed { get; set; }
+        public int ForceSide { get; set; }
+        public int ActionPoints { get; set; }
+        public int IsPlayable { get; set; }
+        public int XP_value { get; set; }
+        public int XP_total { get; set; }
+        public int LVL { get; set; }
+        public ForceSide Forceside { get; set; }
+        public Position Position { get; set; }
 
         public void Heal() { }
         public void Bleed() { }

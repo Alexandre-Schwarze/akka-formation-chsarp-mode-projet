@@ -1,11 +1,14 @@
 ﻿using StarWars.Managers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace StarWars
 {
 	class Program
 	{
-
+		public static char[] alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 		#region Attributes
 
 		#endregion
@@ -23,6 +26,7 @@ namespace StarWars
 			Tools.Tools.InitFolders();
 			EntitiesManager.InitCharactersTypes();
 		}
+
 
 
 	}

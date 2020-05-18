@@ -25,7 +25,7 @@ namespace StarWars.Managers
             game.Grid = GridManager.DisplayGrid(game.Troops, indexgrid);
 
 
-            Tools.Tools.RightOffsetWriteLine("Starting game ...");
+            Console.WriteLine("Starting game ...");
         }
 
         /// <summary>

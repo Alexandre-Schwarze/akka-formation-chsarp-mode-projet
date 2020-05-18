@@ -21,7 +21,7 @@ namespace StarWars.Tools
     /// </summary>
     public class Position
     {
-        public char absciss;
+        public string absciss;
         public int ordinate;
     }
 
@@ -77,7 +77,7 @@ namespace StarWars.Tools
 
         #region Outillage Calcul de positions 
         public static char[] alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-        private static int GetAbscissIndex(char absciss)
+        private static int GetAbscissIndex(string absciss)
         {
             return Array.IndexOf(alpha, absciss);
         }
@@ -97,6 +97,40 @@ namespace StarWars.Tools
             else return false;
         }
 
+
+        public static uint ConvertFromBase36(string val)
+        {
+            const double BASE = 26.0;
+            uint ret = 0;
+
+            char[] vals = val.ToUpper().ToCharArray();
+            int last = vals.Length - 1;
+
+            for (int x = 0; x < vals.Length; x++)
+            {
+                if (vals[x] < 'A' || vals[x] > 'Z')
+                    throw new ArgumentException("Not a valid Base26 string.", val);
+
+                ret += (uint)(Math.Pow(BASE, (double)x) * (vals[last - x] - 'A'));
+            }
+            return ret;
+        }
+
+        public static string ConvertToBase36(uint i)
+        {
+            const int BASE = 26;
+            StringBuilder result = new StringBuilder();
+            uint remainder;
+
+            while (i > 0)
+            {
+                remainder = i % BASE;
+                i = i / BASE;
+                result.Insert(0, (char)((char)remainder + 'A'));
+            };
+
+            return result.ToString();
+        }
         #endregion 
     }
 }

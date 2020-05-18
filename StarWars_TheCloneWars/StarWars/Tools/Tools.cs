@@ -97,26 +97,40 @@ namespace StarWars.Tools
             else return false;
         }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="val"></param>
+		/// <returns></returns>
+		public static int ConvertFromStringBase26(string val)
+		{
+			string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			int res = 0;
 
-        public static uint ConvertFromBase26(string val)
-        {
-            const double BASE = 26.0;
-            uint ret = 0;
+			if (val.Length == 2)
+				res = 26 * (letters.IndexOf(val[0]) + 1) + letters.IndexOf(val[1]);
+			else if (val.Length == 1)
+				res = letters.IndexOf(val[0]);
 
-            char[] vals = val.ToUpper().ToCharArray();
-            int last = vals.Length - 1;
+			return res;
+		}
 
-            for (int x = 0; x < vals.Length; x++)
-            {
-                if (vals[x] < 'A' || vals[x] > 'Z')
-                    throw new ArgumentException("Not a valid Base26 string.", val);
+		public static string ConvertToStringBase26(int index)
+		{
+			string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			string ordinate;
 
-                ret += (uint)(Math.Pow(BASE, (double)x) * (vals[last - x] - 'A'));
-            }
-            return ret;
-        }
+			if (index < 26)
+				ordinate = letters[index].ToString() + ' ';
+			else
+			{
+				int firstIndex = index / 26 - 1;
+				int secondIndex = index - 26 * (int)(index / 26);
+				ordinate = letters[firstIndex].ToString() + letters[secondIndex].ToString();
+			}
 
-
-        #endregion 
-    }
+			return ordinate;
+		}
+		#endregion
+	}
 }

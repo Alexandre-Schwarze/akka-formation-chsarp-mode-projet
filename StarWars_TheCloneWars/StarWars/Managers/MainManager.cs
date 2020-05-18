@@ -16,30 +16,15 @@ namespace StarWars.Managers
         #region Methods
         public static void Welcome()
         {
-            //Tools.Tools.RightOffsetWriteLine("###############################################################");
-            //Tools.Tools.RightOffsetWriteLine("###             STAR WARS : L'ATTAQUE DES CLONES            ###");
-            //Tools.Tools.RightOffsetWriteLine("###############################################################");
-
-            //Tools.Tools.RightOffsetWriteLine("###############################################################");
-            //Tools.Tools.RightOffsetWriteLine("###             STAR WARS : L'ATTAQUE DES CLONES            ###");
-            //Tools.Tools.RightOffsetWriteLine("###############################################################");
-
-
-
-Console.WriteLine("                         _                                      ");
-Console.WriteLine("                     ___| |_ __ _ _ __  __      ____ _ _ __ ___ ");
-Console.WriteLine("                    / __| __/ _` | '__| \\ \\ /\\ / / _` | '__/ __|");
-Console.WriteLine("                    \\__ \\ || (_| | |     \\ V  V / (_| | |  \\__ \\");
-Console.WriteLine("                    |___/\\__\\__,_|_|      \\_/\\_/ \\__,_|_|  |___/");
-Console.WriteLine("__.-.__         ########################################################         __.-.__");
-Console.WriteLine("'-._.-'         ###             L'ATTAQUE DES CLONES                 ###         '-._.-'");
-Console.WriteLine("                ########################################################");
-
-
+            Console.WriteLine("                         _                                      ");
+            Console.WriteLine("                     ___| |_ __ _ _ __  __      ____ _ _ __ ___ ");
+            Console.WriteLine("                    / __| __/ _` | '__| \\ \\ /\\ / / _` | '__/ __|");
+            Console.WriteLine("                    \\__ \\ || (_| | |     \\ V  V / (_| | |  \\__ \\");
+            Console.WriteLine("                    |___/\\__\\__,_|_|      \\_/\\_/ \\__,_|_|  |___/");
+            Console.WriteLine("__.-.__         ########################################################         __.-.__");
+            Console.WriteLine("'-._.-'         ###             L'ATTAQUE DES CLONES                 ###         '-._.-'");
+            Console.WriteLine("                ########################################################");
         }
-
-
-
 
         public static void MainMenu()
         {

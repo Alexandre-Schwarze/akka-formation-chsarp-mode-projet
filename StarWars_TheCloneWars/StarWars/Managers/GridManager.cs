@@ -13,13 +13,6 @@ namespace StarWars.Managers
 	/// </summary>
 	public static class GridManager
 	{
-		#region Attributes
-		public static Grid Grid
-		{
-			get; set;
-		}
-		#endregion
-
 		#region Ctor
 
 		#endregion
@@ -46,7 +39,7 @@ namespace StarWars.Managers
 		/// <returns></returns>
 		public static Grid GenereateGrid(int index)
 		{
-			Grid = new Grid();
+			Grid Grid = new Grid();
 
 			Grid.InitIcons();
 
@@ -90,7 +83,7 @@ namespace StarWars.Managers
 			string matrice = node.InnerText;
 			string[] line = matrice.Split('\n');
 
-			Grid.Index = line[0].Length;
+			grid.Index = line[0].Length;
 		}
 		#endregion
 	}

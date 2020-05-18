@@ -8,6 +8,7 @@ namespace StarWars.Objects
     public class Game
     {
         #region Attributes
+        public Grid Grid { get; set; }
         public string Name { get; set; }
         public int Basetroop_number { get; set; }
         public IBaseTroop[] Troops{ get; set; }

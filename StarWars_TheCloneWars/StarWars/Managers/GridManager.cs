@@ -5,6 +5,7 @@ using System.Text;
 using StarWars.Objects;
 using System.Xml;
 using System.Xml.Linq;
+using StarWars.Entities.Interfaces;
 
 namespace StarWars.Managers
 {
@@ -14,16 +15,16 @@ namespace StarWars.Managers
 	public static class GridManager
 	{
 		#region Ctor
-
+		private static int indexTroops = 0;
 		#endregion
 
 		#region Methods
 		/// <summary>
 		/// Method pour afficher la grille générée
 		/// </summary>
-		public static Grid DisplayGrid (int index )
+		public static Grid DisplayGrid(List<IBaseTroop> listOfTroops, int index)
 		{
-			Grid grid = GenereateGrid(index);
+			Grid grid = GenerateGrid(listOfTroops, index);
 
 			for (int x = 0 ; x < (index * 2) + 1 ; x++)
 			{
@@ -36,6 +37,7 @@ namespace StarWars.Managers
 
 				Console.WriteLine(line);
 			}
+
 			return grid;
 		}
 
@@ -54,11 +56,11 @@ namespace StarWars.Managers
 		}
 
 		/// <summary>
-		/// Method pour générer la grille du jeu
+		/// Method pour générer la grille du jeu et le placement des personnages
 		/// </summary>
 		/// <param name="index">Nombre de lignes et de colonnes de la grille de jeu</param>
 		/// <returns></returns>
-		public static Grid GenereateGrid(int index)
+		public static Grid GenerateGrid(List<IBaseTroop> listOfTroops, int index)
 		{
 			Grid Grid = new Grid();
 
@@ -80,12 +82,22 @@ namespace StarWars.Managers
 					}
 					else*/
 					//{
-						if (x % 2 == 0)
-							Grid.Matrice[x, y] = '—';
-						else if (x % 2 != 0 && y % 2 == 0)
-							Grid.Matrice[x, y] = '|';
-						else
+					if (x % 2 == 0)
+						Grid.Matrice[x, y] = '—';
+					else if (x % 2 != 0 && y % 2 == 0)
+						Grid.Matrice[x, y] = '|';
+					else
+					{
+						Random testTroop = new Random();
+
+						if (testTroop.Next(0, 20) < 18 && indexTroops < listOfTroops.Count - 1)
 							Grid.Matrice[x, y] = ' ';
+						else
+						{
+							Grid.Matrice[x, y] = listOfTroops[indexTroops].Icon;
+							indexTroops++;
+						}
+					}
 					//}
 				}
 			}

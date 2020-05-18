@@ -21,21 +21,22 @@ namespace StarWars.Managers
 		/// <summary>
 		/// Method pour afficher la grille générée
 		/// </summary>
-		public static void DisplayGrid()
+		public static Grid DisplayGrid (int index )
 		{
-			GenereateGrid(10);
+			Grid grid = GenereateGrid(index);
 
-			for (int x = 0 ; x < (10 * 2) + 1 ; x++)
+			for (int x = 0 ; x < (index * 2) + 1 ; x++)
 			{
 				string line = "";
 
-				for (int y = 0 ; y < (10 * 2) + 1 ; y++)
+				for (int y = 0 ; y < (index * 2) + 1 ; y++)
 				{
-					line += Grid.Matrice[x, y];
+					line += grid.Matrice[x, y];
 				}
 
 				Console.WriteLine(line);
 			}
+			return grid;
 		}
 
 		/// <summary>

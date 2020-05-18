@@ -16,9 +16,11 @@ namespace StarWars.Managers
         {
             game = new Game();
             ChooseCharacter();
-            game.Grid = GridManager.GenereateGrid(GridManager.ChooseIndex());
+
+            game.Grid = GridManager.DisplayGrid(GridManager.ChooseIndex());
 
             Tools.Tools.RightOffsetWriteLine("Starting game ...");
+
         }
 
         /// <summary>

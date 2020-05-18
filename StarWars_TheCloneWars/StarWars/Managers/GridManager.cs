@@ -28,7 +28,7 @@ namespace StarWars.Managers
 		/// <summary>
 		/// Method pour afficher la grille générée
 		/// </summary>
-		public void DisplayGrid()
+		public static void DisplayGrid()
 		{
 			GenereateGrid(10);
 

@@ -19,6 +19,26 @@ namespace StarWars.Managers
 
 		#region Methods
 		/// <summary>
+		/// Method pour afficher la grille générée
+		/// </summary>
+		public static void DisplayGrid()
+		{
+			GenereateGrid(10);
+
+			for (int x = 0 ; x < (10 * 2) + 1 ; x++)
+			{
+				string line = "";
+
+				for (int y = 0 ; y < (10 * 2) + 1 ; y++)
+				{
+					line += Grid.Matrice[x, y];
+				}
+
+				Console.WriteLine(line);
+			}
+		}
+
+		/// <summary>
 		/// Method pour choisir la taille de la grille du jeu
 		/// </summary>
 		/// <returns>La taille (largeur = hauteur) de la grille</returns>
@@ -46,21 +66,26 @@ namespace StarWars.Managers
 			Grid.Index = index;
 			Grid.Matrice = new char[(index * 2) + 1, (index * 2) + 1];
 
-			//Grid.Matrice = 
-			//
-			// Il faut ajouter les personnages dans le string column
-			//
-
 			for (int x = 0 ; x < (index * 2) + 1 ; x++)
 			{
 				for (int y = 0 ; y < (index * 2) + 1 ; y++)
 				{
-					if (x % 2 == 0)
-						Grid.Matrice[x, y] = '—';
-					else if (x % 2 != 0 && y % 2 == 0)
-						Grid.Matrice[x, y] = '|';
-					else
-						Grid.Matrice[x, y] = ' ';
+					/*if (x == 0 || y == 0)
+					{
+						if (y == 0 && x % 2 != 0)
+							Grid.Matrice[x, y] = 'A';
+						else if (x == 0 && y % 2 != 0)
+							Grid.Matrice[x, y] = '1';
+					}
+					else*/
+					//{
+						if (x % 2 == 0)
+							Grid.Matrice[x, y] = '—';
+						else if (x % 2 != 0 && y % 2 == 0)
+							Grid.Matrice[x, y] = '|';
+						else
+							Grid.Matrice[x, y] = ' ';
+					//}
 				}
 			}
 

@@ -7,6 +7,9 @@ namespace StarWars.Entities.Implements.Childs
 {
     public class DroideB2 : Synthetic
     {
-      
+      public DroideB2 ()
+        {
+            this.Icon = '§';
+        }
     }
 }

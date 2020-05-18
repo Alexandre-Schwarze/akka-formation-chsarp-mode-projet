@@ -17,10 +17,12 @@ namespace StarWars.Managers
         {
             game = new Game();
             ChooseCharacter();
-
             int indexgrid = GridManager.ChooseIndex();
+            game.Troops = GenerateTroops(indexgrid);
+            game.Troops.Add(game.PJ);
 
-            game.Grid = GridManager.DisplayGrid(GenerateTroops(indexgrid), indexgrid);
+
+            game.Grid = GridManager.DisplayGrid(game.Troops, indexgrid);
 
 
             Tools.Tools.RightOffsetWriteLine("Starting game ...");

@@ -11,7 +11,7 @@ namespace StarWars.Objects
         public Grid Grid { get; set; }
         public string Name { get; set; }
         public int Basetroop_number { get; set; }
-        public IBaseTroop[] Troops{ get; set; }
+        public List<IBaseTroop> Troops{ get; set; }
         public int Max_turns { get; set; }
         public int Current_turn_number { get; set; }
         public IBaseTroop PJ { get; set; }
@@ -20,6 +20,8 @@ namespace StarWars.Objects
         public Game()
         {
             Name = "DefaultName";
+            this.Troops = new List<IBaseTroop>();
+
         }
         #endregion        
         #region Methods

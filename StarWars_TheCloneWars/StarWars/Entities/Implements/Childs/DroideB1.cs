@@ -9,6 +9,7 @@ namespace StarWars.Entities.Implements.Childs
     {
         public DroideB1()
         {
+            this.Icon = '#';
         }
 
 

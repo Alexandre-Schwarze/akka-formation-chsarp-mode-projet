@@ -6,5 +6,9 @@ namespace StarWars.Entities.Implements.Childs
 {
     public class SergentTrooper : CloneTrooper 
     {
+        public SergentTrooper()
+        {
+            this.Icon = 'O';
+        }
     }
 }

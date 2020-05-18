@@ -15,7 +15,7 @@ namespace StarWars.Managers
 	public static class GridManager
 	{
 		#region Ctor
-		private static int indexTroops = 0;
+
 		#endregion
 
 		#region Methods
@@ -30,7 +30,7 @@ namespace StarWars.Managers
 			{
 				string line = "";
 
-				for (int y = 0 ; y < (index * 2) + 1 ; y++)
+				for (int y = 0 ; y < (index * 4) + 1 ; y++)
 				{
 					line += grid.Matrice[x, y];
 				}
@@ -67,11 +67,13 @@ namespace StarWars.Managers
 			Grid.InitIcons();
 
 			Grid.Index = index;
-			Grid.Matrice = new char[(index * 2) + 1, (index * 2) + 1];
+			Grid.Matrice = new char[(index * 2) + 1, (index * 4) + 1 * 2];
+
+			int indexTroops = 0;
 
 			for (int x = 0 ; x < (index * 2) + 1 ; x++)
 			{
-				for (int y = 0 ; y < (index * 2) + 1 ; y++)
+				for (int y = 0 ; y < (index * 4) + 1 * 2 ; y++)
 				{
 					/*if (x == 0 || y == 0)
 					{
@@ -90,13 +92,13 @@ namespace StarWars.Managers
 					{
 						Random testTroop = new Random();
 
-						if (testTroop.Next(0, 20) < 18 && indexTroops < listOfTroops.Count - 1)
-							Grid.Matrice[x, y] = ' ';
-						else
+						if (testTroop.Next(0, 20) > 18 && indexTroops < listOfTroops.Count)
 						{
 							Grid.Matrice[x, y] = listOfTroops[indexTroops].Icon;
 							indexTroops++;
 						}
+						else
+							Grid.Matrice[x, y] = ' ';
 					}
 					//}
 				}

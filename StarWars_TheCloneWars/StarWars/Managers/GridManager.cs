@@ -85,16 +85,14 @@ namespace StarWars.Managers
 				for (int y = 0 ; y < abscissaAxis ; y++)
 				{
 					if (x < 2 && y < 4 || x == 1 || y == 2 || y == 3)
-					{
 						Grid.Matrice[x, y] = ' ';
-					}
 					else if (x == 0)
 					{
 						if ((y + 2) % 4 == 0)
-							Grid.Matrice[x, y] = GetOrdinateValue(ordinateValue)[0];
+							Grid.Matrice[x, y] = Tools.Tools.ConvertToStringBase26(ordinateValue)[0];
 						else if ((y + 1) % 4 == 0)
 						{
-							Grid.Matrice[x, y] = GetOrdinateValue(ordinateValue)[1];
+							Grid.Matrice[x, y] = Tools.Tools.ConvertToStringBase26(ordinateValue)[1];
 							ordinateValue++;
 						}
 						else
@@ -131,6 +129,17 @@ namespace StarWars.Managers
 							if (testTroop.Next(0, 20) > 18 && indexTroops < listOfTroops.Count)
 							{
 								Grid.Matrice[x, y] = listOfTroops[indexTroops].Icon;
+
+								/*if (Grid.Matrice[0, y + 1] != ' ')
+									listOfTroops[indexTroops].Position.absciss = Grid.Matrice[0, y].ToString() + Grid.Matrice[0, y + 1].ToString();
+								else
+									listOfTroops[indexTroops].Position.absciss = Grid.Matrice[0, y].ToString();
+
+								if (Grid.Matrice[x, 1] != ' ')
+									int.TryParse(Grid.Matrice[x, 0].ToString() + Grid.Matrice[x, 1].ToString(), out listOfTroops[indexTroops].Position.ordinate);
+								else
+									int.TryParse(Grid.Matrice[x, 0].ToString(), out listOfTroops[indexTroops].Position.ordinate);*/
+
 								indexTroops++;
 							}
 							else
@@ -166,23 +175,6 @@ namespace StarWars.Managers
 			string[] line = matrice.Split('\n');
 
 			grid.Index = line[0].Length;
-		}
-
-		private static string GetOrdinateValue(int index)
-		{
-			string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			string ordinate;
-
-			if (index < 26)
-				ordinate = letters[index].ToString() + ' ';
-			else
-			{
-				int firstIndex = index / 26 - 1;
-				int secondIndex = index - 26 * (int)(index / 26);
-				ordinate = letters[firstIndex].ToString() + letters[secondIndex].ToString();
-			}
-
-			return ordinate;
 		}
 		#endregion
 	}

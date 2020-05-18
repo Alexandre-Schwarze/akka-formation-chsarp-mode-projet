@@ -1,4 +1,5 @@
-﻿using StarWars.Entities.Interfaces;
+﻿using StarWars.Entities.Implements.Childs;
+using StarWars.Entities.Interfaces;
 using StarWars.Objects;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,12 @@ namespace StarWars.Managers
             game = new Game();
             ChooseCharacter();
 
-            game.Grid = GridManager.DisplayGrid(GridManager.ChooseIndex());
+            int indexgrid = GridManager.ChooseIndex();
+
+            game.Grid = GridManager.DisplayGrid(GenerateTroops(indexgrid), indexgrid);
+
 
             Tools.Tools.RightOffsetWriteLine("Starting game ...");
-
         }
 
         /// <summary>
@@ -54,6 +57,28 @@ namespace StarWars.Managers
         public static void CharacterStats()
         {
 
+        }
+
+        public static List<IBaseTroop> GenerateTroops(int index)
+        {
+            Console.WriteLine("Generating troops ...");
+            List<IBaseTroop> listtroops = new List<IBaseTroop>();
+            int sidenumbers = (int)Math.Round((decimal)((index / 2) - 5), 0);
+            int sergentnumber = (int)Math.Round((decimal)(sidenumbers / 5),0);
+
+            for (int i = 0; i < sidenumbers; i ++)
+            {
+                listtroops.Add(new DroideB1());
+                listtroops.Add(new CloneTrooper());
+            }
+
+            for (int i = 0; i < sergentnumber; i++)
+            {
+                listtroops.Add(new DroideB2());
+                listtroops.Add(new SergentTrooper());
+            }
+
+            return listtroops;
         }
         #endregion
     }

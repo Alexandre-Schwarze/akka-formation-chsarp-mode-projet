@@ -24,6 +24,7 @@ namespace StarWars.Entities.Implements.Childs
             this.XP_total = 0;
             this.ActionPoints = 1;
             this.Forceside = Tools.ForceSide.Light;
+            this.Icon = 'A';
         }
         #endregion        
         #region Methods

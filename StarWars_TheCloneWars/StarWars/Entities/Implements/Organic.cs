@@ -19,6 +19,7 @@ namespace StarWars.Entities.Implements
         public int LVL { get; set; }
         public ForceSide Forceside { get; set; }
         public Position Position { get; set; }
+        public char Icon  { get; set; } 
 
         public void Heal() { }
         public void Bleed() { }

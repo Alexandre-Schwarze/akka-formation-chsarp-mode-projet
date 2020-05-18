@@ -19,6 +19,7 @@ namespace StarWars.Entities.Interfaces
         int XP_total { get; set; }
         int LVL { get; set; }
 
+        char Icon { get; set; }
 
         #endregion
 

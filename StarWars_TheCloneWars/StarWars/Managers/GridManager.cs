@@ -86,10 +86,9 @@ namespace StarWars.Managers
 					//{
 					if (x % 2 == 0)
 						Grid.Matrice[x, y] = '—';
-					else if (x % 2 != 0 && y % 2 == 0)
+					else if (x % 2 != 0 && y % 4 == 0)
 						Grid.Matrice[x, y] = '|';
-					else
-					{
+					else if ((y + 2) % 4 == 0) {
 						Random testTroop = new Random();
 
 						if (testTroop.Next(0, 20) > 18 && indexTroops < listOfTroops.Count)
@@ -99,6 +98,10 @@ namespace StarWars.Managers
 						}
 						else
 							Grid.Matrice[x, y] = ' ';
+					}
+					else
+					{
+						Grid.Matrice[x, y] = ' ';
 					}
 					//}
 				}

@@ -29,6 +29,8 @@ namespace StarWars.Entities.Interfaces
         #region Methods
         void BaseAttack();
         void BaseMove();
+
+        void Checkdeath();
         #endregion
     }
 }

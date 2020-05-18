@@ -21,7 +21,11 @@ namespace StarWars.Entities.Implements
         public Position Position { get; set; }
         public char Icon  { get; set; } 
 
-        public void Heal() { }
+        public void Heal() 
+        {
+            this.Remaining_HP += 2;
+            Console.WriteLine(this.GetType().Name + " se soigne de 2 HP ! Total : " + this.Remaining_HP);
+        }
         public void Bleed() { }
 
         public void BaseAttack()
@@ -30,6 +34,11 @@ namespace StarWars.Entities.Implements
         }
 
         public void BaseMove()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Checkdeath()
         {
             throw new NotImplementedException();
         }

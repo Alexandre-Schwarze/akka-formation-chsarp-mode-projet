@@ -98,7 +98,7 @@ namespace StarWars.Tools
         }
 
 
-        public static uint ConvertFromBase36(string val)
+        public static uint ConvertFromBase26(string val)
         {
             const double BASE = 26.0;
             uint ret = 0;
@@ -116,21 +116,7 @@ namespace StarWars.Tools
             return ret;
         }
 
-        public static string ConvertToBase36(uint i)
-        {
-            const int BASE = 26;
-            StringBuilder result = new StringBuilder();
-            uint remainder;
 
-            while (i > 0)
-            {
-                remainder = i % BASE;
-                i = i / BASE;
-                result.Insert(0, (char)((char)remainder + 'A'));
-            };
-
-            return result.ToString();
-        }
         #endregion 
     }
 }

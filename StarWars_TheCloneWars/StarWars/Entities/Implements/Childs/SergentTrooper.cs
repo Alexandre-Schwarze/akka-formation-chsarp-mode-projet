@@ -9,6 +9,11 @@ namespace StarWars.Entities.Implements.Childs
         public SergentTrooper()
         {
             this.Icon = 'O';
+            this.HP = 10;
+            this.LVL = 1;
+            this.Forceside = Tools.ForceSide.Light;
+            this.ActionPoints = 1;
+            this.Speed = 2;
         }
     }
 }

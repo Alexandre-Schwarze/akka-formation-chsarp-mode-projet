@@ -21,7 +21,8 @@ namespace StarWars.Objects
         {
             Name = "DefaultName";
             this.Troops = new List<IBaseTroop>();
-
+            this.Max_turns = 20;
+            this.Current_turn_number = 1;
         }
         #endregion        
         #region Methods

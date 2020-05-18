@@ -38,8 +38,9 @@ namespace StarWars.Entities.Implements.Childs
             Console.WriteLine("Anakin tente de bondir sur " + target.GetType().Name);
             if (Tools.Tools.IsRangeOK(range, target.Position, this.Position))
             {
-                target.HP -= 5;
+                target.Remaining_HP -= 5;
                 Console.WriteLine("Et lui inflige 5 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.HP);
+
             }
             
         }

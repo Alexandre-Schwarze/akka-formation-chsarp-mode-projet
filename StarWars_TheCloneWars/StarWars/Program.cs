@@ -26,8 +26,5 @@ namespace StarWars
 			Tools.Tools.InitFolders();
 			EntitiesManager.InitCharactersTypes();
 		}
-
-
-
 	}
 }

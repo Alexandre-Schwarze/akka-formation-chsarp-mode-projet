@@ -21,9 +21,19 @@ namespace StarWars.Entities.Implements
         public Position Position { get; set; }
         public char Icon { get; set; }
 
-        public void MotherCoreSyncronizing() { }
-        public void AutoRepair() { }
-        public void Bug() { }
+        public void MotherCoreSyncronizing() 
+        {
+            
+        }
+        public void AutoRepair() 
+        {
+            this.Remaining_HP += 3;
+            Console.WriteLine(this.GetType().Name + " se répare de 3 HP ! Total : " + this.Remaining_HP);
+        }
+        public void Bug() 
+        { 
+
+        }
 
         public void BaseAttack()
         {
@@ -33,6 +43,11 @@ namespace StarWars.Entities.Implements
         public void BaseMove()
         {
             throw new NotImplementedException();
+        }
+
+        public void Checkdeath()
+        {
+            //if(this.Remaining_HP <= 0 )
         }
     }
 }

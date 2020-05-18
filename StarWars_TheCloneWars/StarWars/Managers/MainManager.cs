@@ -37,7 +37,7 @@ namespace StarWars.Managers
             {
                 case "1":
                     Tools.Tools.RightOffsetWriteLine("######### NOUVELLE PARTIE #########");
-                    GameManager.Menu_NewGame();
+                    GameManager.NewGame();
                     break;
                 case "2":
                     Tools.Tools.RightOffsetWriteLine(">>> in progress");

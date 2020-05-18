@@ -10,6 +10,11 @@ namespace StarWars.Entities.Implements.Childs
         public CloneTrooper()
         {
             this.Icon = '8';
+            this.HP = 5;
+            this.LVL = 1;
+            this.Forceside = Tools.ForceSide.Light;
+            this.ActionPoints = 1;
+            this.Speed = 2;
         }
     }
 }

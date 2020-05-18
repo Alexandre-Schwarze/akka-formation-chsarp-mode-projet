@@ -11,10 +11,10 @@ namespace StarWars.Managers
 	/// <summary>
 	/// Manager pour la création de la carte du jeu
 	/// </summary>
-	public class GridManager
+	public static class GridManager
 	{
 		#region Attributes
-		public Grid Grid
+		public static Grid Grid
 		{
 			get; set;
 		}
@@ -49,7 +49,7 @@ namespace StarWars.Managers
 		/// Method pour choisir la taille de la grille du jeu
 		/// </summary>
 		/// <returns>La taille (largeur = hauteur) de la grille</returns>
-		public int ChooseIndex()
+		public static int ChooseIndex()
 		{
 			int index;
 
@@ -64,7 +64,7 @@ namespace StarWars.Managers
 		/// </summary>
 		/// <param name="index">Nombre de lignes et de colonnes de la grille de jeu</param>
 		/// <returns></returns>
-		public Grid GenereateGrid(int index)
+		public static Grid GenereateGrid(int index)
 		{
 			Grid = new Grid();
 
@@ -103,7 +103,7 @@ namespace StarWars.Managers
 		/// Method pour charger la grille du jeu depuis un fichier XML
 		/// </summary>
 		/// <param name="grid">Grille à charger</param>
-		public void LoadGrid(Grid grid)
+		public static void LoadGrid(Grid grid)
 		{
 			string fileName = "file.xml";
 			string currentDirectory = Directory.GetCurrentDirectory();

@@ -59,5 +59,23 @@ namespace StarWars.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à C:\temp\ClonesWars\Data\.
+        /// </summary>
+        internal static string DataPath {
+            get {
+                return ResourceManager.GetString("DataPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à C:\temp\ClonesWars\Saves\.
+        /// </summary>
+        internal static string SavePath {
+            get {
+                return ResourceManager.GetString("SavePath", resourceCulture);
+            }
+        }
     }
 }

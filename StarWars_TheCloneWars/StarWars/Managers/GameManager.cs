@@ -75,7 +75,7 @@ namespace StarWars.Managers
                     string logtroop = troop.GetType().Name + " en " + troop.Position.Txtpos;
 
                     //Check attaques : si autre PNJ autour > attaquer
-                    logtroop += " vérifie si une cible est à proximité ...";
+                    logtroop += " cherche une cible...";
 
                     IBaseTroop targetabletroop = GridManager.CheckAroundForTroop(troops, troop);
                     if (targetabletroop != null)
@@ -87,7 +87,7 @@ namespace StarWars.Managers
                         continue;
                     }
                     else
-                        logtroop += " mais n'entrouve aucune ...";
+                        logtroop += " mais n'en trouve aucune ...";
 
                     //Check blessures : si blessé > se soigne / répare
                     logtroop += " vérifie s'il est blessé... ";

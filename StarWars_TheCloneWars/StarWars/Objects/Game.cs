@@ -15,6 +15,7 @@ namespace StarWars.Objects
         public int Max_turns { get; set; }
         public int Current_turn_number { get; set; }
         public IBaseTroop PJ { get; set; }
+
         #endregion       
         #region Ctor
         public Game()

@@ -36,7 +36,7 @@ namespace StarWars.Entities.Implements.Childs
         public void AttaqueDjemSo(IBaseTroop target)
         {
             int range = 2;
-            Console.WriteLine("Anakin tente de bondir sur " + target.GetType().Name + " en" + target.Position.Txtpos);
+            Console.WriteLine("Anakin tente de bondir sur " + target.GetType().Name + " en " + target.Position.Txtpos);
             if (Tools.Tools.IsRangeOK(range, target.Position, this.Position))
             {
                 target.Remaining_HP -= 5;

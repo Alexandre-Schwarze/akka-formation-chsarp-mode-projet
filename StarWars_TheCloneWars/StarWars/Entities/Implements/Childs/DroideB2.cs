@@ -26,7 +26,7 @@ namespace StarWars.Entities.Implements.Childs
         public void ShootLaserRifle(IBaseTroop target)
         {
             int range = 20;
-            Console.WriteLine("Droide B2 utilise son double fusil laser sur " + target.GetType().Name + " en" + target.Position.Txtpos);
+            Console.WriteLine("Droide B2 utilise son double fusil laser sur " + target.GetType().Name + " en " + target.Position.Txtpos);
             target.Remaining_HP -= 8;
             Console.WriteLine("Et lui inflige 8 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.Remaining_HP + ")");
         }

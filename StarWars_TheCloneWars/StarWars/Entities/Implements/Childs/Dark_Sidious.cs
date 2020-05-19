@@ -21,5 +21,7 @@ namespace StarWars.Entities.Implements.Childs
             this.Forceside = Tools.ForceSide.Dark;
             this.Icon = 'S';
         }
+
+
     }
 }

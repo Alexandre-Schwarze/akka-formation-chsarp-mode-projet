@@ -25,7 +25,7 @@ namespace StarWars.Entities.Implements.Childs
         public void ShootRocketLauncher(IBaseTroop target)
         {
             int range = 20;
-            Console.WriteLine("SergentTrooper utilise son lance-roquette sur " + target.GetType().Name + " en" + target.Position.Txtpos);
+            Console.WriteLine(" utilise son lance-roquette sur " + target.GetType().Name + " en " + target.Position.Txtpos);
             target.Remaining_HP -= 10;
             Console.WriteLine("Et lui inflige 10 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.Remaining_HP + ")");
         }

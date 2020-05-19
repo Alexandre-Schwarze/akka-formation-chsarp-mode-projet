@@ -16,6 +16,12 @@ namespace StarWars.Managers
         #region Methods
         public static void NewGame()
         {
+            SetGame();
+            PlayGame();
+        }
+
+        private static void SetGame()
+        {
             game = new Game();
             ChooseCharacter();
             int indexgrid = GridManager.ChooseIndex();
@@ -23,11 +29,7 @@ namespace StarWars.Managers
 
             List<IBaseTroop> TroopsToPlace = new List<IBaseTroop>(game.Troops);
             TroopsToPlace.Add(game.PJ);
-
             game.Grid = GridManager.DisplayGrid(TroopsToPlace, indexgrid);
-
-            Console.WriteLine("Starting game ...");
-            PlayGame(game);
         }
 
         /// <summary>
@@ -55,19 +57,20 @@ namespace StarWars.Managers
             }
         }
         
-        public static void PlayGame(Game game)
+        public static void PlayGame()
         {
             while (game.Troops.Count > 0 )
             {
                 Tools.Tools.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
 
-                Tools.Tools.RightOffsetWriteLine("################ TOUR DU JOUEUR ##############");
+                Console.WriteLine("################ TOUR DU JOUEUR ##############");
                 /// Implémenter tour du joueur
                 Console.ReadLine();
 
-                Tools.Tools.RightOffsetWriteLine("################ TOURS PNJ ##############");
+                Console.WriteLine("################ TOURS PNJ ##############");
                 DoPNJTurn(game.Troops);
 
+                Tools.Tools.RightOffsetWriteLine("\r\n################ FIN DU TOUR N°" + game.Current_turn_number + " ##############");
                 EndTurn();
             }
         }
@@ -75,7 +78,9 @@ namespace StarWars.Managers
         private static void EndTurn()
         {
             game.Troops = game.Troops.Where((e) => e.Remaining_HP > 0).ToList();
-            game.Grid = GridManager.DisplayGrid(game.Troops, game.Grid.Index);
+            List<IBaseTroop> alltroops = new List<IBaseTroop>(game.Troops);
+            alltroops.Add(game.PJ);
+            game.Grid = GridManager.DisplayGrid(alltroops, game.Grid.Index);
             game.Current_turn_number++;
         }
 
@@ -150,6 +155,8 @@ namespace StarWars.Managers
 
             return listtroops;
         }
+
+
         #endregion
     }
 }

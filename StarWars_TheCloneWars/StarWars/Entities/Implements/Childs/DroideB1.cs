@@ -26,7 +26,7 @@ namespace StarWars.Entities.Implements.Childs
         public void ShootlaserRifle(IBaseTroop target)
         {
             int range = 20;
-            Console.WriteLine("Droide B1 utilise son fusil laser sur " + target.GetType().Name + " en" + target.Position.Txtpos);
+            Console.WriteLine("Droide B1 utilise son fusil laser sur " + target.GetType().Name + " en " + target.Position.Txtpos);
             target.Remaining_HP -= 5;
             Console.WriteLine("Et lui inflige 5 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.Remaining_HP + ")");
         }

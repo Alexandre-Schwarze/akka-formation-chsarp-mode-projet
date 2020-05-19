@@ -21,7 +21,7 @@ namespace StarWars.Entities.Implements
                 _remaining_HP = value;
 
                 if (_remaining_HP <= 0)
-                    Console.WriteLine(this.GetType().Name + " est décédé ...");
+                    Console.WriteLine(this.GetType().Name + " en " + this.Position.Txtpos + " est décédé ...");
             }
         }
         public int Speed { get; set; }

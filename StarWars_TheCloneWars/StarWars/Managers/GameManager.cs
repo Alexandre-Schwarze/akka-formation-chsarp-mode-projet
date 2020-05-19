@@ -2,6 +2,7 @@
 using StarWars.Entities.Implements.Childs;
 using StarWars.Entities.Interfaces;
 using StarWars.Objects;
+using StarWars.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +89,7 @@ namespace StarWars.Managers
                     else
                         logtroop += " mais n'entrouve aucune ...";
 
+                    //Check blessures : si blessé > se soigne / répare
                     logtroop += " vérifie s'il est blessé... ";
                     if (troop.Remaining_HP < troop.MaxHP)
                     {
@@ -99,7 +101,17 @@ namespace StarWars.Managers
                     }
                     else
                         logtroop += "mais n'est pas blessé ... ";
-                    //Check déplacement : Si 7 cases adjacentes libres ? > déplacer 
+
+                    //Check déplacement : Si ni attaque ni soin > déplacer 
+                    logtroop += " regarde autour de lui ...";
+                    Position potentialPosition = GridManager.CheckAroundForTroopMove(game.Getalltroops(), troop, game.Size);
+                    if (potentialPosition != null)
+                    {
+                        logtroop += " et se déplace en " + potentialPosition.Txtpos;
+                        troop.Position = potentialPosition;
+                    }
+                    else
+                        logtroop += " il est encerclé ! ";
 
                     Tools.Tools.DelayedWriteLine(logtroop);
                     continue;
@@ -107,7 +119,6 @@ namespace StarWars.Managers
                 else
                     continue;
             }
-            
         }
 
         private static List<IBaseTroop> GenerateTroops(int index)

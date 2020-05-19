@@ -204,7 +204,7 @@ namespace StarWars.Managers
 		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
 		/// <param name="grid">Grille du jeu</param>
 		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
-		public static IBaseTroop CheckAroundForTroop(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, Grid grid)
+		public static IBaseTroop CheckAroundForTroop(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop)
 		{
 			int absciss = Tools.Tools.ConvertFromStringBase26(baseTroop.Position.absciss);
 			int ordinate = baseTroop.Position.ordinate;

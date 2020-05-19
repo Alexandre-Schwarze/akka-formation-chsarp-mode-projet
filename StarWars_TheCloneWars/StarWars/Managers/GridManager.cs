@@ -14,7 +14,8 @@ namespace StarWars.Managers
 	/// </summary>
 	public static class GridManager
 	{
-		#region Ctor
+		#region Attributes
+		private static bool isTroopsInitialized = false;
 		#endregion
 
 		#region Methods
@@ -31,6 +32,8 @@ namespace StarWars.Managers
 			{
 				Console.WriteLine(lines[x]);
 			}
+
+			isTroopsInitialized = true;
 
 			return grid;
 		}
@@ -123,18 +126,41 @@ namespace StarWars.Managers
 						else if (x % 2 != 0 && y % 4 == 0)
 							Grid.Matrice[x, y] = '|';
 						else if ((y + 2) % 4 == 0) {
-							Random testTroop = new Random();
-
-							if (testTroop.Next(0, 20) > 18 && indexTroops < listOfTroops.Count)
+							if (!isTroopsInitialized)
 							{
-								Grid.Matrice[x, y] = listOfTroops[indexTroops].Icon;
+								Random testTroop = new Random();
 
-								GetTroopPosition(Grid, listOfTroops[indexTroops], x, y);
+								if (testTroop.Next(0, 20) > 18 && indexTroops < listOfTroops.Count)
+								{
+									Grid.Matrice[x, y] = listOfTroops[indexTroops].Icon;
 
-								indexTroops++;
+									SetTroopPosition(Grid, listOfTroops[indexTroops], x, y);
+
+									indexTroops++;
+								}
+								else
+									Grid.Matrice[x, y] = ' ';
 							}
 							else
-								Grid.Matrice[x, y] = ' ';
+							{
+								bool isTroopFind = false;
+								string valAbsciss = (Grid.Matrice[0, y].ToString() + Grid.Matrice[0, y + 1].ToString()).Replace(" ", "");
+								string valOrdinate = (Grid.Matrice[x, 0].ToString() + Grid.Matrice[x, 1].ToString()).Replace(" ", "");
+								int.TryParse(valOrdinate, out int resOrdinate);
+
+								for (int i = 0 ; i < listOfTroops.Count ; i++)
+								{
+									if (listOfTroops[i].Position.absciss == valAbsciss && listOfTroops[i].Position.ordinate == resOrdinate)
+									{
+										Grid.Matrice[x, y] = listOfTroops[i].Icon;
+										isTroopFind = true;
+										break;
+									}
+								}
+
+								if (!isTroopFind)
+									Grid.Matrice[x, y] = ' ';
+							}
 						}
 						else
 						{
@@ -175,7 +201,7 @@ namespace StarWars.Managers
 		/// <param name="baseTroop">Personnage dont on veut récupérer la position</param>
 		/// <param name="firstIndex">Premier index de la matrice</param>
 		/// <param name="secondIndex">Second index de la matrice</param>
-		public static void GetTroopPosition(Grid grid, IBaseTroop baseTroop, int firstIndex, int secondIndex)
+		public static void SetTroopPosition(Grid grid, IBaseTroop baseTroop, int firstIndex, int secondIndex)
 		{
 			if (baseTroop.Position == null)
 				baseTroop.Position = new Tools.Position();

@@ -45,7 +45,7 @@ namespace StarWars.Managers
             if (EntitiesManager.Playablesstats.Select((e) => e.Item1).ToList().Contains(input))
             {
                 game.PJ = (IBaseTroop)Activator.CreateInstance(EntitiesManager.Playables.Where((e) => e.Name.Equals(input)).FirstOrDefault());
-                Console.WriteLine("Caractéristiques personnage : PV:" + game.PJ.HP + ", Vitesse:"+game.PJ.Speed+", attaques spéciales:" );
+                Console.WriteLine("Caractéristiques personnage : PV:" + game.PJ.MaxHP + ", Vitesse:"+game.PJ.Speed+", attaques spéciales:" );
                 game.PJ.GetType().GetTypeInfo().DeclaredMethods.ToList().ForEach((e) => Console.WriteLine("-"+e.Name));
             }
             else
@@ -57,7 +57,7 @@ namespace StarWars.Managers
         
         public static void PlayGame(Game game)
         {
-            while (game.Current_turn_number < game.Max_turns )
+            while (game.Troops.Count > 0 )
             {
                 Tools.Tools.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
 
@@ -68,56 +68,72 @@ namespace StarWars.Managers
                 Tools.Tools.RightOffsetWriteLine("################ TOURS PNJ ##############");
                 DoPNJTurn(game.Troops);
 
-                game.Current_turn_number++;
+                EndTurn();
             }
+        }
+
+        private static void EndTurn()
+        {
+            game.Troops = game.Troops.Where((e) => e.Remaining_HP > 0).ToList();
+            game.Grid = GridManager.DisplayGrid(game.Troops, game.Grid.Index);
+            game.Current_turn_number++;
+        }
+
+        private static void DoPJTurn()
+        {
+
         }
 
         private static void DoPNJTurn(List<IBaseTroop> troops)
         {
             foreach (IBaseTroop troop in troops)
             {
-                switch (troop.Forceside)
+                if (troop.Remaining_HP > 0)
                 {
-                    case Tools.ForceSide.Dark:
-                        //Check attaques : si autre PNJ autour > attaquer
-                        //Check heal : si PV < PV max > heal/repair
-                        if (troop.Remaining_HP < troop.HP)
-                        {
-                            if (troop.GetType().IsSubclassOf(typeof(Synthetic)))
-                                (troop as Synthetic).AutoRepair();
-                            else
-                                (troop as Organic).Heal();
-                            break;
-                        }
-                        //Check déplacement : Si 7 cases adjacentes libres ? > déplacer 
+                    string logtroop = troop.GetType().Name + " en " + troop.Position.Txtpos;
 
+                    //Check attaques : si autre PNJ autour > attaquer
+                    logtroop += " vérifie si une cible est à proximité ...";
 
-                        break;
-                    case Tools.ForceSide.Light:
-                        //Check déplacement : Si 7 cases adjacentes libres ? > déplacer 
-                        //Check heal : si PV != PV max > heal/repair
-                        Console.WriteLine(troop.GetType().Name + " vérifie s'il est blessé... ");
-                        if (troop.Remaining_HP < troop.HP)
-                        {
-                            if (troop.GetType() == typeof(Synthetic))
-                                (troop as Synthetic).AutoRepair();
-                            else
-                                (troop as Organic).Heal();
-                            break;
-                        }
+                    IBaseTroop targetabletroop = GridManager.CheckAroundForTroop(troops, troop);
+                    if (targetabletroop != null)
+                    {
+                        MethodInfo attackmethod = troop.GetType().GetTypeInfo().DeclaredMethods.FirstOrDefault();
+                        object[] parameters = new object[1];
+                        parameters[0] = targetabletroop;
+                        attackmethod.Invoke(troop, parameters);
+                        continue;
+                    }
+                    else
+                        logtroop += " mais n'entrouve aucune ...";
+
+                    logtroop += " vérifie s'il est blessé... ";
+                    if (troop.Remaining_HP < troop.MaxHP)
+                    {
+                        if (troop.GetType() == typeof(Synthetic))
+                            (troop as Synthetic).AutoRepair();
                         else
-                            Console.WriteLine(troop.GetType().Name + " n'est pas blessé ... ");
-                        //Check attaques : si à range > attaque
-                        break;
-                }
-            }
-        }
+                            (troop as Organic).Heal();
+                        continue;
+                    }
+                    else
+                        logtroop += "mais n'est pas blessé ... ";
+                    //Check déplacement : Si 7 cases adjacentes libres ? > déplacer 
 
-        public static List<IBaseTroop> GenerateTroops(int index)
+                    Tools.Tools.DelayedWriteLine(logtroop);
+                    continue;
+                }
+                else
+                    continue;
+            }
+            
+        }
+        
+        private static List<IBaseTroop> GenerateTroops(int index)
         {
             Console.WriteLine("Generating troops ...");
             List<IBaseTroop> listtroops = new List<IBaseTroop>();
-            int sidenumbers = (int)Math.Round((decimal)((index / 2) - 5), 0);
+            int sidenumbers = (int)Math.Round((decimal)((index / 2) ), 0);
             int sergentnumber = (int)Math.Round((decimal)(sidenumbers / 5),0);
 
             for (int i = 0; i < sidenumbers; i ++)
@@ -134,8 +150,6 @@ namespace StarWars.Managers
 
             return listtroops;
         }
-
-
         #endregion
     }
 }

@@ -18,7 +18,7 @@ namespace StarWars.Entities.Implements.Childs
         /// </summary>
         public Anakin()
         {
-            this.HP = 15;
+            this.MaxHP = 15;
             this.Remaining_HP = 15;
             this.LVL = 1;
             this.Speed = 2;
@@ -36,14 +36,12 @@ namespace StarWars.Entities.Implements.Childs
         public void AttaqueDjemSo(IBaseTroop target)
         {
             int range = 2;
-            Console.WriteLine("Anakin tente de bondir sur " + target.GetType().Name);
+            Console.WriteLine("Anakin tente de bondir sur " + target.GetType().Name + " en" + target.Position.Txtpos);
             if (Tools.Tools.IsRangeOK(range, target.Position, this.Position))
             {
                 target.Remaining_HP -= 5;
-                Console.WriteLine("Et lui inflige 5 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.HP);
-
+                Console.WriteLine("Et lui inflige 5 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.MaxHP + ")");
             }
-            
         }
         #endregion
     }

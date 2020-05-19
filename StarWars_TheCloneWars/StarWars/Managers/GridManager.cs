@@ -49,9 +49,9 @@ namespace StarWars.Managers
 			Console.WriteLine("Choisissez la taille de la grille de jeu : ");
 			int.TryParse(Console.ReadLine(), out index);
 
-			while (index >= 70)
+			while (index >= 70 && index < 15)
 			{
-				Console.WriteLine("Choisissez une taille inférieure à 70 : ");
+				Console.WriteLine("Choisissez une taille supérieure à 15 et inférieure à 70 : ");
 				int.TryParse(Console.ReadLine(), out index);
 			}
 
@@ -301,12 +301,14 @@ namespace StarWars.Managers
 		/// <param name="indexMatrice"></param>
 		private static void PlaceTroops(List<IBaseTroop> listOfTroops, int indexMatrice)
 		{
+			List<Tools.Position> listOfPos = new List<Tools.Position>();
+
 			for (int i = 0 ; i < listOfTroops.Count ; i++)
 			{
 				if (!isTroopsInitialized)
 					listOfTroops[i].Position = new Tools.Position();
 
-				int absciss =  Tools.Tools.GenerateRandom(0, indexMatrice);
+				int absciss = Tools.Tools.GenerateRandom(0, indexMatrice);
 				int ordinate;
 
 				if (listOfTroops[i].Forceside == Tools.ForceSide.Dark)

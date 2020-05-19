@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -65,13 +66,16 @@ namespace StarWars.Tools
         private static string GameFolder = UserAppFolderPath + "\\CloneWars";
         public static string SaveFolder = GameFolder + "\\Saves";
         public static string DataFolder = GameFolder + "\\Data";
-        public static string PlayablesFile = "PJs.xml";
+        public static string PlayablesFile = DataFolder + "\\PJs.xml";
 
         public static void InitFolders()
         {
             System.IO.Directory.CreateDirectory(GameFolder);
             System.IO.Directory.CreateDirectory(SaveFolder);
             System.IO.Directory.CreateDirectory(DataFolder);
+
+            using (StreamWriter sw = new StreamWriter(PlayablesFile, true))
+                sw.Write(Properties.Resources.PJs);
         }
         #endregion
 

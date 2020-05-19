@@ -19,6 +19,7 @@ namespace StarWars.Entities.Implements.Childs
         public Anakin()
         {
             this.HP = 15;
+            this.Remaining_HP = 15;
             this.LVL = 1;
             this.Speed = 2;
             this.XP_total = 0;

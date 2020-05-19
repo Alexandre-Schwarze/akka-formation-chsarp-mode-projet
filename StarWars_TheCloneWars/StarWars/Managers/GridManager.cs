@@ -33,8 +33,6 @@ namespace StarWars.Managers
 				Console.WriteLine(lines[x]);
 			}
 
-			isTroopsInitialized = true;
-
 			return grid;
 		}
 
@@ -78,7 +76,11 @@ namespace StarWars.Managers
 			Grid.Index = index;
 			Grid.Matrice = new char[abscissAxis, ordinateAxis];
 
-			int indexTroops = 0;
+			if (!isTroopsInitialized)
+			{
+				PlaceTroops(listOfTroops, index - 1);
+				isTroopsInitialized = true;
+			}
 
 			for (int x = 0 ; x < abscissAxis ; x++)
 			{
@@ -126,41 +128,23 @@ namespace StarWars.Managers
 						else if (x % 2 != 0 && y % 4 == 0)
 							Grid.Matrice[x, y] = '|';
 						else if ((y + 2) % 4 == 0) {
-							if (!isTroopsInitialized)
+							bool isTroopFind = false;
+							string valAbsciss = (Grid.Matrice[0, y].ToString() + Grid.Matrice[0, y + 1].ToString()).Replace(" ", "");
+							string valOrdinate = (Grid.Matrice[x, 0].ToString() + Grid.Matrice[x, 1].ToString()).Replace(" ", "");
+							int.TryParse(valOrdinate, out int resOrdinate);
+
+							for (int i = 0 ; i < listOfTroops.Count ; i++)
 							{
-								Random testTroop = new Random();
-
-								if (testTroop.Next(0, 20) > 18 && indexTroops < listOfTroops.Count)
+								if (listOfTroops[i].Position.absciss == valAbsciss && listOfTroops[i].Position.ordinate == resOrdinate)
 								{
-									Grid.Matrice[x, y] = listOfTroops[indexTroops].Icon;
-
-									SetTroopPosition(Grid, listOfTroops[indexTroops], x, y);
-
-									indexTroops++;
+									Grid.Matrice[x, y] = listOfTroops[i].Icon;
+									isTroopFind = true;
+									break;
 								}
-								else
-									Grid.Matrice[x, y] = ' ';
 							}
-							else
-							{
-								bool isTroopFind = false;
-								string valAbsciss = (Grid.Matrice[0, y].ToString() + Grid.Matrice[0, y + 1].ToString()).Replace(" ", "");
-								string valOrdinate = (Grid.Matrice[x, 0].ToString() + Grid.Matrice[x, 1].ToString()).Replace(" ", "");
-								int.TryParse(valOrdinate, out int resOrdinate);
 
-								for (int i = 0 ; i < listOfTroops.Count ; i++)
-								{
-									if (listOfTroops[i].Position.absciss == valAbsciss && listOfTroops[i].Position.ordinate == resOrdinate)
-									{
-										Grid.Matrice[x, y] = listOfTroops[i].Icon;
-										isTroopFind = true;
-										break;
-									}
-								}
-
-								if (!isTroopFind)
-									Grid.Matrice[x, y] = ' ';
-							}
+							if (!isTroopFind)
+								Grid.Matrice[x, y] = ' ';
 						}
 						else
 						{
@@ -254,6 +238,34 @@ namespace StarWars.Managers
 			}
 
 			return null;
+		}
+
+		private static void PlaceTroops(List<IBaseTroop> listOfTroops, int indexMatrice)
+		{
+			List<int> listOfAbsciss = Tools.Tools.GenerateRandoms(listOfTroops.Count, 0, indexMatrice);
+			List<int> listOfOrdinate = Tools.Tools.GenerateRandoms(listOfTroops.Count, 0, indexMatrice / 2);
+
+			for (int i = 0 ; i < listOfTroops.Count ; i++)
+			{
+				if (!isTroopsInitialized)
+					listOfTroops[i].Position = new Tools.Position();
+
+				listOfTroops[i].Position.absciss = Tools.Tools.ConvertToStringBase26(listOfAbsciss[i]).Replace(" ", "");
+				listOfTroops[i].Position.ordinate = listOfOrdinate[i];
+			}
+
+			/*Random testTroop = new Random();
+
+			if (testTroop.Next(0, 20) > 18 && indexTroops < listOfTroops.Count)
+			{
+				grid.Matrice[firstIndex, secondIndex] = listOfTroops[indexTroops].Icon;
+
+				SetTroopPosition(grid, listOfTroops[indexTroops], firstIndex, secondIndex);
+
+				indexTroops++;
+			}
+			else
+				grid.Matrice[firstIndex, secondIndex] = ' ';*/
 		}
 		#endregion
 	}

@@ -15,7 +15,6 @@ namespace StarWars.Managers
 	public static class GridManager
 	{
 		#region Ctor
-		private const string Alphabet = "abcdefghijklmnopqrstuvwxyz";
 		#endregion
 
 		#region Methods
@@ -67,33 +66,33 @@ namespace StarWars.Managers
 
 			Grid.InitIcons();
 
-			int ordinateAxis = (index * 2) + 3;
-			int abscissaAxis = (index * 4) + 5;
+			int abscissAxis = (index * 2) + 3;
+			int ordinateAxis = (index * 4) + 5;
 
-			int ordinateValue = 0;
-			int abscissaValue = 1;
+			int abscissValue = 0;
+			int ordinateValue = 1;
 
 			Grid.Index = index;
-			Grid.Matrice = new char[ordinateAxis, abscissaAxis];
+			Grid.Matrice = new char[abscissAxis, ordinateAxis];
 
 			int indexTroops = 0;
 
-			for (int x = 0 ; x < ordinateAxis ; x++)
+			for (int x = 0 ; x < abscissAxis ; x++)
 			{
 				lines.Add("");
 
-				for (int y = 0 ; y < abscissaAxis ; y++)
+				for (int y = 0 ; y < ordinateAxis ; y++)
 				{
 					if (x < 2 && y < 4 || x == 1 || y == 2 || y == 3)
 						Grid.Matrice[x, y] = ' ';
 					else if (x == 0)
 					{
 						if ((y + 2) % 4 == 0)
-							Grid.Matrice[x, y] = Tools.Tools.ConvertToStringBase26(ordinateValue)[0];
+							Grid.Matrice[x, y] = Tools.Tools.ConvertToStringBase26(abscissValue)[0];
 						else if ((y + 1) % 4 == 0)
 						{
-							Grid.Matrice[x, y] = Tools.Tools.ConvertToStringBase26(ordinateValue)[1];
-							ordinateValue++;
+							Grid.Matrice[x, y] = Tools.Tools.ConvertToStringBase26(abscissValue)[1];
+							abscissValue++;
 						}
 						else
 							Grid.Matrice[x, y] = ' ';
@@ -103,15 +102,15 @@ namespace StarWars.Managers
 						if (x % 2 != 0)
 						{
 							if (y == 0)
-								Grid.Matrice[x, y] = abscissaValue.ToString()[0];
+								Grid.Matrice[x, y] = ordinateValue.ToString()[0];
 							else
 							{
-								if (abscissaValue > 9)
-									Grid.Matrice[x, y] = abscissaValue.ToString()[1];
+								if (ordinateValue > 9)
+									Grid.Matrice[x, y] = ordinateValue.ToString()[1];
 								else
 									Grid.Matrice[x, y] = ' ';
 
-								abscissaValue++;
+								ordinateValue++;
 							}
 						}
 						else
@@ -130,15 +129,7 @@ namespace StarWars.Managers
 							{
 								Grid.Matrice[x, y] = listOfTroops[indexTroops].Icon;
 
-								/*if (Grid.Matrice[0, y + 1] != ' ')
-									listOfTroops[indexTroops].Position.absciss = Grid.Matrice[0, y].ToString() + Grid.Matrice[0, y + 1].ToString();
-								else
-									listOfTroops[indexTroops].Position.absciss = Grid.Matrice[0, y].ToString();
-
-								if (Grid.Matrice[x, 1] != ' ')
-									int.TryParse(Grid.Matrice[x, 0].ToString() + Grid.Matrice[x, 1].ToString(), out listOfTroops[indexTroops].Position.ordinate);
-								else
-									int.TryParse(Grid.Matrice[x, 0].ToString(), out listOfTroops[indexTroops].Position.ordinate);*/
+								GetTroopPosition(Grid, listOfTroops[indexTroops], x, y);
 
 								indexTroops++;
 							}
@@ -176,6 +167,37 @@ namespace StarWars.Managers
 
 			grid.Index = line[0].Length;
 		}
+
+		/// <summary>
+		/// Method pour récupérer la position initiale des personnages
+		/// </summary>
+		/// <param name="grid">Grille du jeu</param>
+		/// <param name="baseTroop">Personnage dont on veut récupérer la position</param>
+		/// <param name="firstIndex">Premier index de la matrice</param>
+		/// <param name="secondIndex">Second index de la matrice</param>
+		public static void GetTroopPosition(Grid grid, IBaseTroop baseTroop, int firstIndex, int secondIndex)
+		{
+			if (baseTroop.Position == null)
+				baseTroop.Position = new Tools.Position();
+
+			string absciss;
+			int ordinate;
+
+			if (grid.Matrice[0, secondIndex + 1] != ' ')
+				absciss = grid.Matrice[0, secondIndex].ToString() + grid.Matrice[0, secondIndex + 1].ToString();
+			else
+				absciss = grid.Matrice[0, secondIndex].ToString();
+			
+			if (grid.Matrice[firstIndex, 1] != ' ')
+				int.TryParse(grid.Matrice[firstIndex, 0].ToString() + grid.Matrice[firstIndex, 1].ToString(), out ordinate);
+			else
+				int.TryParse(grid.Matrice[firstIndex, 0].ToString(), out ordinate);
+
+			baseTroop.Position.absciss = absciss;
+			baseTroop.Position.ordinate = ordinate;
+		}
+
+		//public static IBaseTroop 
 		#endregion
 	}
 }

@@ -18,50 +18,24 @@ namespace StarWars.Managers
         {
             SetGame();
             PlayGame();
+            EndGame();
         }
 
         private static void SetGame()
         {
             game = new Game();
-            ChooseCharacter();
-            int indexgrid = GridManager.ChooseIndex();
-            game.Troops = GenerateTroops(indexgrid);
+            game.PJ = ChooseCharacter();
 
-            List<IBaseTroop> TroopsToPlace = new List<IBaseTroop>(game.Troops);
-            TroopsToPlace.Add(game.PJ);
-            game.Grid = GridManager.DisplayGrid(TroopsToPlace, indexgrid);
+            game.Size = GridManager.ChooseIndex();
+            game.Troops = GenerateTroops(game.Size);
         }
-
-        /// <summary>
-        /// Choix du personnage jouable
-        /// </summary>
-        /// <returns>Classe de PJ sélectionnée par l'utilisateur</returns>
-        public static void ChooseCharacter()
-        {
-            Tools.Tools.RightOffsetWriteLine("Personnages jouables disponibles ...");
-            EntitiesManager.Playablesstats.ForEach((e) => Console.WriteLine("-"+e.Item1 + " : " + e.Item2 ));
-
-            Tools.Tools.RightOffsetWriteLine("Veuillez saisir le nom du personnage choisi ...");
-
-            var input = Console.ReadLine();
-            if (EntitiesManager.Playablesstats.Select((e) => e.Item1).ToList().Contains(input))
-            {
-                game.PJ = (IBaseTroop)Activator.CreateInstance(EntitiesManager.Playables.Where((e) => e.Name.Equals(input)).FirstOrDefault());
-                Console.WriteLine("Caractéristiques personnage : PV:" + game.PJ.MaxHP + ", Vitesse:"+game.PJ.Speed+", attaques spéciales:" );
-                game.PJ.GetType().GetTypeInfo().DeclaredMethods.ToList().ForEach((e) => Console.WriteLine("-"+e.Name));
-            }
-            else
-            {
-                Console.WriteLine("La valeur saisie ne correspond pas...");
-                ChooseCharacter();
-            }
-        }
-        
+         
         public static void PlayGame()
         {
             while (game.Troops.Count > 0 )
             {
                 Tools.Tools.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
+                game.Grid = GridManager.DisplayGrid(game.Getalltroops(), game.Size);
 
                 Console.WriteLine("################ TOUR DU JOUEUR ##############");
                 /// Implémenter tour du joueur
@@ -75,12 +49,14 @@ namespace StarWars.Managers
             }
         }
 
+        private static void EndGame()
+        {
+            throw new NotImplementedException();
+        }
+
         private static void EndTurn()
         {
-            game.Troops = game.Troops.Where((e) => e.Remaining_HP > 0).ToList();
-            List<IBaseTroop> alltroops = new List<IBaseTroop>(game.Troops);
-            alltroops.Add(game.PJ);
-            game.Grid = GridManager.DisplayGrid(alltroops, game.Grid.Index);
+            game.Troops = game.Troops.Where((e) => e.Remaining_HP > 0).ToList();         
             game.Current_turn_number++;
         }
 
@@ -133,15 +109,15 @@ namespace StarWars.Managers
             }
             
         }
-        
+
         private static List<IBaseTroop> GenerateTroops(int index)
         {
             Console.WriteLine("Generating troops ...");
             List<IBaseTroop> listtroops = new List<IBaseTroop>();
-            int sidenumbers = (int)Math.Round((decimal)((index / 2) ), 0);
-            int sergentnumber = (int)Math.Round((decimal)(sidenumbers / 5),0);
+            int sidenumbers = (int)Math.Round((decimal)((index / 2)), 0);
+            int sergentnumber = (int)Math.Round((decimal)(sidenumbers / 5), 0);
 
-            for (int i = 0; i < sidenumbers; i ++)
+            for (int i = 0; i < sidenumbers; i++)
             {
                 listtroops.Add(new DroideB1());
                 listtroops.Add(new CloneTrooper());
@@ -154,6 +130,35 @@ namespace StarWars.Managers
             }
 
             return listtroops;
+        }
+
+        /// <summary>
+        /// Choix du personnage jouable
+        /// </summary>
+        /// <returns>Classe de PJ sélectionnée par l'utilisateur</returns>
+        private static IBaseTroop ChooseCharacter()
+        {
+            object pj = new object();
+            Tools.Tools.RightOffsetWriteLine("Personnages jouables disponibles ...");
+            EntitiesManager.Playablesstats.ForEach((e) => Console.WriteLine("-" + e.Item1 + " : " + e.Item2));
+
+            Tools.Tools.RightOffsetWriteLine("Veuillez saisir le nom du personnage choisi ...");
+
+            var input = Console.ReadLine();
+            if (EntitiesManager.Playablesstats.Select((e) => e.Item1).ToList().Contains(input))
+            {
+                pj = (IBaseTroop)Activator.CreateInstance(EntitiesManager.Playables.Where((e) => e.Name.Equals(input)).FirstOrDefault());
+                Console.WriteLine("Caractéristiques personnage : PV:" + (pj as IBaseTroop).MaxHP + ", Vitesse:" + (pj as IBaseTroop).Speed + ", attaques spéciales:");
+                pj.GetType().GetTypeInfo().DeclaredMethods.ToList().ForEach((e) => Console.WriteLine("-" + e.Name));
+            }
+            else
+            {
+                Console.WriteLine("La valeur saisie ne correspond pas...");
+                ChooseCharacter();
+            }
+
+            return (IBaseTroop)pj;
+
         }
 
 

@@ -16,6 +16,8 @@ namespace StarWars.Objects
         public int Current_turn_number { get; set; }
         public IBaseTroop PJ { get; set; }
 
+        public int Size { get; set; }
+
         #endregion       
         #region Ctor
         public Game()
@@ -27,6 +29,13 @@ namespace StarWars.Objects
         }
         #endregion        
         #region Methods
+        public List<IBaseTroop> Getalltroops ()
+        {
+            List<IBaseTroop> alltroops = new List<IBaseTroop>(this.Troops);
+            alltroops.Add(PJ);
+            return alltroops;
+        }
+
         #endregion
     }
 }

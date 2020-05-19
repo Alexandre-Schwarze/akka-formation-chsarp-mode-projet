@@ -26,6 +26,8 @@ namespace StarWars.Managers
 		{
 			List<string> lines = new List<string>();
 
+			Console.WriteLine("\r\n\r\n");
+
 			Grid grid = GenerateGrid(listOfTroops, index, lines);
 
 			for (int x = 0 ; x < lines.Count ; x++)
@@ -240,6 +242,63 @@ namespace StarWars.Managers
 			return null;
 		}
 
+		/// <summary>
+		/// Method pour détecter un personnage à proimité avant de tenter de se déplacer
+		/// </summary>
+		/// <param name="listOfTroops">Liste des troupes</param>
+		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
+		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
+		public static Tools.Position CheckAroundForTroopMove(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, int indexMatrice)
+		{
+			List<Tools.Position> listOfValidPos = new List<Tools.Position>();
+
+			int absciss = Tools.Tools.ConvertFromStringBase26(baseTroop.Position.Absciss);
+			int ordinate = baseTroop.Position.Ordinate;
+
+			for (int x = ordinate - 1 ; x <= ordinate + 1 ; x++)
+			{
+				if (x > 0 && x <= indexMatrice)
+				{
+					for (int y = absciss - 1 ; y <= absciss + 1 ; y++)
+					{
+						if (y >= 0 && y < indexMatrice)
+						{
+							bool test = false;
+
+							for (int i = 0 ; i < listOfTroops.Count ; i++)
+							{
+								if (listOfTroops[i].Position.Absciss == Tools.Tools.ConvertToStringBase26(y).Replace(" ", "") && listOfTroops[i].Position.Ordinate == x)
+									test = true;
+							}
+
+							if (!test)
+							{
+								Tools.Position newPos = new Tools.Position();
+								newPos.Absciss = Tools.Tools.ConvertToStringBase26(y).Replace(" ", "");
+								newPos.Ordinate = x;
+
+								listOfValidPos.Add(newPos);
+							}
+						}
+					}
+				}
+			}
+
+			if (listOfValidPos.Count == 0)
+			{
+				Console.WriteLine(baseTroop.GetType().Name + " est encerclé, il ne peut pas bouger !");
+				return null;
+			}
+
+			Random random = new Random();
+			return listOfValidPos[random.Next(0, listOfValidPos.Count - 1)];
+		}
+
+		/// <summary>
+		/// Method pour placer les troupes à chaque refresh de la grille
+		/// </summary>
+		/// <param name="listOfTroops"></param>
+		/// <param name="indexMatrice"></param>
 		private static void PlaceTroops(List<IBaseTroop> listOfTroops, int indexMatrice)
 		{
 			for (int i = 0 ; i < listOfTroops.Count ; i++)
@@ -251,9 +310,9 @@ namespace StarWars.Managers
 				int ordinate;
 
 				if (listOfTroops[i].Forceside == Tools.ForceSide.Dark)
-					ordinate = Tools.Tools.GenerateRandom(0, (indexMatrice / 2) + 1);
+					ordinate = Tools.Tools.GenerateRandom(1, (indexMatrice / 2) + 1);
 				else
-					ordinate = Tools.Tools.GenerateRandom((indexMatrice / 2) + 2, indexMatrice);
+					ordinate = Tools.Tools.GenerateRandom((indexMatrice / 2) + 2, indexMatrice - 1);
 
 				listOfTroops[i].Position.Absciss = Tools.Tools.ConvertToStringBase26(absciss).Replace(" ", "");
 				listOfTroops[i].Position.Ordinate = ordinate;

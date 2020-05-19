@@ -148,15 +148,13 @@ namespace StarWars.Tools
 			return value;
 		}
 
-		public static List<int> GenerateRandoms(int count, int minVal, int maxVal)
+		public static int GenerateRandom(int minVal, int maxVal)
 		{
-			List<int> result = new List<int>();
 			Random random = new Random();
 
-			for (int i = 0 ; i < count ; i++)
-			{
-				result.Add(random.Next(minVal, maxVal));
-			}
+			int result;
+
+			result = random.Next(minVal, maxVal);
 
 			return result;
 		}

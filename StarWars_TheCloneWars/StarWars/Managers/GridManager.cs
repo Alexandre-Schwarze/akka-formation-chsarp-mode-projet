@@ -242,30 +242,22 @@ namespace StarWars.Managers
 
 		private static void PlaceTroops(List<IBaseTroop> listOfTroops, int indexMatrice)
 		{
-			List<int> listOfAbsciss = Tools.Tools.GenerateRandoms(listOfTroops.Count, 0, indexMatrice);
-			List<int> listOfOrdinate = Tools.Tools.GenerateRandoms(listOfTroops.Count, 0, indexMatrice / 2);
-
 			for (int i = 0 ; i < listOfTroops.Count ; i++)
 			{
 				if (!isTroopsInitialized)
 					listOfTroops[i].Position = new Tools.Position();
 
-				listOfTroops[i].Position.Absciss = Tools.Tools.ConvertToStringBase26(listOfAbsciss[i]).Replace(" ", "");
-				listOfTroops[i].Position.Ordinate = listOfOrdinate[i];
+				int absciss =  Tools.Tools.GenerateRandom(0, indexMatrice);
+				int ordinate;
+
+				if (listOfTroops[i].Forceside == Tools.ForceSide.Dark)
+					ordinate = Tools.Tools.GenerateRandom(0, (indexMatrice / 2) + 1);
+				else
+					ordinate = Tools.Tools.GenerateRandom((indexMatrice / 2) + 2, indexMatrice);
+
+				listOfTroops[i].Position.Absciss = Tools.Tools.ConvertToStringBase26(absciss).Replace(" ", "");
+				listOfTroops[i].Position.Ordinate = ordinate;
 			}
-
-			/*Random testTroop = new Random();
-
-			if (testTroop.Next(0, 20) > 18 && indexTroops < listOfTroops.Count)
-			{
-				grid.Matrice[firstIndex, secondIndex] = listOfTroops[indexTroops].Icon;
-
-				SetTroopPosition(grid, listOfTroops[indexTroops], firstIndex, secondIndex);
-
-				indexTroops++;
-			}
-			else
-				grid.Matrice[firstIndex, secondIndex] = ' ';*/
 		}
 		#endregion
 	}

@@ -27,8 +27,9 @@ namespace StarWars.Entities.Implements.Childs
         {
             int range = 20;
             Console.WriteLine("CloneTrooper utilise son blaster sur " + target.GetType().Name + " en " + target.Position.Txtpos);
-            target.Remaining_HP -= 5;
             Console.WriteLine("Et lui inflige 5 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.Remaining_HP + ")");
+            target.Remaining_HP -= 5;
+            
         }
         #endregion
     }

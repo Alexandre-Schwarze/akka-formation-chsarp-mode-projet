@@ -8,7 +8,7 @@ namespace StarWars.Entities.Interfaces
     public interface IBaseTroop
     {
         #region Attributes
-        int HP { get; set; }
+        int MaxHP { get; set; }
         int Remaining_HP { get; set; }
         int Speed { get; set; }
         ForceSide Forceside { get; set; }

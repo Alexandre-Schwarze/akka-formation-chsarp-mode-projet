@@ -150,7 +150,7 @@ namespace StarWars.Managers
 
 								for (int i = 0 ; i < listOfTroops.Count ; i++)
 								{
-									if (listOfTroops[i].Position.absciss == valAbsciss && listOfTroops[i].Position.ordinate == resOrdinate)
+									if (listOfTroops[i].Position.Absciss == valAbsciss && listOfTroops[i].Position.Ordinate == resOrdinate)
 									{
 										Grid.Matrice[x, y] = listOfTroops[i].Icon;
 										isTroopFind = true;
@@ -219,8 +219,8 @@ namespace StarWars.Managers
 			else
 				int.TryParse(grid.Matrice[firstIndex, 0].ToString(), out ordinate);
 
-			baseTroop.Position.absciss = absciss;
-			baseTroop.Position.ordinate = ordinate;
+			baseTroop.Position.Absciss = absciss;
+			baseTroop.Position.Ordinate = ordinate;
 		}
 
 		/// <summary>
@@ -232,8 +232,8 @@ namespace StarWars.Managers
 		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
 		public static IBaseTroop CheckAroundForTroop(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop)
 		{
-			int absciss = Tools.Tools.ConvertFromStringBase26(baseTroop.Position.absciss);
-			int ordinate = baseTroop.Position.ordinate;
+			int absciss = Tools.Tools.ConvertFromStringBase26(baseTroop.Position.Absciss);
+			int ordinate = baseTroop.Position.Ordinate;
 
 			for (int x = ordinate - 1 ; x <= ordinate + 1 ; x++)
 			{
@@ -245,7 +245,7 @@ namespace StarWars.Managers
 						{
 							for (int i = 0 ; i < listOfTroops.Count ; i++)
 							{
-								if (listOfTroops[i].Position.absciss == Tools.Tools.ConvertToStringBase26(y).Replace(" ", "") && listOfTroops[i].Position.ordinate == x && listOfTroops[i].Forceside != baseTroop.Forceside)
+								if (listOfTroops[i].Position.Absciss == Tools.Tools.ConvertToStringBase26(y).Replace(" ", "") && listOfTroops[i].Position.Ordinate == x && listOfTroops[i].Forceside != baseTroop.Forceside)
 									return listOfTroops[i];
 							}
 						}

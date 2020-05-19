@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 
 namespace StarWars.Tools
 {
@@ -22,8 +23,9 @@ namespace StarWars.Tools
     /// </summary>
     public class Position
     {
-        public string absciss;
-        public int ordinate;
+        public string Absciss;
+        public int Ordinate;
+        public string Txtpos => Absciss + Ordinate;
     }
 
     /// <summary>
@@ -54,6 +56,12 @@ namespace StarWars.Tools
             Console.WriteLine(offset + txt);
         }
 
+        public static void DelayedWriteLine(string txt)
+        {
+            Thread.Sleep(1000);
+            Console.WriteLine(txt);
+        }
+
         public static void SetConsolePosition()
         {
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
@@ -73,6 +81,10 @@ namespace StarWars.Tools
             System.IO.Directory.CreateDirectory(GameFolder);
             System.IO.Directory.CreateDirectory(SaveFolder);
             System.IO.Directory.CreateDirectory(DataFolder);
+
+            if(File.Exists(PlayablesFile))
+                File.Delete(PlayablesFile);
+
 
             using (StreamWriter sw = new StreamWriter(PlayablesFile, true))
                 sw.Write(Properties.Resources.PJs);
@@ -95,8 +107,8 @@ namespace StarWars.Tools
         /// <returns>Cible à portée de l'attaque ou non</returns>
         public static bool IsRangeOK(int range, Position target, Position striker)
         {
-            if ((Math.Abs(GetAbscissIndex(target.absciss) - GetAbscissIndex(striker.absciss)) <= range) || (Math.Abs(GetAbscissIndex(striker.absciss) - GetAbscissIndex(target.absciss)) <= range) &&
-                (Math.Abs(target.ordinate - striker.ordinate) <= range) || (Math.Abs(striker.ordinate - target.ordinate) <= range))
+            if ((Math.Abs(GetAbscissIndex(target.Absciss) - GetAbscissIndex(striker.Absciss)) <= range) || (Math.Abs(GetAbscissIndex(striker.Absciss) - GetAbscissIndex(target.Absciss)) <= range) &&
+                (Math.Abs(target.Ordinate - striker.Ordinate) <= range) || (Math.Abs(striker.Ordinate - target.Ordinate) <= range))
                 return true;
             else return false;
         }

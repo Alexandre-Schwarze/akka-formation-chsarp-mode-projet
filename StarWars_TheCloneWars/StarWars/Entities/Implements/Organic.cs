@@ -8,8 +8,20 @@ namespace StarWars.Entities.Implements
 {
     public class Organic : IBaseTroop 
     {
-        public int HP { get ; set; }
-        public int Remaining_HP { get; set; }
+        public int MaxHP { get ; set; }
+
+        private int _remaining_HP;
+        public int Remaining_HP { 
+            get 
+            {
+                return _remaining_HP;
+            }
+            set { _remaining_HP = value;
+
+                if (_remaining_HP <= 0)
+                    Console.WriteLine(this.GetType().Name + " est décédé ...");
+            }
+        }
         public int Speed { get; set; }
         public int ForceSide { get; set; }
         public int ActionPoints { get; set; }

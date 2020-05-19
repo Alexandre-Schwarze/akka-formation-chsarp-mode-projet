@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarWars.Entities.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,12 +10,24 @@ namespace StarWars.Entities.Implements.Childs
         public SergentTrooper()
         {
             this.Icon = 'O';
-            this.HP = 10;
+            this.MaxHP = 10;
             this.Remaining_HP = 10;
             this.LVL = 1;
             this.Forceside = Tools.ForceSide.Light;
             this.ActionPoints = 1;
             this.Speed = 2;
+        }
+
+        /// <summary>
+        /// Attaque lance-roquettes
+        /// </summary>
+        /// <param name="target">Cible de l'attaque</param>
+        public void ShootRocketLauncher(IBaseTroop target)
+        {
+            int range = 20;
+            Console.WriteLine("SergentTrooper utilise son lance-roquette sur " + target.GetType().Name + " en" + target.Position.Txtpos);
+            target.Remaining_HP -= 10;
+            Console.WriteLine("Et lui inflige 10 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.Remaining_HP + ")");
         }
     }
 }

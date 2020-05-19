@@ -118,18 +118,18 @@ namespace StarWars.Tools
 		public static string ConvertToStringBase26(int index)
 		{
 			string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			string ordinate;
+			string value;
 
 			if (index < 26)
-				ordinate = letters[index].ToString() + ' ';
+				value = letters[index].ToString() + ' ';
 			else
 			{
 				int firstIndex = index / 26 - 1;
 				int secondIndex = index - 26 * (int)(index / 26);
-				ordinate = letters[firstIndex].ToString() + letters[secondIndex].ToString();
+				value = letters[firstIndex].ToString() + letters[secondIndex].ToString();
 			}
 
-			return ordinate;
+			return value;
 		}
 		#endregion
 	}

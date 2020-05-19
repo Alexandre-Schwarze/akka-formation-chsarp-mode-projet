@@ -197,7 +197,38 @@ namespace StarWars.Managers
 			baseTroop.Position.ordinate = ordinate;
 		}
 
-		//public static IBaseTroop 
+		/// <summary>
+		/// Method pour détecter un ennemi à proximité
+		/// </summary>
+		/// <param name="listOfTroops">Liste des troupes</param>
+		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
+		/// <param name="grid">Grille du jeu</param>
+		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
+		public static IBaseTroop CheckAroundForTroop(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, Grid grid)
+		{
+			int absciss = Tools.Tools.ConvertFromStringBase26(baseTroop.Position.absciss);
+			int ordinate = baseTroop.Position.ordinate;
+
+			for (int x = ordinate - 1 ; x <= ordinate + 1 ; x++)
+			{
+				if (x > 0)
+				{
+					for (int y = absciss - 1 ; y <= absciss + 1 ; y++)
+					{
+						if (y >= 0)
+						{
+							for (int i = 0 ; i < listOfTroops.Count ; i++)
+							{
+								if (listOfTroops[i].Position.absciss == Tools.Tools.ConvertToStringBase26(y).Replace(" ", "") && listOfTroops[i].Position.ordinate == x && listOfTroops[i].Forceside != baseTroop.Forceside)
+									return listOfTroops[i];
+							}
+						}
+					}
+				}
+			}
+
+			return null;
+		}
 		#endregion
 	}
 }

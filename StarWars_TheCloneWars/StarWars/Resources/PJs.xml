@@ -1,0 +1,27 @@
+<?xml version = "1.0" encoding="ISO8859-1" standalone="yes" ?>
+<PJs>
+	<PJ>
+		<Name>Anakin</Name>
+		<Description>Jedi de l'école Djem So, pratique un style offensif imprévisible </Description>
+	</PJ>
+	<PJ>
+		<Name>Dooku</Name>
+		<Description>Seigneur Sith pratiquant du Makashii, un style léger et rapide</Description>
+	</PJ>
+	<PJ>
+		<Name>Dark_Sidious</Name>
+		<Description>Seigneur Sith, maitre des éclairs </Description>
+	</PJ>
+	<PJ>
+		<Name>ObiWan</Name>
+		<Description>Maitre Jedi de l'école Soresu, un style de combat en spirale défensif </Description>
+	</PJ>
+	<PJ>
+		<Name>Jango_Fett</Name>
+		<Description>Un chasseur de prime disposant d'une panoplie de gadgets utiles </Description>
+	</PJ>
+	<PJ>
+		<Name>Yoda</Name>
+		<Description>Grand Maitre Jedi de l'école Ataru, style polyvalent acrobatique </Description>
+	</PJ>
+</PJs>

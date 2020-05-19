@@ -11,6 +11,7 @@ namespace StarWars.Entities.Implements.Childs
         {
             this.Icon = '8';
             this.HP = 5;
+            this.Remaining_HP = 5;
             this.LVL = 1;
             this.Forceside = Tools.ForceSide.Light;
             this.ActionPoints = 1;

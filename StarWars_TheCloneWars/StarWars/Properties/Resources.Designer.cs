@@ -70,6 +70,31 @@ namespace StarWars.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à &lt;?xml version = &quot;1.0&quot; encoding=&quot;ISO8859-1&quot; standalone=&quot;yes&quot; ?&gt;
+        ///&lt;PJs&gt;
+        ///	&lt;PJ&gt;
+        ///		&lt;Name&gt;Anakin&lt;/Name&gt;
+        ///		&lt;Description&gt;Jedi de l&apos;école Djem So, pratique un style offensif imprévisible &lt;/Description&gt;
+        ///	&lt;/PJ&gt;
+        ///	&lt;PJ&gt;
+        ///		&lt;Name&gt;Dooku&lt;/Name&gt;
+        ///		&lt;Description&gt;Seigneur Sith pratiquant du Makashii, un style léger et rapide&lt;/Description&gt;
+        ///	&lt;/PJ&gt;
+        ///	&lt;PJ&gt;
+        ///		&lt;Name&gt;Dark_Sidious&lt;/Name&gt;
+        ///		&lt;Description&gt;Seigneur Sith, maitre des éclairs &lt;/Description&gt;
+        ///	&lt;/PJ&gt;
+        ///	&lt;PJ&gt;
+        ///		&lt;Name&gt;ObiWan&lt;/Name&gt;
+        ///		&lt;Description&gt;Maitre Jedi de l&apos;école  [le reste de la chaîne a été tronqué]&quot;;.
+        /// </summary>
+        internal static string PJs {
+            get {
+                return ResourceManager.GetString("PJs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à C:\temp\ClonesWars\Saves\.
         /// </summary>
         internal static string SavePath {

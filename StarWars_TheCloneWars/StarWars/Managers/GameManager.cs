@@ -20,9 +20,13 @@ namespace StarWars.Managers
             ChooseCharacter();
             int indexgrid = GridManager.ChooseIndex();
             game.Troops = GenerateTroops(indexgrid);
-            game.Troops.Add(game.PJ);
+
+            List<IBaseTroop> TroopsToPlace = new List<IBaseTroop>(game.Troops);
+            TroopsToPlace.Add(game.PJ);
+
+            game.Grid = GridManager.DisplayGrid(TroopsToPlace, indexgrid);
+
             Console.WriteLine("Starting game ...");
-            game.Grid = GridManager.DisplayGrid(game.Troops, indexgrid);
             PlayGame(game);
         }
 
@@ -53,10 +57,9 @@ namespace StarWars.Managers
         
         public static void PlayGame(Game game)
         {
-
             while (game.Current_turn_number < game.Max_turns )
             {
-                Tools.Tools.RightOffsetWriteLine("################ TOUR N°"+game.Current_turn_number+" ##############");
+                Tools.Tools.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
 
                 Tools.Tools.RightOffsetWriteLine("################ TOUR DU JOUEUR ##############");
                 /// Implémenter tour du joueur
@@ -64,6 +67,7 @@ namespace StarWars.Managers
 
                 Tools.Tools.RightOffsetWriteLine("################ TOURS PNJ ##############");
                 DoPNJTurn(game.Troops);
+
                 game.Current_turn_number++;
             }
         }
@@ -75,8 +79,8 @@ namespace StarWars.Managers
                 switch (troop.Forceside)
                 {
                     case Tools.ForceSide.Dark:
-                        //Check déplacement : Si 7 cases adjacentes libres ? > déplacer 
-                        //Check heal : si PV != PV max > heal/repair
+                        //Check attaques : si autre PNJ autour > attaquer
+                        //Check heal : si PV < PV max > heal/repair
                         if (troop.Remaining_HP < troop.HP)
                         {
                             if (troop.GetType().IsSubclassOf(typeof(Synthetic)))
@@ -85,7 +89,9 @@ namespace StarWars.Managers
                                 (troop as Organic).Heal();
                             break;
                         }
-                        //Check attaques : si 
+                        //Check déplacement : Si 7 cases adjacentes libres ? > déplacer 
+
+
                         break;
                     case Tools.ForceSide.Light:
                         //Check déplacement : Si 7 cases adjacentes libres ? > déplacer 

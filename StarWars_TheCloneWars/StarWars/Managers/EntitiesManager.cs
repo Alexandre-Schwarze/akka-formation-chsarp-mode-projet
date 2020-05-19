@@ -39,7 +39,7 @@ namespace StarWars.Managers
         }
 
         public static void InitCharactersTypes()
-        {
+        {            
             Playablesstats = new List<Tuple<string, string>>();
             XDocument xml = XDocument.Parse(
                  File.ReadAllText(Path.Combine(Tools.Tools.DataFolder, "PJs.xml"), System.Text.Encoding.UTF8));

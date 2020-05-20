@@ -6,6 +6,7 @@ using StarWars.Objects;
 using System.Xml;
 using System.Xml.Linq;
 using StarWars.Entities.Interfaces;
+using System.Linq;
 
 namespace StarWars.Managers
 {
@@ -39,12 +40,21 @@ namespace StarWars.Managers
 					if (x == 0 || y == 0 || y == 1)
 						Console.ForegroundColor = ConsoleColor.Blue;
 					else if (lines[x][y] == 'A' || lines[x][y] == 'S' || lines[x][y] == 'D' || lines[x][y] == 'J' || lines[x][y] == 'W' || lines[x][y] == 'Y')
-						Console.ForegroundColor = ConsoleColor.Green;
+					{
+						IBaseTroop PJ = listOfTroops.Where(s => s.Icon == lines[x][y]).First();
+						Console.ForegroundColor = PJ.color;
+					}
 					else if (lines[x][y] == '8' || lines[x][y] == 'O')
-						Console.ForegroundColor = ConsoleColor.Cyan;
+					{
+						IBaseTroop trooper = listOfTroops.Where(s => s.Icon == lines[x][y]).First();
+						Console.ForegroundColor = trooper.color;
+					}
 					else if (lines[x][y] == '#' || lines[x][y] == '§')
-						Console.ForegroundColor = ConsoleColor.Yellow;
-					else 
+					{
+						IBaseTroop droid = listOfTroops.Where(s => s.Icon == lines[x][y]).First();
+						Console.ForegroundColor = droid.color;
+					}
+					else
 						Console.ForegroundColor = ConsoleColor.White;
 
 					Console.Write(lines[x][y]);
@@ -200,32 +210,28 @@ namespace StarWars.Managers
 		}
 
 		/// <summary>
-		/// Method pour récupérer la position initiale des personnages
+		/// Method pour placer les troupes à chaque refresh de la grille
 		/// </summary>
-		/// <param name="grid">Grille du jeu</param>
-		/// <param name="baseTroop">Personnage dont on veut récupérer la position</param>
-		/// <param name="firstIndex">Premier index de la matrice</param>
-		/// <param name="secondIndex">Second index de la matrice</param>
-		public static void SetTroopPosition(Grid grid, IBaseTroop baseTroop, int firstIndex, int secondIndex)
+		/// <param name="listOfTroops"></param>
+		/// <param name="indexMatrice"></param>
+		private static void PlaceTroops(List<IBaseTroop> listOfTroops, int indexMatrice)
 		{
-			if (baseTroop.Position == null)
-				baseTroop.Position = new Tools.Position();
+			for (int i = 0 ; i < listOfTroops.Count ; i++)
+			{
+				if (!isTroopsInitialized)
+					listOfTroops[i].Position = new Tools.Position();
 
-			string absciss;
-			int ordinate;
+				int absciss = Tools.Tools.GenerateRandom(0, indexMatrice);
+				int ordinate;
 
-			if (grid.Matrice[0, secondIndex + 1] != ' ')
-				absciss = grid.Matrice[0, secondIndex].ToString() + grid.Matrice[0, secondIndex + 1].ToString();
-			else
-				absciss = grid.Matrice[0, secondIndex].ToString();
-			
-			if (grid.Matrice[firstIndex, 1] != ' ')
-				int.TryParse(grid.Matrice[firstIndex, 0].ToString() + grid.Matrice[firstIndex, 1].ToString(), out ordinate);
-			else
-				int.TryParse(grid.Matrice[firstIndex, 0].ToString(), out ordinate);
+				if (listOfTroops[i].Forceside == Tools.ForceSide.Dark)
+					ordinate = Tools.Tools.GenerateRandom(1, (indexMatrice / 2) + 1);
+				else
+					ordinate = Tools.Tools.GenerateRandom((indexMatrice / 2) + 2, indexMatrice - 1);
 
-			baseTroop.Position.Absciss = absciss;
-			baseTroop.Position.Ordinate = ordinate;
+				listOfTroops[i].Position.Absciss = Tools.Tools.ConvertToStringBase26(absciss).Replace(" ", "");
+				listOfTroops[i].Position.Ordinate = ordinate;
+			}
 		}
 
 		/// <summary>
@@ -274,7 +280,40 @@ namespace StarWars.Managers
 			int absciss = Tools.Tools.ConvertFromStringBase26(baseTroop.Position.Absciss);
 			int ordinate = baseTroop.Position.Ordinate;
 
-			for (int x = ordinate - 1 ; x <= ordinate + 1 ; x++)
+			if (absciss - 1 >= 0)
+			{
+				Tools.Position newPos = new Tools.Position();
+				newPos.Absciss = Tools.Tools.ConvertToStringBase26(absciss - 1).Replace(" ", "");
+				newPos.Ordinate = ordinate;
+
+				listOfValidPos.Add(newPos);
+			}
+			if (absciss + 1 < indexMatrice)
+			{
+				Tools.Position newPos = new Tools.Position();
+				newPos.Absciss = Tools.Tools.ConvertToStringBase26(absciss + 1).Replace(" ", "");
+				newPos.Ordinate = ordinate;
+
+				listOfValidPos.Add(newPos);
+			}
+			if (ordinate - 1 >= 1)
+			{
+				Tools.Position newPos = new Tools.Position();
+				newPos.Absciss = baseTroop.Position.Absciss;
+				newPos.Ordinate = ordinate - 1;
+
+				listOfValidPos.Add(newPos);
+			}
+			if (ordinate + 1 <= indexMatrice)
+			{
+				Tools.Position newPos = new Tools.Position();
+				newPos.Absciss = baseTroop.Position.Absciss;
+				newPos.Ordinate = ordinate + 1;
+
+				listOfValidPos.Add(newPos);
+			}
+
+			/*for (int x = ordinate - 1 ; x <= ordinate + 1 ; x++)
 			{
 				if (x > 0 && x <= indexMatrice)
 				{
@@ -301,7 +340,7 @@ namespace StarWars.Managers
 						}
 					}
 				}
-			}
+			}*/
 
 			if (listOfValidPos.Count == 0)
 			{
@@ -310,34 +349,14 @@ namespace StarWars.Managers
 			}
 
 			Random random = new Random();
-			return listOfValidPos[random.Next(0, listOfValidPos.Count - 1)];
+			return listOfValidPos[random.Next(0, listOfValidPos.Count)];
 		}
 
-		/// <summary>
-		/// Method pour placer les troupes à chaque refresh de la grille
-		/// </summary>
-		/// <param name="listOfTroops"></param>
-		/// <param name="indexMatrice"></param>
-		private static void PlaceTroops(List<IBaseTroop> listOfTroops, int indexMatrice)
+		public static bool CheckPlayer(List<IBaseTroop> listOfTroops, Tools.Position position, ConsoleKeyInfo key)
 		{
-			List<Tools.Position> listOfPos = new List<Tools.Position>();
+			// check pour chaque position, retourner une position valide ou null
 
-			for (int i = 0 ; i < listOfTroops.Count ; i++)
-			{
-				if (!isTroopsInitialized)
-					listOfTroops[i].Position = new Tools.Position();
-
-				int absciss = Tools.Tools.GenerateRandom(0, indexMatrice);
-				int ordinate;
-
-				if (listOfTroops[i].Forceside == Tools.ForceSide.Dark)
-					ordinate = Tools.Tools.GenerateRandom(1, (indexMatrice / 2) + 1);
-				else
-					ordinate = Tools.Tools.GenerateRandom((indexMatrice / 2) + 2, indexMatrice - 1);
-
-				listOfTroops[i].Position.Absciss = Tools.Tools.ConvertToStringBase26(absciss).Replace(" ", "");
-				listOfTroops[i].Position.Ordinate = ordinate;
-			}
+			return false;
 		}
 		#endregion
 	}

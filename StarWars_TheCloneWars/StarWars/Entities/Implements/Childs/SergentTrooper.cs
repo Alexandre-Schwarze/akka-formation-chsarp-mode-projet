@@ -16,7 +16,8 @@ namespace StarWars.Entities.Implements.Childs
             this.Forceside = Tools.ForceSide.Light;
             this.ActionPoints = 1;
             this.Speed = 2;
-        }
+			this.color = ConsoleColor.Cyan;
+		}
 
         /// <summary>
         /// Attaque lance-roquettes

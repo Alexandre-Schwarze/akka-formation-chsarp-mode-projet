@@ -1,6 +1,7 @@
 ﻿using StarWars.Tools;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace StarWars.Entities.Interfaces 
@@ -18,6 +19,8 @@ namespace StarWars.Entities.Interfaces
         int XP_value { get; set; }
         int XP_total { get; set; }
         int LVL { get; set; }
+
+        ConsoleColor color { get; set; }
 
         char Icon { get; set; }
 

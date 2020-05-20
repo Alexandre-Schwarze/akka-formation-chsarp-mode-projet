@@ -5,9 +5,11 @@ using StarWars.Objects;
 using StarWars.Tools;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace StarWars.Managers
 {
@@ -27,8 +29,8 @@ namespace StarWars.Managers
         {
             game = new Game();
             game.PJ = ChooseCharacter();
-
-            game.Size = GridManager.ChooseIndex();
+            game.Size = 26;
+            //game.Size = GridManager.ChooseIndex();
             game.Troops = GenerateTroops(game.Size);
         }
          
@@ -36,17 +38,15 @@ namespace StarWars.Managers
         {
             while (game.Troops.Count > 0 )
             {
-                Tools.Tools.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
-                game.Grid = GridManager.DisplayGrid(game.Getalltroops(), game.Size);
+                //Tools.Tools.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
+                 game.Grid = GridManager.DisplayGrid(game.Getalltroops(), game.Size);
 
-                Console.WriteLine("################ TOUR DU JOUEUR ##############");
-                /// Implémenter tour du joueur
-                Console.ReadLine();
+                //Console.WriteLine("################ TOUR DU JOUEUR ##############");
+                DoPJTurn();
 
                 //Console.WriteLine("################ TOURS PNJ ##############");
                 DoPNJTurn(game.Troops);
 
-                Tools.Tools.RightOffsetWriteLine("\r\n################ FIN DU TOUR N°" + game.Current_turn_number + " ##############");
                 EndTurn();
             }
         }
@@ -64,7 +64,7 @@ namespace StarWars.Managers
 
         private static void DoPJTurn()
         {
-
+            Console.ReadLine();
         }
 
         private static void DoPNJTurn(List<IBaseTroop> troops)
@@ -73,6 +73,8 @@ namespace StarWars.Managers
             {
                 if (troop.Remaining_HP > 0)
                 {
+               
+
                     string logtroop = troop.GetType().Name + " en " + troop.Position.Txtpos;
 
                     //Check attaques : si autre PNJ autour > attaquer
@@ -81,6 +83,10 @@ namespace StarWars.Managers
                     IBaseTroop targetabletroop = GridManager.CheckAroundForTroop(troops, troop);
                     if (targetabletroop != null)
                     {
+                        if (game.PJ == targetabletroop)
+                            game.PJ.color = ConsoleColor.Red;
+
+
                         MethodInfo attackmethod = troop.GetType().GetTypeInfo().DeclaredMethods.FirstOrDefault();
                         object[] parameters = new object[1];
                         parameters[0] = targetabletroop;
@@ -114,7 +120,6 @@ namespace StarWars.Managers
                     else
                         logtroop += " il est encerclé ! ";
 
-                    Tools.Tools.DelayedWriteLine(logtroop);
                     continue;
                 }
                 else
@@ -173,6 +178,7 @@ namespace StarWars.Managers
                 if(selectedchar.GetType().GetTypeInfo().DeclaredMethods.Count() > 0)
                     selectedchar.GetType().GetTypeInfo().DeclaredMethods.ToList().ForEach((e) => Console.WriteLine("-" + e.Name));
 
+                selectedchar.color = ConsoleColor.Green;
                 return selectedchar;
             }
             else

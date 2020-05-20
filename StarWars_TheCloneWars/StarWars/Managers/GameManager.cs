@@ -5,11 +5,8 @@ using StarWars.Objects;
 using StarWars.Tools;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
 
 namespace StarWars.Managers
 {
@@ -79,12 +76,43 @@ namespace StarWars.Managers
 
         private static void DoPJTurn()
         {
-            PJMove(Console.ReadKey(true)); 
+            Console.WriteLine("A = Attaquer | \u2190 \u2191 \u2192 \u2193  = Déplacer | (spacebar) Attendre");
+            ConsoleKeyInfo enteredkey = Console.ReadKey(true);
+
+            ConsoleKey[] acceptables = new ConsoleKey[] {ConsoleKey.A ,ConsoleKey.LeftArrow, ConsoleKey.UpArrow , ConsoleKey.DownArrow, ConsoleKey.RightArrow, ConsoleKey.Spacebar }; 
+
+            while (!acceptables.Contains(enteredkey.Key))
+                enteredkey = Console.ReadKey(true);
+
+            if (enteredkey.Key == ConsoleKey.A)
+                PJAttack();
+            else if (enteredkey.Key == ConsoleKey.Spacebar)
+                return;
+            else
+                PJMove(enteredkey); 
+        }
+
+        private static void PJAttack()
+        {
+            Tools.Tools.ClearLastConsoleLine();
+            IBaseTroop targetabletroop = GridManager.CheckAroundForTroop(game.Getalltroops(), game.PJ, game.Size);
+            if (targetabletroop != null)
+            {
+                MethodInfo attackmethod = game.PJ.GetType().GetTypeInfo().DeclaredMethods.FirstOrDefault();
+                object[] parameters = new object[1];
+                parameters[0] = targetabletroop;
+                attackmethod.Invoke(game.PJ, parameters);
+            }
+            else 
+            {
+                Tools.Tools.ClearLastConsoleLine();
+                Console.WriteLine("Aucune cible à portée !");
+                DoPJTurn();
+            } 
         }
 
         private static void PJMove(ConsoleKeyInfo key)
-        {
-            
+        { 
             Position desiredpos = GridManager.CheckPlayer(game.Troops, game.PJ.Position, key, game.Grid.Index);
             if (desiredpos != null)
                 game.PJ.Position = desiredpos;
@@ -211,7 +239,6 @@ namespace StarWars.Managers
                 Console.WriteLine("La valeur saisie ne correspond pas...");
                 return null;
             }
-            return null;
         }
 
         #endregion

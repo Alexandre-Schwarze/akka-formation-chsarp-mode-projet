@@ -22,6 +22,13 @@ namespace StarWars.Entities.Implements.Childs
             this.Icon = 'S';
         }
 
+        public void LightningStrike(IBaseTroop target)
+        {
+            string log = String.Empty;
+            log += "Dark_Sidious lance des éclairs sur " + target.GetType().Name + " en " + target.Position.Txtpos + " et lui inflige 15 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.MaxHP + ")";
+            target.Remaining_HP -= 15;
+        }
+
 
     }
 }

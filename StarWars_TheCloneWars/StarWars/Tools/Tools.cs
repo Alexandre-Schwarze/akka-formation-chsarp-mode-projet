@@ -45,6 +45,8 @@ namespace StarWars.Tools
         public const int MINIMIZE = 6;
         public const int RESTORE = 9;
         private static int txtoffset = 12;
+		
+
 
         public static void RightOffsetWriteLine(string txt)
         {
@@ -77,6 +79,15 @@ namespace StarWars.Tools
 			Console.Write(new string(' ', Console.WindowWidth));
 			Console.SetCursorPosition(0, currentLineCursor);
 		}
+
+		//public static void ConsoleWriteLineCheckRedundancy(string txt)
+		//{
+		//	Console.SetCursorPosition(0, Console.CursorTop - 1);
+		//	if (Console.ReadLine() == txt)
+		//		return;
+		//	else
+		//		Console.WriteLine(txt);
+		//}
 		#endregion
 
 		#region Outillage Dossiers

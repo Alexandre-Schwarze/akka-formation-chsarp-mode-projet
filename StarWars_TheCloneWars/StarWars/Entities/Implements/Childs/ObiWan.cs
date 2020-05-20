@@ -21,5 +21,11 @@ namespace StarWars.Entities.Implements.Childs
             this.Forceside = Tools.ForceSide.Light;
             this.Icon = 'W';
         }
+        public void SoresuStrike(IBaseTroop target)
+        {
+            string log = String.Empty;
+            log += "ObiWan attaque " + target.GetType().Name + " en " + target.Position.Txtpos + " et lui inflige 12 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.MaxHP + ")";
+            target.Remaining_HP -= 12;
+        }
     }
 }

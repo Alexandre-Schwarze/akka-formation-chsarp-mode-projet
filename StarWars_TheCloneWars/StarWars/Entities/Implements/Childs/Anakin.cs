@@ -35,13 +35,9 @@ namespace StarWars.Entities.Implements.Childs
         /// <param name="target">Cible de l'attaque</param>
         public void AttaqueDjemSo(IBaseTroop target)
         {
-            int range = 2;
-            Console.WriteLine("Anakin tente de bondir sur " + target.GetType().Name + " en " + target.Position.Txtpos);
-            if (Tools.Tools.IsRangeOK(range, target.Position, this.Position))
-            {
-                Console.WriteLine("Et lui inflige 5 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.MaxHP + ")");
-                target.Remaining_HP -= 5;
-            }
+            string log = String.Empty;
+            log += "Anakin bondit sur " + target.GetType().Name + " en " + target.Position.Txtpos + " et lui inflige 12 points de dégats ! (PV " + target.GetType().Name + " restants : " + target.MaxHP + ")";
+            target.Remaining_HP -= 12;
         }
         #endregion
     }

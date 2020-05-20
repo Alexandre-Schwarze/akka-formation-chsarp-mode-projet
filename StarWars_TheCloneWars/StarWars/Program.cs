@@ -21,6 +21,7 @@ namespace StarWars
 
 		static void Init()
 		{
+			Console.OutputEncoding = System.Text.Encoding.UTF8;
 			Tools.Tools.SetConsolePosition();
 			Tools.Tools.InitFolders();
 			EntitiesManager.InitCharactersTypes();

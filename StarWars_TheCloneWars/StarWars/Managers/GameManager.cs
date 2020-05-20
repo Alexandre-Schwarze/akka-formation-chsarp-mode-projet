@@ -28,7 +28,10 @@ namespace StarWars.Managers
         private static void SetGame()
         {
             game = new Game();
-            game.PJ = ChooseCharacter();
+            
+            while (game.PJ == null)
+                game.PJ =  ChooseCharacter();
+
             game.Size = 26;
             //game.Size = GridManager.ChooseIndex();
             game.Troops = GenerateTroops(game.Size);
@@ -200,7 +203,7 @@ namespace StarWars.Managers
             else
             {
                 Console.WriteLine("La valeur saisie ne correspond pas...");
-                ChooseCharacter();
+                return null;
             }
             return null;
         }

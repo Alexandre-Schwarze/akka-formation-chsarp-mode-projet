@@ -69,31 +69,17 @@ namespace StarWars.Managers
 
         private static void PJMove(ConsoleKeyInfo key)
         {
-            //Position desiredpos = CanMove(listtroop, Position, key) not null
-            //if desiredpos != null
-            //    game.PJ.Position = desiredpos;
-            //else
-
-
-
-            switch (key.Key)
+            Position desiredpos = GridManager.CheckPlayer(game.Troops, game.PJ.Position, key, game.Grid.Index);
+            if (desiredpos != null)
+                game.PJ.Position = desiredpos;
+            else
             {
-                case ConsoleKey.LeftArrow:
-                    game.PJ.Position()
-                    break;
-                case ConsoleKey.RightArrow:
-                    Right();
-                    break;
-                case ConsoleKey.UpArrow:
-                    game.PJ.Position.Ordinate--;
-                    break;
-                case ConsoleKey.DownArrow:
-                    int desiredordinate = game.PJ.Position.Ordinate +1 ;
-
-                    break;
-                default:
-                    break;
+                Console.WriteLine("Mauvaise position ou combinaison, veuillez réitérer");
+                PJMove(Console.ReadKey(true));
             }
+
+
+
         }
 
         private static void DoPNJTurn(List<IBaseTroop> troops)
@@ -107,7 +93,7 @@ namespace StarWars.Managers
                     //Check attaques : si autre PNJ autour > attaquer
                     logtroop += " cherche une cible...";
 
-                    IBaseTroop targetabletroop = GridManager.CheckAroundForTroop(troops, troop);
+                    IBaseTroop targetabletroop = GridManager.CheckAroundForTroop(troops, troop, game.Size);
                     if (targetabletroop != null)
                     {
                         if (game.PJ == targetabletroop)

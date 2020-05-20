@@ -24,6 +24,8 @@ namespace StarWars.Managers
 		/// </summary>
 		public static Grid DisplayGrid(List<IBaseTroop> listOfTroops, int index)
 		{
+			Console.Clear();
+
 			List<string> lines = new List<string>();
 
 			Console.WriteLine("\r\n\r\n");
@@ -32,8 +34,25 @@ namespace StarWars.Managers
 
 			for (int x = 0 ; x < lines.Count ; x++)
 			{
-				Console.WriteLine(lines[x]);
+				for (int y = 0 ; y < lines[x].Length ; y++)
+				{
+					if (x == 0 || y == 0 || y == 1)
+						Console.ForegroundColor = ConsoleColor.Blue;
+					else if (lines[x][y] == 'A' || lines[x][y] == 'S' || lines[x][y] == 'D' || lines[x][y] == 'J' || lines[x][y] == 'W' || lines[x][y] == 'Y')
+						Console.ForegroundColor = ConsoleColor.Green;
+					else if (lines[x][y] == '8' || lines[x][y] == 'O')
+						Console.ForegroundColor = ConsoleColor.Cyan;
+					else if (lines[x][y] == '#' || lines[x][y] == '§')
+						Console.ForegroundColor = ConsoleColor.Yellow;
+					else 
+						Console.ForegroundColor = ConsoleColor.White;
+
+					Console.Write(lines[x][y]);
+				}
+				Console.Write("\r\n");
 			}
+
+			Console.WriteLine("\r\n\r\n");
 
 			return grid;
 		}

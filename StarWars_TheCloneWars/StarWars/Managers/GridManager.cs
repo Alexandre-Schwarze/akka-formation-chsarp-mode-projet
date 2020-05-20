@@ -222,26 +222,41 @@ namespace StarWars.Managers
 		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
 		/// <param name="grid">Grille du jeu</param>
 		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
-		public static IBaseTroop CheckAroundForTroop(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop)
+		public static IBaseTroop CheckAroundForTroop(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, int indexMatrice)
 		{
 			int absciss = Tools.Tools.ConvertFromStringBase26(baseTroop.Position.Absciss);
 			int ordinate = baseTroop.Position.Ordinate;
 
-			for (int x = ordinate - 1 ; x <= ordinate + 1 ; x++)
+			if (absciss - 1 >= 0)
 			{
-				if (x > 0)
+				for (int i = 0 ; i < listOfTroops.Count ; i++)
 				{
-					for (int y = absciss - 1 ; y <= absciss + 1 ; y++)
-					{
-						if (y >= 0)
-						{
-							for (int i = 0 ; i < listOfTroops.Count ; i++)
-							{
-								if (listOfTroops[i].Position.Absciss == Tools.Tools.ConvertToStringBase26(y).Replace(" ", "") && listOfTroops[i].Position.Ordinate == x && listOfTroops[i].Forceside != baseTroop.Forceside)
-									return listOfTroops[i];
-							}
-						}
-					}
+					if (listOfTroops[i].Position.Absciss == Tools.Tools.ConvertToStringBase26(absciss - 1).Replace(" ", "") && listOfTroops[i].Position.Ordinate == ordinate && listOfTroops[i].Forceside != baseTroop.Forceside)
+						return listOfTroops[i];
+				}
+			}
+			if (absciss + 1 < indexMatrice)
+			{
+				for (int i = 0 ; i < listOfTroops.Count ; i++)
+				{
+					if (listOfTroops[i].Position.Absciss == Tools.Tools.ConvertToStringBase26(absciss + 1).Replace(" ", "") && listOfTroops[i].Position.Ordinate == ordinate && listOfTroops[i].Forceside != baseTroop.Forceside)
+						return listOfTroops[i];
+				}
+			}
+			if (ordinate - 1 >= 1)
+			{
+				for (int i = 0 ; i < listOfTroops.Count ; i++)
+				{
+					if (listOfTroops[i].Position.Absciss == baseTroop.Position.Absciss && listOfTroops[i].Position.Ordinate == ordinate - 1 && listOfTroops[i].Forceside != baseTroop.Forceside)
+						return listOfTroops[i];
+				}
+			}
+			if (ordinate + 1 < indexMatrice + 1)
+			{
+				for (int i = 0 ; i < listOfTroops.Count ; i++)
+				{
+					if (listOfTroops[i].Position.Absciss == baseTroop.Position.Absciss && listOfTroops[i].Position.Ordinate == ordinate + 1 && listOfTroops[i].Forceside != baseTroop.Forceside)
+						return listOfTroops[i];
 				}
 			}
 

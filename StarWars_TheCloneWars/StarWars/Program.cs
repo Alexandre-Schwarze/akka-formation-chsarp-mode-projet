@@ -17,7 +17,6 @@ namespace StarWars
 		{
 			Init();
 			MainManager.Welcome();
-			MainManager.MainMenu(); 
 		}
 
 		static void Init()

@@ -18,8 +18,8 @@ namespace StarWars.Entities.Implements
             }
             set { _remaining_HP = value;
 
-                if (_remaining_HP <= 0)
-                    Console.WriteLine(this.GetType().Name + " en " + this.Position.Txtpos + " est décédé ...");
+                //if (_remaining_HP <= 0)
+                //    Console.WriteLine(this.GetType().Name + " en " + this.Position.Txtpos + " est décédé ...");
             }
         }
         public int Speed { get; set; }
@@ -37,7 +37,7 @@ namespace StarWars.Entities.Implements
         public void Heal() 
         {
             this.Remaining_HP += 2;
-            Console.WriteLine(this.GetType().Name + " se soigne de 2 HP ! Total : " + this.Remaining_HP);
+            //Console.WriteLine(this.GetType().Name + " se soigne de 2 HP ! Total : " + this.Remaining_HP);
         }
         public void Bleed() { }
 

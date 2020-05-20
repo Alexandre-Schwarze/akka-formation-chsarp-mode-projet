@@ -16,6 +16,8 @@ namespace StarWars.Managers
         #region Methods
         public static void Welcome()
         {
+            Console.ForegroundColor = ConsoleColor.White;
+
             Console.WriteLine("                         _                                      ");
             Console.WriteLine("                     ___| |_ __ _ _ __  __      ____ _ _ __ ___ ");
             Console.WriteLine("                    / __| __/ _` | '__| \\ \\ /\\ / / _` | '__/ __|");
@@ -24,6 +26,8 @@ namespace StarWars.Managers
             Console.WriteLine("__.-.__         ########################################################         __.-.__");
             Console.WriteLine("'-._.-'         ###             L'ATTAQUE DES CLONES                 ###         '-._.-'");
             Console.WriteLine("                ########################################################");
+
+            MainMenu();
         }
 
         public static void MainMenu()

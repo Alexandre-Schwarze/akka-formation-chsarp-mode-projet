@@ -68,10 +68,19 @@ namespace StarWars.Tools
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             ShowWindow(ThisConsole, MAXIMIZE);
         }
-        #endregion
 
-        #region Outillage Dossiers
-        private static string UserAppFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+		public static void ClearLastConsoleLine()
+		{
+			Console.SetCursorPosition(0, Console.CursorTop - 1);
+			int currentLineCursor = Console.CursorTop;
+			Console.SetCursorPosition(0, Console.CursorTop);
+			Console.Write(new string(' ', Console.WindowWidth));
+			Console.SetCursorPosition(0, currentLineCursor);
+		}
+		#endregion
+
+		#region Outillage Dossiers
+		private static string UserAppFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static string GameFolder = UserAppFolderPath + "\\CloneWars";
         public static string SaveFolder = GameFolder + "\\Saves";
         public static string DataFolder = GameFolder + "\\Data";

@@ -40,24 +40,29 @@ namespace StarWars.Managers
          
         public static void PlayGame()
         {
-            while (game.Troops.Count > 0 )
+            while (game.PJ != null)
             {
                 //Tools.Tools.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
 
                 //Console.WriteLine("################ TOUR DU JOUEUR ##############");
-                if (game.PJ != null)
-                    DoPJTurn();
+                DoPJTurn();
                 
                 //Console.WriteLine("################ TOURS PNJ ##############");
                 DoPNJTurn(game.Troops);
 
                 EndTurn();
             }
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Tools.Tools.RightOffsetWriteLine("########## GAmE oVER ##########");
         }
 
         private static void EndGame()
         {
-            throw new NotImplementedException();
+            System.Environment.Exit(1);
+            game.Grid = null;
+            game = null;
+            MainManager.Welcome();
         }
 
         private static void EndTurn()
@@ -85,6 +90,7 @@ namespace StarWars.Managers
                 game.PJ.Position = desiredpos;
             else
             {
+                Tools.Tools.ClearLastConsoleLine();
                 Console.WriteLine("Mauvaise position ou combinaison, veuillez réitérer");
                 PJMove(Console.ReadKey(true));
             }

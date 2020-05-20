@@ -32,6 +32,7 @@ namespace StarWars.Managers
             game.Size = 26;
             //game.Size = GridManager.ChooseIndex();
             game.Troops = GenerateTroops(game.Size);
+            game.Grid = GridManager.DisplayGrid(game.Getalltroops(), game.Size);
         }
          
         public static void PlayGame()
@@ -39,11 +40,11 @@ namespace StarWars.Managers
             while (game.Troops.Count > 0 )
             {
                 //Tools.Tools.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
-                 game.Grid = GridManager.DisplayGrid(game.Getalltroops(), game.Size);
 
                 //Console.WriteLine("################ TOUR DU JOUEUR ##############");
-                DoPJTurn();
-
+                if (game.PJ != null)
+                    DoPJTurn();
+                
                 //Console.WriteLine("################ TOURS PNJ ##############");
                 DoPNJTurn(game.Troops);
 
@@ -60,6 +61,12 @@ namespace StarWars.Managers
         {
             game.Troops = game.Troops.Where((e) => e.Remaining_HP > 0).ToList();         
             game.Current_turn_number++;
+            if (game.PJ != null)
+            {
+                if (game.PJ.Remaining_HP <= 0)
+                    game.PJ = null;
+            }
+            game.Grid = GridManager.DisplayGrid(game.Getalltroops(), game.Size);
         }
 
         private static void DoPJTurn()
@@ -69,6 +76,7 @@ namespace StarWars.Managers
 
         private static void PJMove(ConsoleKeyInfo key)
         {
+            
             Position desiredpos = GridManager.CheckPlayer(game.Troops, game.PJ.Position, key, game.Grid.Index);
             if (desiredpos != null)
                 game.PJ.Position = desiredpos;
@@ -77,9 +85,6 @@ namespace StarWars.Managers
                 Console.WriteLine("Mauvaise position ou combinaison, veuillez réitérer");
                 PJMove(Console.ReadKey(true));
             }
-
-
-
         }
 
         private static void DoPNJTurn(List<IBaseTroop> troops)
@@ -93,7 +98,7 @@ namespace StarWars.Managers
                     //Check attaques : si autre PNJ autour > attaquer
                     logtroop += " cherche une cible...";
 
-                    IBaseTroop targetabletroop = GridManager.CheckAroundForTroop(troops, troop, game.Size);
+                    IBaseTroop targetabletroop = GridManager.CheckAroundForTroop(game.Getalltroops(), troop, game.Size);
                     if (targetabletroop != null)
                     {
                         if (game.PJ == targetabletroop)

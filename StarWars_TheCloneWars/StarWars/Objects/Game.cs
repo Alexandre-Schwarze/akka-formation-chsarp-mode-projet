@@ -32,7 +32,9 @@ namespace StarWars.Objects
         public List<IBaseTroop> Getalltroops ()
         {
             List<IBaseTroop> alltroops = new List<IBaseTroop>(this.Troops);
-            alltroops.Add(PJ);
+            
+            if(PJ != null)
+                alltroops.Add(PJ);
             return alltroops;
         }
 

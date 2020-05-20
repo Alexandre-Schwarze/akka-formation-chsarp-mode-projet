@@ -152,7 +152,6 @@ namespace StarWars.Managers
         {
             Tools.Tools.RightOffsetWriteLine("Personnages jouables disponibles ...");
 
-
             int cpt = 1;
             foreach (Tuple<string,string> playable in EntitiesManager.Playablesstats)
             {
@@ -164,9 +163,10 @@ namespace StarWars.Managers
 
             var input = Console.ReadLine();
             int rslt;
-            if(int.TryParse(input, out rslt))
+            int.TryParse(input, out rslt);
+            if (rslt < EntitiesManager.Playablesstats.Count+1 && rslt > 0)
             {             
-                string name = EntitiesManager.Playablesstats[rslt].Item1;
+                string name = EntitiesManager.Playablesstats[rslt-1].Item1;
                 IBaseTroop selectedchar = (IBaseTroop)Activator.CreateInstance(EntitiesManager.Playables.Where((e) => e.Name.Equals(name)).FirstOrDefault());
                 Console.WriteLine("Caractéristiques "+ selectedchar.GetType().Name + " : PV:" + (selectedchar as IBaseTroop).MaxHP + ", Vitesse:" + (selectedchar as IBaseTroop).Speed + ", attaques spéciales:");
                 

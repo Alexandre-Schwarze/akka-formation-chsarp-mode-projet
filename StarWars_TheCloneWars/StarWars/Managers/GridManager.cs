@@ -191,25 +191,6 @@ namespace StarWars.Managers
 		}
 
 		/// <summary>
-		/// Method pour charger la grille du jeu depuis un fichier XML
-		/// </summary>
-		/// <param name="grid">Grille à charger</param>
-		public static void LoadGrid(Grid grid)
-		{
-			string fileName = "file.xml";
-			string currentDirectory = Directory.GetCurrentDirectory();
-
-			XmlDocument xml = new XmlDocument();
-			xml.Load(Path.Combine(currentDirectory, fileName));
-			XmlNode node = xml.DocumentElement.SelectSingleNode("Grid");
-
-			string matrice = node.InnerText;
-			string[] line = matrice.Split('\n');
-
-			grid.Index = line[0].Length;
-		}
-
-		/// <summary>
 		/// Method pour placer les troupes à chaque refresh de la grille
 		/// </summary>
 		/// <param name="listOfTroops"></param>
@@ -268,7 +249,7 @@ namespace StarWars.Managers
 		}
 
 		/// <summary>
-		/// Method pour détecter un personnage à proimité avant de tenter de se déplacer
+		/// Method pour détecter un personnage à proximité avant de tenter de se déplacer
 		/// </summary>
 		/// <param name="listOfTroops">Liste des troupes</param>
 		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
@@ -277,86 +258,46 @@ namespace StarWars.Managers
 		{
 			List<Tools.Position> listOfValidPos = new List<Tools.Position>();
 
-			int absciss = Tools.Tools.ConvertFromStringBase26(baseTroop.Position.Absciss);
-			int ordinate = baseTroop.Position.Ordinate;
+			Tools.Position newPosLeft = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, "left", indexMatrice);
+			Tools.Position newPosRight = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, "right", indexMatrice);
+			Tools.Position newPosUp = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, "up", indexMatrice);
+			Tools.Position newPosDown = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, "down", indexMatrice);
 
-			if (absciss - 1 >= 0)
-			{
-				Tools.Position newPos = new Tools.Position();
-				newPos.Absciss = Tools.Tools.ConvertToStringBase26(absciss - 1).Replace(" ", "");
-				newPos.Ordinate = ordinate;
-
-				listOfValidPos.Add(newPos);
-			}
-			if (absciss + 1 < indexMatrice)
-			{
-				Tools.Position newPos = new Tools.Position();
-				newPos.Absciss = Tools.Tools.ConvertToStringBase26(absciss + 1).Replace(" ", "");
-				newPos.Ordinate = ordinate;
-
-				listOfValidPos.Add(newPos);
-			}
-			if (ordinate - 1 >= 1)
-			{
-				Tools.Position newPos = new Tools.Position();
-				newPos.Absciss = baseTroop.Position.Absciss;
-				newPos.Ordinate = ordinate - 1;
-
-				listOfValidPos.Add(newPos);
-			}
-			if (ordinate + 1 <= indexMatrice)
-			{
-				Tools.Position newPos = new Tools.Position();
-				newPos.Absciss = baseTroop.Position.Absciss;
-				newPos.Ordinate = ordinate + 1;
-
-				listOfValidPos.Add(newPos);
-			}
-
-			/*for (int x = ordinate - 1 ; x <= ordinate + 1 ; x++)
-			{
-				if (x > 0 && x <= indexMatrice)
-				{
-					for (int y = absciss - 1 ; y <= absciss + 1 ; y++)
-					{
-						if (y >= 0 && y < indexMatrice)
-						{
-							bool test = false;
-
-							for (int i = 0 ; i < listOfTroops.Count ; i++)
-							{
-								if (listOfTroops[i].Position.Absciss == Tools.Tools.ConvertToStringBase26(y).Replace(" ", "") && listOfTroops[i].Position.Ordinate == x)
-									test = true;
-							}
-
-							if (!test)
-							{
-								Tools.Position newPos = new Tools.Position();
-								newPos.Absciss = Tools.Tools.ConvertToStringBase26(y).Replace(" ", "");
-								newPos.Ordinate = x;
-
-								listOfValidPos.Add(newPos);
-							}
-						}
-					}
-				}
-			}*/
+			if (newPosLeft != null)
+				listOfValidPos.Add(newPosLeft);
+			if (newPosRight != null)
+				listOfValidPos.Add(newPosRight);
+			if (newPosUp != null)
+				listOfValidPos.Add(newPosUp);
+			if (newPosDown != null)
+				listOfValidPos.Add(newPosDown);
 
 			if (listOfValidPos.Count == 0)
-			{
-				Console.WriteLine(baseTroop.GetType().Name + " est encerclé, il ne peut pas bouger !");
 				return null;
-			}
 
 			Random random = new Random();
-			return listOfValidPos[random.Next(0, listOfValidPos.Count)];
+			Tools.Position newPosition = listOfValidPos[random.Next(0, listOfValidPos.Count)];
+
+			return newPosition;
 		}
 
-		public static bool CheckPlayer(List<IBaseTroop> listOfTroops, Tools.Position position, ConsoleKeyInfo key)
+		public static Tools.Position CheckPlayer(List<IBaseTroop> listOfTroops, Tools.Position position, ConsoleKeyInfo key, int indexMatrice)
 		{
-			// check pour chaque position, retourner une position valide ou null
+			switch (key.Key)
+			{
+				case ConsoleKey.LeftArrow:
+					return Tools.Tools.IsPositionValid(listOfTroops, position, "left", indexMatrice);
+				case ConsoleKey.UpArrow:
+					return Tools.Tools.IsPositionValid(listOfTroops, position, "up", indexMatrice);
+				case ConsoleKey.RightArrow:
+					return Tools.Tools.IsPositionValid(listOfTroops, position, "right", indexMatrice);
+				case ConsoleKey.DownArrow:
+					return Tools.Tools.IsPositionValid(listOfTroops, position, "down", indexMatrice);
+				default:
+					break;
+			}
 
-			return false;
+			return null;
 		}
 		#endregion
 	}

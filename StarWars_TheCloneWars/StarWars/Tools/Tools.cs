@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarWars.Entities.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -113,11 +114,97 @@ namespace StarWars.Tools
             else return false;
         }
 
+		public static Position IsPositionValid(List<IBaseTroop> listOfTroops, Position actualPos, string direction, int indexMatrice)
+		{
+			int absciss = ConvertFromStringBase26(actualPos.Absciss);
+			int ordinate = actualPos.Ordinate;
+
+			switch (direction)
+			{
+				case ("left"):
+				{
+					if (absciss - 1 >= 0)
+					{
+						for (int i = 0 ; i < listOfTroops.Count ; i++)
+						{
+							if (listOfTroops[i].Position.Absciss == ConvertToStringBase26(absciss - 1).Replace(" ", "") && listOfTroops[i].Position.Ordinate == ordinate)
+								return null;
+						}
+
+						Position newPos = new Position();
+						newPos.Absciss = ConvertToStringBase26(absciss - 1).Replace(" ", "");
+						newPos.Ordinate = ordinate;
+
+						return newPos;
+					}
+					break;
+				}
+				case ("right"):
+				{
+					if (absciss + 1 < indexMatrice)
+					{
+						for (int i = 0 ; i < listOfTroops.Count ; i++)
+						{
+							if (listOfTroops[i].Position.Absciss == ConvertToStringBase26(absciss + 1).Replace(" ", "") && listOfTroops[i].Position.Ordinate == ordinate)
+								return null;
+						}
+
+						Position newPos = new Position();
+						newPos.Absciss = ConvertToStringBase26(absciss + 1).Replace(" ", "");
+						newPos.Ordinate = ordinate;
+
+						return newPos;
+					}
+					break;
+				}
+				case ("up"):
+				{
+					if (ordinate - 1 >= 1)
+					{
+						for (int i = 0 ; i < listOfTroops.Count ; i++)
+						{
+							if (listOfTroops[i].Position.Absciss == actualPos.Absciss && listOfTroops[i].Position.Ordinate == ordinate - 1)
+								return null;
+						}
+
+						Position newPos = new Position();
+						newPos.Absciss = actualPos.Absciss;
+						newPos.Ordinate = ordinate - 1;
+
+						return newPos;
+					}
+					break;
+				}
+				case ("down"):
+				{
+					if (ordinate + 1 < indexMatrice + 1)
+					{
+						for (int i = 0 ; i < listOfTroops.Count ; i++)
+						{
+							if (listOfTroops[i].Position.Absciss == actualPos.Absciss && listOfTroops[i].Position.Ordinate == ordinate + 1)
+								return null;
+						}
+
+						Position newPos = new Position();
+						newPos.Absciss = actualPos.Absciss;
+						newPos.Ordinate = ordinate + 1;
+
+						return newPos;
+					}
+					break;
+				}
+				default:
+					break;
+			}
+
+			return null;
+		}
+
 		/// <summary>
-		/// 
+		/// Method pour convertir un string en base 26 vers un entier
 		/// </summary>
-		/// <param name="val"></param>
-		/// <returns></returns>
+		/// <param name="val">String à convertir</param>
+		/// <returns>La valeur entière</returns>
 		public static int ConvertFromStringBase26(string val)
 		{
 			string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -131,6 +218,11 @@ namespace StarWars.Tools
 			return res;
 		}
 
+		/// <summary>
+		/// Method pour convertir un entier vers un string en base 26
+		/// </summary>
+		/// <param name="index">Entier à convertir</param>
+		/// <returns>Le string en base 26</returns>
 		public static string ConvertToStringBase26(int index)
 		{
 			string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -148,6 +240,12 @@ namespace StarWars.Tools
 			return value;
 		}
 
+		/// <summary>
+		/// Method pour renvoyer un entier aléatoire compris entre deux valeurs
+		/// </summary>
+		/// <param name="minVal">Valeur minimum du nombre aléatoire</param>
+		/// <param name="maxVal">Valeur maximum du nombre aléatoire</param>
+		/// <returns>L'entier aléatoire</returns>
 		public static int GenerateRandom(int minVal, int maxVal)
 		{
 			Random random = new Random();

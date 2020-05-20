@@ -64,7 +64,36 @@ namespace StarWars.Managers
 
         private static void DoPJTurn()
         {
-            Console.ReadLine();
+            PJMove(Console.ReadKey(true)); 
+        }
+
+        private static void PJMove(ConsoleKeyInfo key)
+        {
+            //Position desiredpos = CanMove(listtroop, Position, key) not null
+            //if desiredpos != null
+            //    game.PJ.Position = desiredpos;
+            //else
+
+
+
+            switch (key.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    game.PJ.Position()
+                    break;
+                case ConsoleKey.RightArrow:
+                    Right();
+                    break;
+                case ConsoleKey.UpArrow:
+                    game.PJ.Position.Ordinate--;
+                    break;
+                case ConsoleKey.DownArrow:
+                    int desiredordinate = game.PJ.Position.Ordinate +1 ;
+
+                    break;
+                default:
+                    break;
+            }
         }
 
         private static void DoPNJTurn(List<IBaseTroop> troops)
@@ -73,8 +102,6 @@ namespace StarWars.Managers
             {
                 if (troop.Remaining_HP > 0)
                 {
-               
-
                     string logtroop = troop.GetType().Name + " en " + troop.Position.Txtpos;
 
                     //Check attaques : si autre PNJ autour > attaquer
@@ -85,7 +112,6 @@ namespace StarWars.Managers
                     {
                         if (game.PJ == targetabletroop)
                             game.PJ.color = ConsoleColor.Red;
-
 
                         MethodInfo attackmethod = troop.GetType().GetTypeInfo().DeclaredMethods.FirstOrDefault();
                         object[] parameters = new object[1];
@@ -100,7 +126,7 @@ namespace StarWars.Managers
                     logtroop += " vérifie s'il est blessé... ";
                     if (troop.Remaining_HP < troop.MaxHP)
                     {
-                        if (troop.GetType() == typeof(Synthetic))
+                        if (troop.GetType().BaseType == typeof(Synthetic))
                             (troop as Synthetic).AutoRepair();
                         else
                             (troop as Organic).Heal();
@@ -126,7 +152,6 @@ namespace StarWars.Managers
                     continue;
             }
         }
-
         private static List<IBaseTroop> GenerateTroops(int index)
         {
             Console.WriteLine("Generating troops ...");

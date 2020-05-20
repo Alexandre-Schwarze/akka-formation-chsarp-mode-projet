@@ -28,8 +28,6 @@ namespace StarWars.Managers
 
         public static List<Tuple<string, string>> Playablesstats;
 
-
-
         public static IEnumerable<Type> GetTypesInNamespaceEnumerable(string nameSpace)
         {
             return

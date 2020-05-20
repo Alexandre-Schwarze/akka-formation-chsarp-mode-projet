@@ -14,6 +14,7 @@ namespace StarWars.Managers
     public static class GameManager
     {
         private static Game game;
+
         #region Methods
         public static void NewGame()
         {
@@ -42,7 +43,7 @@ namespace StarWars.Managers
                 /// Implémenter tour du joueur
                 Console.ReadLine();
 
-                Console.WriteLine("################ TOURS PNJ ##############");
+                //Console.WriteLine("################ TOURS PNJ ##############");
                 DoPNJTurn(game.Troops);
 
                 Tools.Tools.RightOffsetWriteLine("\r\n################ FIN DU TOUR N°" + game.Current_turn_number + " ##############");
@@ -149,29 +150,38 @@ namespace StarWars.Managers
         /// <returns>Classe de PJ sélectionnée par l'utilisateur</returns>
         private static IBaseTroop ChooseCharacter()
         {
-            object pj = new object();
             Tools.Tools.RightOffsetWriteLine("Personnages jouables disponibles ...");
-            EntitiesManager.Playablesstats.ForEach((e) => Console.WriteLine("-" + e.Item1 + " : " + e.Item2));
 
-            Tools.Tools.RightOffsetWriteLine("Veuillez saisir le nom du personnage choisi ...");
+
+            int cpt = 1;
+            foreach (Tuple<string,string> playable in EntitiesManager.Playablesstats)
+            {
+                Console.WriteLine(cpt + "-" + playable.Item1 + " : " + playable.Item2);
+                cpt++;
+            }
+
+            Tools.Tools.RightOffsetWriteLine("Veuillez saisir le numéro du personnage choisi ...");
 
             var input = Console.ReadLine();
-            if (EntitiesManager.Playablesstats.Select((e) => e.Item1).ToList().Contains(input))
-            {
-                pj = (IBaseTroop)Activator.CreateInstance(EntitiesManager.Playables.Where((e) => e.Name.Equals(input)).FirstOrDefault());
-                Console.WriteLine("Caractéristiques personnage : PV:" + (pj as IBaseTroop).MaxHP + ", Vitesse:" + (pj as IBaseTroop).Speed + ", attaques spéciales:");
-                pj.GetType().GetTypeInfo().DeclaredMethods.ToList().ForEach((e) => Console.WriteLine("-" + e.Name));
+            int rslt;
+            if(int.TryParse(input, out rslt))
+            {             
+                string name = EntitiesManager.Playablesstats[rslt].Item1;
+                IBaseTroop selectedchar = (IBaseTroop)Activator.CreateInstance(EntitiesManager.Playables.Where((e) => e.Name.Equals(name)).FirstOrDefault());
+                Console.WriteLine("Caractéristiques "+ selectedchar.GetType().Name + " : PV:" + (selectedchar as IBaseTroop).MaxHP + ", Vitesse:" + (selectedchar as IBaseTroop).Speed + ", attaques spéciales:");
+                
+                if(selectedchar.GetType().GetTypeInfo().DeclaredMethods.Count() > 0)
+                    selectedchar.GetType().GetTypeInfo().DeclaredMethods.ToList().ForEach((e) => Console.WriteLine("-" + e.Name));
+
+                return selectedchar;
             }
             else
             {
                 Console.WriteLine("La valeur saisie ne correspond pas...");
                 ChooseCharacter();
             }
-
-            return (IBaseTroop)pj;
-
+            return null;
         }
-
 
         #endregion
     }

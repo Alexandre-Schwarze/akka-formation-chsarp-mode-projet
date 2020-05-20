@@ -28,7 +28,15 @@ namespace StarWars.Managers
 			Console.Clear();
 
 			List<string> lines = new List<string>();
+			IBaseTroop player = null;
 
+			foreach (IBaseTroop troop in listOfTroops)
+			{
+				if (troop.IsPlayable == 0)
+					player = troop;
+			}
+
+			Console.WriteLine("			PERSONNAGE : " + player.GetType().Name + "		||		PV : " + player.Remaining_HP + "/" + player.MaxHP);
 			Console.WriteLine("\r\n\r\n");
 
 			Grid grid = GenerateGrid(listOfTroops, index, lines);

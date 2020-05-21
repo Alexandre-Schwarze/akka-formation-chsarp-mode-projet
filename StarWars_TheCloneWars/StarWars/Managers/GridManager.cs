@@ -60,7 +60,7 @@ namespace StarWars.Managers
 					player = troop;
 			}
 
-			CustomConsole.Instance.RightOffsetWriteLine("			PERSONNAGE : " + player.GetType().Name + "		||		PV : " + player.Remaining_HP + "/" + player.MaxHP);
+			CustomConsole.RightOffsetWriteLine("			PERSONNAGE : " + player.GetType().Name + "		||		PV : " + player.Remaining_HP + "/" + player.MaxHP);
 
 			Grid grid = GenerateGrid(listOfTroops, index, lines);
 

@@ -21,7 +21,7 @@ namespace StarWars.Entities.Implements
                 _remaining_HP = value;
 
                 //if (_remaining_HP <= 0)
-                //    Console.WriteLine(this.GetType().Name + " en " + this.Position.Txtpos + " est décédé ...");
+                //    CustomConsole.RightOffsetWriteLine(this.GetType().Name + " en " + this.Position.Txtpos + " est décédé ...");
             }
         }
         public int Speed { get; set; }
@@ -43,7 +43,7 @@ namespace StarWars.Entities.Implements
         public void AutoRepair() 
         {
             this.Remaining_HP += 3;
-            //Console.WriteLine(this.GetType().Name + " se répare de 3 HP ! Total : " + this.Remaining_HP);
+            //CustomConsole.RightOffsetWriteLine(this.GetType().Name + " se répare de 3 HP ! Total : " + this.Remaining_HP);
         }
         public void Bug() 
         { 

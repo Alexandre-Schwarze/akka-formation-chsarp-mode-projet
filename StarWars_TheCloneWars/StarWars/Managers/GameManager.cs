@@ -62,7 +62,7 @@ namespace StarWars.Managers
         {
             while (game.PJ != null)
             {
-                //Tools.Tools.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
+                //CustomConsole.Instance.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
 
                 //Console.WriteLine("################ TOUR DU JOUEUR ##############");
                 DoPJTurn();
@@ -74,7 +74,7 @@ namespace StarWars.Managers
             }
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
-            Tools.Tools.RightOffsetWriteLine("########## GAmE oVER ##########");
+            CustomConsole.Instance.RightOffsetWriteLine("########## GAmE oVER ##########");
         }
         private  void EndGame()
         {
@@ -113,7 +113,7 @@ namespace StarWars.Managers
         }
         private  void PJAttack()
         {
-            Tools.Tools.ClearLastConsoleLine();
+            CustomConsole.Instance.ClearLastConsoleLine();
             IBaseTroop targetabletroop = GridManager.Instance.CheckAroundForTroop(game.Getalltroops(), game.PJ, game.Size);
             if (targetabletroop != null)
             {
@@ -124,7 +124,7 @@ namespace StarWars.Managers
             }
             else 
             {
-                Tools.Tools.ClearLastConsoleLine();
+                CustomConsole.Instance.ClearLastConsoleLine();
                 Console.WriteLine("Aucune cible à portée !");
                 DoPJTurn();
             } 
@@ -136,7 +136,7 @@ namespace StarWars.Managers
                 game.PJ.Position = desiredpos;
             else
             {
-                Tools.Tools.ClearLastConsoleLine();
+                CustomConsole.Instance.ClearLastConsoleLine();
                 Console.WriteLine("Mauvaise position ou combinaison, veuillez réitérer");
                 PJMove(Console.ReadKey(true));
             }
@@ -224,7 +224,7 @@ namespace StarWars.Managers
         /// <returns>Classe de PJ sélectionnée par l'utilisateur</returns>
         private  IBaseTroop ChooseCharacter()
         {
-            Tools.Tools.RightOffsetWriteLine("Personnages jouables disponibles ...");
+            CustomConsole.Instance.RightOffsetWriteLine("Personnages jouables disponibles ...");
 
             int cpt = 1;
             foreach (Tuple<string,string> playable in EntitiesManager.Playablesstats)
@@ -233,7 +233,7 @@ namespace StarWars.Managers
                 cpt++;
             }
 
-            Tools.Tools.RightOffsetWriteLine("Veuillez saisir le numéro du personnage choisi ...");
+            CustomConsole.Instance.RightOffsetWriteLine("Veuillez saisir le numéro du personnage choisi ...");
 
             var input = Console.ReadLine();
             int rslt;

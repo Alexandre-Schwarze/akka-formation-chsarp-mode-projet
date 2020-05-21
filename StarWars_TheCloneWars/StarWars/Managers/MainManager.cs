@@ -52,27 +52,27 @@ namespace StarWars.Managers
 
         public  void MainMenu()
         {
-            Tools.Tools.RightOffsetWriteLine("1. Nouvelle Partie ");
-            Tools.Tools.RightOffsetWriteLine("2. Charger partie sauvegardée (in progress)");
-            Tools.Tools.RightOffsetWriteLine("3. Quitter");
-            Tools.Tools.RightOffsetWriteLine("Veuillez saisir votre choix (1 ou 2) puis Entrée : ");
+            CustomConsole.Instance.RightOffsetWriteLine("1. Nouvelle Partie ");
+            CustomConsole.Instance.RightOffsetWriteLine("2. Charger partie sauvegardée (in progress)");
+            CustomConsole.Instance.RightOffsetWriteLine("3. Quitter");
+            CustomConsole.Instance.RightOffsetWriteLine("Veuillez saisir votre choix (1 ou 2) puis Entrée : ");
             
             switch (Console.ReadLine())
             {
                 case "1":
-                    Tools.Tools.RightOffsetWriteLine("######### NOUVELLE PARTIE #########");
+                    CustomConsole.Instance.RightOffsetWriteLine("######### NOUVELLE PARTIE #########");
                     GameManager.Instance.NewGame();
                     break;
                 case "2":
-                    Tools.Tools.RightOffsetWriteLine(">>> in progress");
+                    CustomConsole.Instance.RightOffsetWriteLine(">>> in progress");
                     MainMenu();
                     break;
                 case "3":
-                    Tools.Tools.RightOffsetWriteLine(">>> Vous nous quittez déjà ? à bientôt alors !");
+                    CustomConsole.Instance.RightOffsetWriteLine(">>> Vous nous quittez déjà ? à bientôt alors !");
                     System.Environment.Exit(1);
                     break;
                 default:
-                    Tools.Tools.RightOffsetWriteLine(">>> Choix non reconnu");
+                    CustomConsole.Instance.RightOffsetWriteLine(">>> Choix non reconnu");
                     MainMenu();
                     break;
             }

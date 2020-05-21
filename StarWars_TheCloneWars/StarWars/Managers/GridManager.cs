@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using StarWars.Entities.Interfaces;
 using System.Linq;
 using MoreLinq;
+using StarWars.Tools;
 
 namespace StarWars.Managers
 {
@@ -59,7 +60,7 @@ namespace StarWars.Managers
 					player = troop;
 			}
 
-			Tools.Tools.RightOffsetWriteLine("			PERSONNAGE : " + player.GetType().Name + "		||		PV : " + player.Remaining_HP + "/" + player.MaxHP);
+			CustomConsole.Instance.RightOffsetWriteLine("			PERSONNAGE : " + player.GetType().Name + "		||		PV : " + player.Remaining_HP + "/" + player.MaxHP);
 
 			Grid grid = GenerateGrid(listOfTroops, index, lines);
 
@@ -92,9 +93,10 @@ namespace StarWars.Managers
 				Console.Write("\r\n");
 			}
 
-			string leg = "légende : ";
-			listOfTroops.DistinctBy((i) => i.Icon).ToList().ForEach((e) => leg += e.Icon + " = "+ e.GetType().Name + ", ");
-			Console.WriteLine(leg);
+			string legend = "légende : ";
+			listOfTroops.DistinctBy((i) => i.Icon).ToList().ForEach((e) => legend += e.Icon + " = "+ e.GetType().Name + " ,");
+			legend = legend.Remove(legend.Length - 1);
+			Console.WriteLine(legend);
 
 			Console.WriteLine("\r\n\r\n");
 

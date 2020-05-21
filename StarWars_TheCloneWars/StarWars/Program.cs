@@ -1,4 +1,5 @@
 ﻿using StarWars.Managers;
+using StarWars.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace StarWars
 		static void Init()
 		{
 			Console.OutputEncoding = System.Text.Encoding.UTF8;
-			Tools.Tools.SetConsolePosition();
+			CustomConsole.Instance.SetConsolePosition();
 			Tools.Tools.InitFolders();
 			EntitiesManager.Instance.InitCharactersTypes();
 		}

@@ -14,17 +14,39 @@ namespace StarWars.Managers
 	/// <summary>
 	/// Manager pour la création de la carte du jeu
 	/// </summary>
-	public static class GridManager
+	public sealed class GridManager
 	{
-		#region Attributes
+		#region Attributs
+		private static GridManager _instance;
+		static readonly object instanceLock = new object();
+		public static GridManager Instance
+		{
+			get
+			{
+				if (_instance == null) //Les locks prennent du temps, il est préférable de vérifier d'abord la nullité de l'instance.
+				{
+					lock (instanceLock)
+					{
+						if (_instance == null) //on vérifie encore, au cas où l'instance aurait été créée entretemps.
+							_instance = new GridManager();
+					}
+				}
+				return _instance;
+			}
+		}
 		private static bool isTroopsInitialized = false;
 		#endregion
+
+		#region Ctor
+		private GridManager() { }
+		#endregion
+
 
 		#region Methods
 		/// <summary>
 		/// Method pour afficher la grille générée
 		/// </summary>
-		public static Grid DisplayGrid(List<IBaseTroop> listOfTroops, int index)
+		public Grid DisplayGrid(List<IBaseTroop> listOfTroops, int index)
 		{
 			Console.Clear();
 
@@ -83,7 +105,7 @@ namespace StarWars.Managers
 		/// Method pour choisir la taille de la grille du jeu
 		/// </summary>
 		/// <returns>La taille (largeur = hauteur) de la grille</returns>
-		public static int ChooseIndex()
+		public int ChooseIndex()
 		{
 			int index;
 
@@ -104,7 +126,7 @@ namespace StarWars.Managers
 		/// </summary>
 		/// <param name="index">Nombre de lignes et de colonnes de la grille de jeu</param>
 		/// <returns></returns>
-		public static Grid GenerateGrid(List<IBaseTroop> listOfTroops, int index, List<string> lines)
+		public Grid GenerateGrid(List<IBaseTroop> listOfTroops, int index, List<string> lines)
 		{
 			Grid Grid = new Grid();
 
@@ -207,7 +229,7 @@ namespace StarWars.Managers
 		/// </summary>
 		/// <param name="listOfTroops"></param>
 		/// <param name="indexMatrice"></param>
-		private static void PlaceTroops(List<IBaseTroop> listOfTroops, int indexMatrice)
+		private void PlaceTroops(List<IBaseTroop> listOfTroops, int indexMatrice)
 		{
 			for (int i = 0 ; i < listOfTroops.Count ; i++)
 			{
@@ -234,7 +256,7 @@ namespace StarWars.Managers
 		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
 		/// <param name="grid">Grille du jeu</param>
 		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
-		public static IBaseTroop CheckAroundForTroop(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, int indexMatrice)
+		public IBaseTroop CheckAroundForTroop(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, int indexMatrice)
 		{
 			int absciss = Tools.Tools.ConvertFromStringBase26(baseTroop.Position.Absciss);
 			int ordinate = baseTroop.Position.Ordinate;
@@ -281,7 +303,7 @@ namespace StarWars.Managers
 		/// <param name="listOfTroops">Liste des troupes</param>
 		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
 		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
-		public static Tools.Position CheckAroundForTroopMove(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, int indexMatrice)
+		public Tools.Position CheckAroundForTroopMove(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, int indexMatrice)
 		{
 			List<Tools.Position> listOfValidPos = new List<Tools.Position>();
 
@@ -308,7 +330,15 @@ namespace StarWars.Managers
 			return newPosition;
 		}
 
-		public static Tools.Position CheckPlayer(List<IBaseTroop> listOfTroops, Tools.Position position, ConsoleKeyInfo key, int indexMatrice)
+		/// <summary>
+		/// Method ??
+		/// </summary>
+		/// <param name="listOfTroops"></param>
+		/// <param name="position"></param>
+		/// <param name="key"></param>
+		/// <param name="indexMatrice"></param>
+		/// <returns></returns>
+		public Tools.Position CheckPlayer(List<IBaseTroop> listOfTroops, Tools.Position position, ConsoleKeyInfo key, int indexMatrice)
 		{
 			switch (key.Key)
 			{

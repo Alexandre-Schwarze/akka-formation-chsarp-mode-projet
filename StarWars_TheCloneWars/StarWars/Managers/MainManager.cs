@@ -7,14 +7,34 @@ using StarWars.Tools;
 
 namespace StarWars.Managers
 {
-    public static class MainManager
+    public sealed class MainManager
     {
-        #region Attributes
+        #region Attributs
+        private static MainManager _instance;
+        static readonly object instanceLock = new object();
+        public static MainManager Instance
+        {
+            get
+            {
+                if (_instance == null) //Les locks prennent du temps, il est préférable de vérifier d'abord la nullité de l'instance.
+                {
+                    lock (instanceLock)
+                    {
+                        if (_instance == null) //on vérifie encore, au cas où l'instance aurait été créée entretemps.
+                            _instance = new MainManager();
+                    }
+                }
+                return _instance;
+            }
+        }
+        #endregion
 
+        #region Ctor
+        private MainManager() { }
         #endregion
 
         #region Methods
-        public static void Welcome()
+        public  void Welcome()
         {
             Console.ForegroundColor = ConsoleColor.White;
 
@@ -30,7 +50,7 @@ namespace StarWars.Managers
             MainMenu();
         }
 
-        public static void MainMenu()
+        public  void MainMenu()
         {
             Tools.Tools.RightOffsetWriteLine("1. Nouvelle Partie ");
             Tools.Tools.RightOffsetWriteLine("2. Charger partie sauvegardée (in progress)");
@@ -41,7 +61,7 @@ namespace StarWars.Managers
             {
                 case "1":
                     Tools.Tools.RightOffsetWriteLine("######### NOUVELLE PARTIE #########");
-                    GameManager.NewGame();
+                    GameManager.Instance.NewGame();
                     break;
                 case "2":
                     Tools.Tools.RightOffsetWriteLine(">>> in progress");
@@ -58,24 +78,24 @@ namespace StarWars.Managers
             }
         }
 
-        public static void SearchSaveGame()
+        public  void SearchSaveGame()
         {
-
+            throw new NotImplementedException();
         }
 
-        public static void LoadGame()
+        public  void LoadGame()
         {
-
+            throw new NotImplementedException();
         }
 
-        public static void SaveGame()
+        public  void SaveGame()
         {
-
+            throw new NotImplementedException();
         }
 
-        public static void DeleteSavedGame()
+        public  void DeleteSavedGame()
         {
-
+            throw new NotImplementedException();
         }
 
 

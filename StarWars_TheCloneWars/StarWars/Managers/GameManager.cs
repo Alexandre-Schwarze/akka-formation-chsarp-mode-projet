@@ -10,19 +10,43 @@ using System.Reflection;
 
 namespace StarWars.Managers
 {
-    public static class GameManager
+    public sealed class GameManager
     {
+        #region Attributs
+        private static GameManager _instance;
+        static readonly object instanceLock = new object();
         private static Game game;
+        public static GameManager Instance
+        {
+            get
+            {
+                if (_instance == null) //Les locks prennent du temps, il est préférable de vérifier d'abord la nullité de l'instance.
+                {
+                    lock (instanceLock)
+                    {
+                        if (_instance == null) //on vérifie encore, au cas où l'instance aurait été créée entretemps.
+                            _instance = new GameManager();
+                    }
+                }
+                return _instance;
+            }
+        }
+        #endregion
+
+        #region Ctor
+        private GameManager()
+        { }
+        #endregion
 
         #region Methods
-        public static void NewGame()
+
+        public  void NewGame()
         {
             SetGame();
             PlayGame();
             EndGame();
         }
-
-        private static void SetGame()
+        private  void SetGame()
         {
             game = new Game();
             
@@ -32,10 +56,9 @@ namespace StarWars.Managers
             game.Size = 26;
             //game.Size = GridManager.ChooseIndex();
             game.Troops = GenerateTroops(game.Size);
-            game.Grid = GridManager.DisplayGrid(game.Getalltroops(), game.Size);
-        }
-         
-        public static void PlayGame()
+            game.Grid = GridManager.Instance.DisplayGrid(game.Getalltroops(), game.Size);
+        }      
+        public  void PlayGame()
         {
             while (game.PJ != null)
             {
@@ -53,16 +76,14 @@ namespace StarWars.Managers
             Console.ForegroundColor = ConsoleColor.Red;
             Tools.Tools.RightOffsetWriteLine("########## GAmE oVER ##########");
         }
-
-        private static void EndGame()
+        private  void EndGame()
         {
             System.Environment.Exit(1);
             game.Grid = null;
             game = null;
-            MainManager.Welcome();
+            MainManager.Instance.Welcome();
         }
-
-        private static void EndTurn()
+        private  void EndTurn()
         {
             game.Troops = game.Troops.Where((e) => e.Remaining_HP > 0).ToList();         
             game.Current_turn_number++;
@@ -71,10 +92,9 @@ namespace StarWars.Managers
                 if (game.PJ.Remaining_HP <= 0)
                     game.PJ = null;
             }
-            game.Grid = GridManager.DisplayGrid(game.Getalltroops(), game.Size);
+            game.Grid = GridManager.Instance.DisplayGrid(game.Getalltroops(), game.Size);
         }
-
-        private static void DoPJTurn()
+        private  void DoPJTurn()
         {
             Console.WriteLine("A = Attaquer | \u2190 \u2191 \u2192 \u2193  = Déplacer | (spacebar) Attendre");
             ConsoleKeyInfo enteredkey = Console.ReadKey(true);
@@ -91,11 +111,10 @@ namespace StarWars.Managers
             else
                 PJMove(enteredkey); 
         }
-
-        private static void PJAttack()
+        private  void PJAttack()
         {
             Tools.Tools.ClearLastConsoleLine();
-            IBaseTroop targetabletroop = GridManager.CheckAroundForTroop(game.Getalltroops(), game.PJ, game.Size);
+            IBaseTroop targetabletroop = GridManager.Instance.CheckAroundForTroop(game.Getalltroops(), game.PJ, game.Size);
             if (targetabletroop != null)
             {
                 MethodInfo attackmethod = game.PJ.GetType().GetTypeInfo().DeclaredMethods.FirstOrDefault();
@@ -110,10 +129,9 @@ namespace StarWars.Managers
                 DoPJTurn();
             } 
         }
-
-        private static void PJMove(ConsoleKeyInfo key)
+        private  void PJMove(ConsoleKeyInfo key)
         { 
-            Position desiredpos = GridManager.CheckPlayer(game.Troops, game.PJ.Position, key, game.Grid.Index);
+            Position desiredpos = GridManager.Instance.CheckPlayer(game.Troops, game.PJ.Position, key, game.Grid.Index);
             if (desiredpos != null)
                 game.PJ.Position = desiredpos;
             else
@@ -123,8 +141,7 @@ namespace StarWars.Managers
                 PJMove(Console.ReadKey(true));
             }
         }
-
-        private static void DoPNJTurn(List<IBaseTroop> troops)
+        private  void DoPNJTurn(List<IBaseTroop> troops)
         {
             foreach (IBaseTroop troop in troops)
             {
@@ -135,7 +152,7 @@ namespace StarWars.Managers
                     //Check attaques : si autre PNJ autour > attaquer
                     logtroop += " cherche une cible...";
 
-                    IBaseTroop targetabletroop = GridManager.CheckAroundForTroop(game.Getalltroops(), troop, game.Size);
+                    IBaseTroop targetabletroop = GridManager.Instance.CheckAroundForTroop(game.Getalltroops(), troop, game.Size);
                     if (targetabletroop != null)
                     {
                         if (game.PJ == targetabletroop)
@@ -165,7 +182,7 @@ namespace StarWars.Managers
 
                     //Check déplacement : Si ni attaque ni soin > déplacer 
                     logtroop += " regarde autour de lui ...";
-                    Position potentialPosition = GridManager.CheckAroundForTroopMove(game.Getalltroops(), troop, game.Size);
+                    Position potentialPosition = GridManager.Instance.CheckAroundForTroopMove(game.Getalltroops(), troop, game.Size);
                     if (potentialPosition != null)
                     {
                         logtroop += " et se déplace en " + potentialPosition.Txtpos;
@@ -180,7 +197,7 @@ namespace StarWars.Managers
                     continue;
             }
         }
-        private static List<IBaseTroop> GenerateTroops(int index)
+        private  List<IBaseTroop> GenerateTroops(int index)
         {
             Console.WriteLine("Generating troops ...");
             List<IBaseTroop> listtroops = new List<IBaseTroop>();
@@ -201,12 +218,11 @@ namespace StarWars.Managers
 
             return listtroops;
         }
-
         /// <summary>
         /// Choix du personnage jouable
         /// </summary>
         /// <returns>Classe de PJ sélectionnée par l'utilisateur</returns>
-        private static IBaseTroop ChooseCharacter()
+        private  IBaseTroop ChooseCharacter()
         {
             Tools.Tools.RightOffsetWriteLine("Personnages jouables disponibles ...");
 
@@ -240,7 +256,6 @@ namespace StarWars.Managers
                 return null;
             }
         }
-
         #endregion
     }
 }

@@ -20,16 +20,6 @@ namespace StarWars.Tools
     }
 
     /// <summary>
-    /// Type personnalisé pour les positions au sein de la grille
-    /// </summary>
-    public class Position
-    {
-        public string Absciss;
-        public int Ordinate;
-        public string Txtpos => Absciss + Ordinate;
-    }
-
-    /// <summary>
     /// Classe utilitaire 
     /// </summary>
     public static class Tools
@@ -46,8 +36,6 @@ namespace StarWars.Tools
         public const int RESTORE = 9;
         private static int txtoffset = 12;
 		
-
-
         public static void RightOffsetWriteLine(string txt)
         {
             Console.WriteLine("\r\n");

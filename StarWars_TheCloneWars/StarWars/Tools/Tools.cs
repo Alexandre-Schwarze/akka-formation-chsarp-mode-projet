@@ -101,7 +101,8 @@ namespace StarWars.Tools
         #endregion
 
         #region Outillage Calcul de positions 
-        public static char[] alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+		private static string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		public static char[] alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
         private static int GetAbscissIndex(string absciss)
         {
             return Array.IndexOf(alpha, absciss);
@@ -215,7 +216,6 @@ namespace StarWars.Tools
 		/// <returns>La valeur entière</returns>
 		public static int ConvertFromStringBase26(string val)
 		{
-			string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			int res = 0;
 
 			if (val.Length == 2)
@@ -233,7 +233,6 @@ namespace StarWars.Tools
 		/// <returns>Le string en base 26</returns>
 		public static string ConvertToStringBase26(int index)
 		{
-			string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			string value;
 
 			if (index < 26)

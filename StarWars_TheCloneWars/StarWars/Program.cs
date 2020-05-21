@@ -8,15 +8,10 @@ namespace StarWars
 {
 	class Program
 	{
-		public static char[] alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-		#region Attributes
-
-		#endregion
-
 		static void Main(string[] args)
 		{
 			Init();
-			MainManager.Welcome();
+			MainManager.Instance.Welcome();
 		}
 
 		static void Init()
@@ -24,7 +19,7 @@ namespace StarWars
 			Console.OutputEncoding = System.Text.Encoding.UTF8;
 			Tools.Tools.SetConsolePosition();
 			Tools.Tools.InitFolders();
-			EntitiesManager.InitCharactersTypes();
+			EntitiesManager.Instance.InitCharactersTypes();
 		}
 	}
 }

@@ -86,7 +86,8 @@ namespace StarWars.Managers
 
         public  void LoadGame(Game gametoload)
         {
-            throw new NotImplementedException();
+            GameManager.Instance.game = gametoload;
+            GameManager.Instance.PlayGame();
         }
 
         public  void SaveGame(Game gametosave)

@@ -15,7 +15,7 @@ namespace StarWars.Managers
         #region Attributs
         private static GameManager _instance;
         static readonly object instanceLock = new object();
-        private Game game;
+        public Game game;
         public static GameManager Instance
         {
             get

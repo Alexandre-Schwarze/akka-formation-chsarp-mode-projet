@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using StarWars.Objects;
 using StarWars.Tools;
 
 namespace StarWars.Managers
@@ -83,12 +84,12 @@ namespace StarWars.Managers
             throw new NotImplementedException();
         }
 
-        public  void LoadGame()
+        public  void LoadGame(Game gametoload)
         {
             throw new NotImplementedException();
         }
 
-        public  void SaveGame()
+        public  void SaveGame(Game gametosave)
         {
             throw new NotImplementedException();
         }

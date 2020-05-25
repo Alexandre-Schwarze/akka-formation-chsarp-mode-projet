@@ -37,6 +37,7 @@ namespace StarWars.Managers
         #region Methods
         public  void Welcome()
         {
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
 
             Console.WriteLine("                         _                                      ");
@@ -54,7 +55,7 @@ namespace StarWars.Managers
         public  void MainMenu()
         {
             CustomConsole.RightOffsetWriteLine("1. Nouvelle Partie ");
-            CustomConsole.RightOffsetWriteLine("2. Charger partie sauvegardée (in progress)");
+            CustomConsole.RightOffsetWriteLine("2. Charger paramétrage sauvegardé ");
             CustomConsole.RightOffsetWriteLine("3. Quitter");
             CustomConsole.RightOffsetWriteLine("Veuillez saisir votre choix (1 ou 2) puis Entrée : ");
             
@@ -66,7 +67,11 @@ namespace StarWars.Managers
                     break;
                 case "2":
                     CustomConsole.RightOffsetWriteLine(">>> Chargement précédente partie ...");
-                    LoadGame(BDDManager.Instance.GetSavedGame());
+                    Game game = BDDManager.Instance.GetSavedGame();
+                    if (game.PJ != null)
+                        LoadGame(game);
+                    else
+                        Welcome();
                     break;
                 case "3":
                     CustomConsole.RightOffsetWriteLine(">>> Vous nous quittez déjà ? à bientôt alors !");
@@ -86,6 +91,7 @@ namespace StarWars.Managers
 
         public void LoadGame(Game loadedgame)
         {
+            
             GameManager.Instance.game = loadedgame;
             GameManager.Instance.SetGame();
             GameManager.Instance.PlayGame();

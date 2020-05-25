@@ -42,6 +42,7 @@ namespace StarWars.Managers
         public Game GetSavedGame()
         {
             Game game = new Game();
+
             using (SqlConnection connection = new SqlConnection())
             {
                 connection.ConnectionString = connexionstring;
@@ -93,7 +94,7 @@ namespace StarWars.Managers
                 try
                 {
                     Int32 rowsAffected = com.ExecuteNonQuery();
-                    Console.WriteLine("RowsAffected: {0}", rowsAffected);
+                    Console.WriteLine("Sauvegarde ...");
                 }
                 catch (Exception ex)
                 {

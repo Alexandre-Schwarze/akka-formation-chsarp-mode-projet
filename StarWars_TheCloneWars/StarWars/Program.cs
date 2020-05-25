@@ -11,9 +11,9 @@ namespace StarWars
 	{
 		static void Main(string[] args)
 		{
-			Init();
-			MainManager.Instance.Welcome();
-		}
+            Init();
+            MainManager.Instance.Welcome();
+        }
 
 		static void Init()
 		{

@@ -40,24 +40,22 @@ namespace StarWars.Managers
 
         #region Methods
 
-        public  void NewGame()
+        public void NewGame()
         {
             Console.Clear();
+            game = new Game();
+            game.Size = GridManager.Instance.ChooseIndex();
             SetGame();
             PlayGame();
             EndGame();
         }
-        private  void SetGame()
+        public void SetGame()
         {
-            game = new Game();
-            
             while (game.PJ == null)
                 game.PJ =  ChooseCharacter();
 
-            game.Size = 26;
-            //game.Size = GridManager.ChooseIndex();
             game.Troops = GenerateTroops(game.Size);
-            game.Grid = GridManager.Instance.DisplayGrid(game.Getalltroops(), game.Size);
+            game.Grid = GridManager.Instance.DisplayGrid(game.Troops, game.PJ, game.Size);
         }      
         public  void PlayGame()
         {
@@ -93,9 +91,9 @@ namespace StarWars.Managers
                 if (game.PJ.Remaining_HP <= 0)
                     game.PJ = null;
             }
-            game.Grid = GridManager.Instance.DisplayGrid(game.Getalltroops(), game.Size);
+            game.Grid = GridManager.Instance.DisplayGrid(game.Troops, game.PJ, game.Size);
 
-            MainManager.Instance.SaveGame(this.game);
+       //     MainManager.Instance.SaveGame(this.game);
         }
         private  void DoPJTurn()
         {

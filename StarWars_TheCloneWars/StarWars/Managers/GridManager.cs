@@ -47,18 +47,11 @@ namespace StarWars.Managers
 		/// <summary>
 		/// Method pour afficher la grille générée
 		/// </summary>
-		public Grid DisplayGrid(List<IBaseTroop> listOfTroops, int index)
+		public Grid DisplayGrid(List<IBaseTroop> listOfTroops, IBaseTroop player, int index)
 		{
 			Console.Clear();
 
 			List<string> lines = new List<string>();
-			IBaseTroop player = null;
-
-			foreach (IBaseTroop troop in listOfTroops)
-			{
-				if (troop.IsPlayable == 0)
-					player = troop;
-			}
 
 			CustomConsole.RightOffsetWriteLine("			PERSONNAGE : " + player.GetType().Name + "		||		PV : " + player.Remaining_HP + "/" + player.MaxHP);
 

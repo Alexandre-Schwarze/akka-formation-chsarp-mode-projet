@@ -114,9 +114,9 @@ namespace StarWars.Managers
 			Console.WriteLine("Choisissez la taille de la grille de jeu : ");
 			int.TryParse(Console.ReadLine(), out index);
 
-			while (index > 70 || index < 15)
+			while (index > 26 || index < 15)
 			{
-				Console.WriteLine("Choisissez une taille supérieure à 15 et inférieure à 70 : ");
+				Console.WriteLine("Choisissez une taille supérieure à 15 et inférieure à 27 : ");
 				int.TryParse(Console.ReadLine(), out index);
 			}
 

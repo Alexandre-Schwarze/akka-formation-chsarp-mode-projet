@@ -67,6 +67,12 @@ namespace StarWars.Managers
 					else if (lines[x][y] == 'A' || lines[x][y] == 'S' || lines[x][y] == 'D' || lines[x][y] == 'J' || lines[x][y] == 'W' || lines[x][y] == 'Y')
 					{
 						IBaseTroop PJ = listOfTroops.Where(s => s.Icon == lines[x][y]).First();
+
+						if (PJ.Remaining_HP == PJ.MaxHP)
+							PJ.color = ConsoleColor.Green;
+						else
+							PJ.color = ConsoleColor.Red;
+
 						Console.ForegroundColor = PJ.color;
 					}
 					else if (lines[x][y] == '8' || lines[x][y] == 'O')

@@ -55,6 +55,7 @@ namespace StarWars.Managers
 
 			CustomConsole.RightOffsetWriteLine("			PERSONNAGE : " + player.GetType().Name + "		||		PV : " + player.Remaining_HP + "/" + player.MaxHP);
 
+			listOfTroops.Add(player);
 			Grid grid = GenerateGrid(listOfTroops, index, lines);
 
 			for (int x = 0 ; x < lines.Count ; x++)

@@ -46,6 +46,7 @@ namespace StarWars.Managers
             game = new Game();
             game.Size = GridManager.Instance.ChooseIndex();
             SetGame();
+            BDDManager.Instance.SaveGame(this.game);
             PlayGame();
             EndGame();
         }
@@ -59,6 +60,7 @@ namespace StarWars.Managers
         }      
         public  void PlayGame()
         {
+       
             while (game.PJ != null)
             {
                 //CustomConsole.RightOffsetWriteLine("\r\n################ TOUR N°"+game.Current_turn_number+" ##############");
@@ -93,7 +95,7 @@ namespace StarWars.Managers
             }
             game.Grid = GridManager.Instance.DisplayGrid(game.Troops, game.PJ, game.Size);
 
-       //     MainManager.Instance.SaveGame(this.game);
+            
         }
         private  void DoPJTurn()
         {

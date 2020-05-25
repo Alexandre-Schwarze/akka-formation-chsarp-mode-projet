@@ -39,7 +39,7 @@ namespace StarWars.Managers
         #endregion
 
         #region Methods
-        public Game GetGame()
+        public Game GetSavedGame()
         {
             Game game = new Game();
             using (SqlConnection connection = new SqlConnection())
@@ -71,7 +71,40 @@ namespace StarWars.Managers
             }
         }
 
-        public void SetGame(Game game) { }
+        public void SaveGame(Game game) 
+        {
+            string type = game.PJ.GetType().Name;
+            int hp = game.PJ.Remaining_HP;
+            int size = game.Size;
+            int turnnumber = game.Current_turn_number;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = connexionstring;
+
+                connection.Open();
+
+                SqlCommand com = new SqlCommand("Set_Saved_Game", connection) { CommandType = CommandType.StoredProcedure };
+                com.Parameters.AddWithValue("@type_perso", type);
+                com.Parameters.AddWithValue("@HP", hp);
+                com.Parameters.AddWithValue("@size", size);
+                com.Parameters.AddWithValue("@turnnumber", turnnumber);
+
+                try
+                {
+                    Int32 rowsAffected = com.ExecuteNonQuery();
+                    Console.WriteLine("RowsAffected: {0}", rowsAffected);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
 
         public void Delete(Game game) { }
 

@@ -58,6 +58,7 @@ namespace StarWars.Managers
 			listOfTroops.Add(player);
 			Grid grid = GenerateGrid(listOfTroops, index, lines);
 
+
 			for (int x = 0 ; x < lines.Count ; x++)
 			{
 				for (int y = 0 ; y < lines[x].Length ; y++)
@@ -99,7 +100,7 @@ namespace StarWars.Managers
 			Console.WriteLine(legend);
 
 			Console.WriteLine("\r\n\r\n");
-
+			listOfTroops.Remove(player);
 			return grid;
 		}
 

@@ -66,7 +66,7 @@ namespace StarWars.Managers
                     break;
                 case "2":
                     CustomConsole.RightOffsetWriteLine(">>> Chargement précédente partie ...");
-                    LoadGame(BDDManager.Instance.GetGame());
+                    LoadGame(BDDManager.Instance.GetSavedGame());
                     break;
                 case "3":
                     CustomConsole.RightOffsetWriteLine(">>> Vous nous quittez déjà ? à bientôt alors !");
@@ -84,16 +84,11 @@ namespace StarWars.Managers
             throw new NotImplementedException();
         }
 
-        public  void LoadGame(Game loadedgame)
+        public void LoadGame(Game loadedgame)
         {
             GameManager.Instance.game = loadedgame;
             GameManager.Instance.SetGame();
             GameManager.Instance.PlayGame();
-        }
-
-        public  void SaveGame(Game gametosave)
-        {
-            throw new NotImplementedException();
         }
 
         public  void DeleteSavedGame()

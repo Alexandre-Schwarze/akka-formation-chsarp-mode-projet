@@ -88,10 +88,11 @@ namespace StarWars.Managers
             game.Troops = game.Troops.Where((e) => e.Remaining_HP > 0).ToList();         
             game.Current_turn_number++;
             if (game.PJ != null)
-            {
-                BDDManager.Instance.SaveGame(this.game);
+            {         
                 if (game.PJ.Remaining_HP <= 0)
                     game.PJ = null;
+                else
+                    BDDManager.Instance.SaveGame(this.game);
             }
             game.Grid = GridManager.Instance.DisplayGrid(game.Troops, game.PJ, game.Size);
         }

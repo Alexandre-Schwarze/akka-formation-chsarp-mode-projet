@@ -41,8 +41,6 @@ namespace StarWars.Managers
         #region Methods
         public Game GetSavedGame()
         {
-           
-
             using (SqlConnection connection = new SqlConnection())
             {
                 Game game = new Game();

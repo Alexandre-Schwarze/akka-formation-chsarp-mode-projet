@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -71,7 +72,11 @@ namespace StarWars.Managers
                     if (game.PJ != null)
                         LoadGame(game);
                     else
-                        Welcome();
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Aucune donnée sauvegardée");
+                        MainMenu();
+                    }
                     break;
                 case "3":
                     CustomConsole.RightOffsetWriteLine(">>> Vous nous quittez déjà ? à bientôt alors !");

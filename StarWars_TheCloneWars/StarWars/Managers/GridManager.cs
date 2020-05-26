@@ -99,11 +99,11 @@ namespace StarWars.Managers
 			}
 
 			string legend = "légende : ";
-			listOfTroops.DistinctBy((i) => i.Icon).ToList().ForEach((e) => legend += e.Icon + " = "+ e.GetType().Name + " ,");
-			legend = legend.Remove(legend.Length - 1);
+			listOfTroops.DistinctBy((i) => i.Icon).ToList().ForEach((e) => legend += e.Icon + " = "+ e.GetType().Name + " | ");
+			legend = legend.Remove(legend.Length - 2);
 			Console.WriteLine(legend);
 
-			Console.WriteLine("\r\n\r\n");
+			Console.WriteLine("\r\n");
 			listOfTroops.Remove(player);
 			return grid;
 		}

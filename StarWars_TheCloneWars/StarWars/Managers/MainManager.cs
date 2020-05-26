@@ -91,7 +91,7 @@ namespace StarWars.Managers
 
         public void LoadGame(Game loadedgame)
         {
-            
+			GridManager.isTroopsInitialized = true;
             GameManager.Instance.game = loadedgame;
             GameManager.Instance.SetGame();
             GameManager.Instance.PlayGame();

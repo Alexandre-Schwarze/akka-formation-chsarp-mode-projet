@@ -35,6 +35,7 @@ namespace StarWars.Managers
 				return _instance;
 			}
 		}
+		private static readonly int[] gridIndex = { 15, 27 };
 		private static bool isTroopsInitialized = false;
 		#endregion
 
@@ -53,9 +54,12 @@ namespace StarWars.Managers
 
 			List<string> lines = new List<string>();
 
-			CustomConsole.RightOffsetWriteLine("			PERSONNAGE : " + player.GetType().Name + "		||		PV : " + player.Remaining_HP + "/" + player.MaxHP);
+			if (player != null)
+			{
+				CustomConsole.RightOffsetWriteLine("			PERSONNAGE : " + player.GetType().Name + "		||		PV : " + player.Remaining_HP + "/" + player.MaxHP + "\r\n");
+				listOfTroops.Add(player);
+			}
 
-			listOfTroops.Add(player);
 			Grid grid = GenerateGrid(listOfTroops, index, lines);
 
 
@@ -115,7 +119,7 @@ namespace StarWars.Managers
 			Console.WriteLine("Choisissez la taille de la grille de jeu : ");
 			int.TryParse(Console.ReadLine(), out index);
 
-			while (index > 26 || index < 15)
+			while (index < gridIndex[0] || index > gridIndex[1])
 			{
 				Console.WriteLine("Choisissez une taille supérieure à 15 et inférieure à 27 : ");
 				int.TryParse(Console.ReadLine(), out index);

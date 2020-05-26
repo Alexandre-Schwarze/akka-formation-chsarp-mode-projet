@@ -36,7 +36,7 @@ namespace StarWars.Managers
 			}
 		}
 		private static readonly int[] gridIndex = { 15, 27 };
-		private static bool isTroopsInitialized = false;
+		public static bool isTroopsInitialized = false;
 		#endregion
 
 		#region Ctor

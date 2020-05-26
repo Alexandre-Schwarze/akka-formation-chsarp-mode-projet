@@ -89,12 +89,11 @@ namespace StarWars.Managers
             game.Current_turn_number++;
             if (game.PJ != null)
             {
+                BDDManager.Instance.SaveGame(this.game);
                 if (game.PJ.Remaining_HP <= 0)
                     game.PJ = null;
             }
             game.Grid = GridManager.Instance.DisplayGrid(game.Troops, game.PJ, game.Size);
-
-            BDDManager.Instance.SaveGame(this.game);
         }
         private  void DoPJTurn()
         {

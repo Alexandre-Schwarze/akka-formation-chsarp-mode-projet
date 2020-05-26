@@ -46,7 +46,6 @@ namespace StarWars.Managers
             game = new Game();
             game.Size = GridManager.Instance.ChooseIndex();
             SetGame();
-            BDDManager.Instance.SaveGame(this.game);
             PlayGame();
             EndGame();
         }
@@ -95,7 +94,7 @@ namespace StarWars.Managers
             }
             game.Grid = GridManager.Instance.DisplayGrid(game.Troops, game.PJ, game.Size);
 
-            
+            BDDManager.Instance.SaveGame(this.game);
         }
         private  void DoPJTurn()
         {

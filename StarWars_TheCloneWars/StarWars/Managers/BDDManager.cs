@@ -84,17 +84,32 @@ namespace StarWars.Managers
                 connection.ConnectionString = connexionstring;
 
                 connection.Open();
-
-                SqlCommand com = new SqlCommand("Set_Saved_Game", connection) { CommandType = CommandType.StoredProcedure };
-                com.Parameters.AddWithValue("@type_perso", type);
-                com.Parameters.AddWithValue("@HP", hp);
-                com.Parameters.AddWithValue("@size", size);
-                com.Parameters.AddWithValue("@turnnumber", turnnumber);
+                int insertedid;
 
                 try
                 {
-                    Int32 rowsAffected = com.ExecuteNonQuery();
-                    Console.WriteLine("Sauvegarde ...");
+                    //Clear tables
+                    SqlCommand com = new SqlCommand("ResetTables", connection) { CommandType = CommandType.StoredProcedure };
+                    com.ExecuteNonQuery();
+
+                    /// INSERT PJ
+                    com = new SqlCommand(String.Format("INSERT INTO Type_Troop ([Type]) OUTPUT INSERTED.Id_Type_Troop VALUES ('{0}')", game.PJ.GetType().Name),connection);
+                    insertedid = (int)com.ExecuteScalar();
+                    com = new SqlCommand(String.Format("INSERT INTO Troop (Id_Type_Troop, Remaining_HP, Id_Game, PositionAbsciss, PositionOrdinate) OUTPUT INSERTED.Id_Troop VALUES ({0},{1},{2},'{3}',{4})", insertedid, game.PJ.Remaining_HP,1,game.PJ.Position.Absciss, game.PJ.Position.Ordinate), connection);
+                    insertedid = (int)com.ExecuteScalar();
+
+                    /// INSERT GAME
+                    com = new SqlCommand(String.Format("INSERT INTO GAME (Id_Game, PJ, GridSize, TurnNumber) VALUES ({0},{1},{2},{3})",1, insertedid, game.Size, game.Current_turn_number ), connection);
+                    com.ExecuteNonQuery();
+
+                    /// INSERT GAME TROOPS
+                    foreach (IBaseTroop troop in game.Troops)
+                    {
+                        com = new SqlCommand(String.Format("INSERT INTO Type_Troop ([Type]) OUTPUT INSERTED.Id_Type_Troop VALUES ('{0}')", troop.GetType().Name), connection);
+                        insertedid = (int)com.ExecuteScalar();
+                        com = new SqlCommand(String.Format("INSERT INTO Troop (Id_Type_Troop, Remaining_HP, Id_Game, PositionAbsciss, PositionOrdinate) VALUES ({0},{1},{2},'{3}',{4})", insertedid, troop.Remaining_HP, 1, troop.Position.Absciss, troop.Position.Ordinate), connection);
+                        com.ExecuteNonQuery();
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -98,7 +98,7 @@ namespace StarWars.Managers
         private  void DoPJTurn()
         {
 
-            Console.WriteLine("A = Attaquer | \u2190 \u2191 \u2192 \u2193  = Déplacer | (spacebar) Attendre | S = Sauvegarder partie");
+            Console.WriteLine("A = Attaquer | \u2190 \u2191 \u2192 \u2193  = Déplacer | (spacebar) Attendre");
             ConsoleKeyInfo enteredkey = Console.ReadKey(true);
 
             ConsoleKey[] acceptables = new ConsoleKey[] {ConsoleKey.A, ConsoleKey.LeftArrow, ConsoleKey.UpArrow , ConsoleKey.DownArrow, ConsoleKey.RightArrow, ConsoleKey.Spacebar }; 

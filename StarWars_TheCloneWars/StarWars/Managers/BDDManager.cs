@@ -53,10 +53,6 @@ namespace StarWars.Managers
 
                     int idgame = 0;
                     int idPJ = 0;
-                    int idtypetroopPJ = 0;
-                    int hp_PJ = 0;
-                    string PJabsciss = String.Empty;
-                    int PJoridnate=0;
 
                     ///Récupérer GAME
                     SqlCommand com = new SqlCommand("SELECT * FROM Game", connection);
@@ -73,26 +69,18 @@ namespace StarWars.Managers
 
                     ///Récupérer GAME.PJ
                     IBaseTroop PJ;
-                    com = new SqlCommand(String.Format("SELECT Id_Type_Troop, Remaining_HP, PositionAbsciss, PositionOrdinate FROM Troop WHERE Id_Troop = {0}", idPJ),connection);
-                    reader = com.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        idtypetroopPJ = reader.GetInt32(0);
-                        hp_PJ = reader.GetInt32(1);
-                        PJabsciss = reader.GetString(2);
-                        PJoridnate  = reader.GetInt32(3);
-                    }
-                    reader.Close();
-                    com = new SqlCommand(String.Format("SELECT [Type] FROM Type_Troop WHERE Id_Type_Troop = {0}", idtypetroopPJ), connection);
+                    com = new SqlCommand(String.Format("SELECT tt.[Type], t.Remaining_HP ,t.PositionAbsciss, t.PositionOrdinate FROM Troop t " +
+                    "INNER JOIN Type_Troop tt ON T.Id_Type_Troop = tt.Id_Type_Troop WHERE Id_Troop = {0}", idPJ),connection);
                     reader = com.ExecuteReader();
                     while (reader.Read())
                     {
                         PJ = (IBaseTroop)Activator.CreateInstance(Assembly.GetExecutingAssembly().GetTypes().First(t => t.Name == reader.GetString(0)));
-                        PJ.Remaining_HP = hp_PJ;
-                        PJ.Position = new Tools.Position() { Absciss = PJabsciss, Ordinate = PJoridnate };
+                        PJ.Remaining_HP = reader.GetInt32(1);
+                        PJ.Position = new Tools.Position() { Absciss = reader.GetString(2), Ordinate = reader.GetInt32(3) };
                         game.PJ = PJ;
                     }
                     reader.Close();
+
                     
                     ///Récupérer GAME.TROOPS
                     List<IBaseTroop> troops = new List<IBaseTroop>();
@@ -102,7 +90,6 @@ namespace StarWars.Managers
                     reader = com.ExecuteReader();
                     while (reader.Read())
                     {
-
                         var troop = (IBaseTroop)Activator.CreateInstance(Assembly.GetExecutingAssembly().GetTypes().First(t => t.Name == reader.GetString(0)));
                         troop.Remaining_HP = reader.GetInt32(1);
                         troop.Position = new Tools.Position() { Absciss = reader.GetString(2), Ordinate = reader.GetInt32(3) };

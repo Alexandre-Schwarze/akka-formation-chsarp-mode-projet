@@ -54,10 +54,10 @@ namespace StarWars.Managers
 
         public  void MainMenu()
         {
-            CustomConsole.RightOffsetWriteLine("1. Nouvelle Partie ");
-            CustomConsole.RightOffsetWriteLine("2. Charger paramétrage sauvegardé ");
+            CustomConsole.RightOffsetWriteLine("1. Nouvelle partie ");
+            CustomConsole.RightOffsetWriteLine("2. Charger partie précédente ");
             CustomConsole.RightOffsetWriteLine("3. Quitter");
-            CustomConsole.RightOffsetWriteLine("Veuillez saisir votre choix (1 ou 2) puis Entrée : ");
+            CustomConsole.RightOffsetWriteLine("Veuillez saisir votre choix puis Entrée : ");
             
             switch (Console.ReadLine())
             {
@@ -79,7 +79,7 @@ namespace StarWars.Managers
                     break;
                 default:
                     CustomConsole.RightOffsetWriteLine(">>> Choix non reconnu");
-                    MainMenu();
+                    Welcome();
                     break;
             }
         }
@@ -93,7 +93,7 @@ namespace StarWars.Managers
         {
 			GridManager.isTroopsInitialized = true;
             GameManager.Instance.game = loadedgame;
-            GameManager.Instance.SetGame();
+            loadedgame.Grid =  GridManager.Instance.DisplayGrid(loadedgame.Troops, loadedgame.PJ, loadedgame.Size);
             GameManager.Instance.PlayGame();
         }
 

@@ -31,7 +31,7 @@ namespace StarWars.Managers
             }
         }
 
-        private static string connexionstring = "Data Source = DESKTOP-M25SQU2\\SQLEXPRESS01; Initial Catalog = StarWars; Integrated Security=true;";
+        public string connexionstring;
         #endregion
 
         #region Ctor

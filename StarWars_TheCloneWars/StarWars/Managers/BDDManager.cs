@@ -6,7 +6,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace StarWars.Managers
 {
@@ -135,7 +134,7 @@ namespace StarWars.Managers
                     insertedid = (int)com.ExecuteScalar();
 
                     /// INSERT GAME
-                    com = new SqlCommand(String.Format("INSERT INTO GAME (Id_Game, PJ, GridSize, TurnNumber) VALUES ({0},{1},{2},{3})",1, insertedid, game.Size, game.Current_turn_number ), connection);
+                    com = new SqlCommand(String.Format("INSERT INTO GAME (Id_Game, PJ, GridSize, TurnNumber, Killed) VALUES ({0},{1},{2},{3},{4})",1, insertedid, game.Size, game.Current_turn_number,game.PNJKilledByPlayer), connection);
                     com.ExecuteNonQuery();
 
                     /// INSERT GAME TROOPS
@@ -158,7 +157,26 @@ namespace StarWars.Managers
             }
         }
 
-        public void Delete(Game game) { }
+        public Tuple<int,int> GetStats()
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                var tuple = new object();
+                connection.ConnectionString = connexionstring;
+                connection.Open();
+
+                SqlCommand com = new SqlCommand("SELECT * FROM Player", connection);
+
+                SqlDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    tuple = new Tuple<int, int>(reader.GetInt32(0), reader.GetInt32(1));
+                }
+                reader.Close();
+                connection.Close();
+                return (Tuple<int, int>)tuple;
+            }
+        }
 
         #endregion
     }

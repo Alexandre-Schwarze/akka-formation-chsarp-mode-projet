@@ -57,7 +57,8 @@ namespace StarWars.Managers
         {
             CustomConsole.RightOffsetWriteLine("1. Nouvelle partie ");
             CustomConsole.RightOffsetWriteLine("2. Charger partie précédente ");
-            CustomConsole.RightOffsetWriteLine("3. Quitter");
+            CustomConsole.RightOffsetWriteLine("3. Rapports de combat");
+            CustomConsole.RightOffsetWriteLine("4. Quitter");
             CustomConsole.RightOffsetWriteLine("Veuillez saisir votre choix puis Entrée : ");
             
             switch (Console.ReadLine())
@@ -79,6 +80,9 @@ namespace StarWars.Managers
                     }
                     break;
                 case "3":
+                    ShowStats();
+                    break;
+                case "4":
                     CustomConsole.RightOffsetWriteLine(">>> Vous nous quittez déjà ? à bientôt alors !");
                     System.Environment.Exit(1);
                     break;
@@ -87,6 +91,18 @@ namespace StarWars.Managers
                     Welcome();
                     break;
             }
+        }
+
+        private void ShowStats()
+        {
+            Console.Clear();
+            Tuple<int, int> rslt = BDDManager.Instance.GetStats();
+            Console.WriteLine("    Nombre de PNJ tués au total : " + rslt.Item1);
+            Console.WriteLine("\r\n    Nombre de PNJ tués au cours de la dernière partie : " + rslt.Item2);
+
+            Console.WriteLine("\r\n Appuyez sur Entrée pour revenir au menu ...");
+            while (Console.ReadKey(true).Key == ConsoleKey.Enter)
+                Welcome();            
         }
 
         public  void SearchSaveGame()

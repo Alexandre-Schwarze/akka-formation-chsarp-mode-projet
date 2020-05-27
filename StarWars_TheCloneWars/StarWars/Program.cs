@@ -38,6 +38,7 @@ namespace StarWars
 			Console.WriteLine("Setting from secrets.json: " + mySettingsConfig.ApiSecret);
 			Console.WriteLine("Connection string: " + configuration.GetConnectionString("DefaultConnection"));
 			BDDManager.Instance.connexionstring = configuration.GetConnectionString("DefaultConnection");
+			Console.WriteLine("Enter key to continue ...");
 			Console.ReadKey();
 		}
 	}

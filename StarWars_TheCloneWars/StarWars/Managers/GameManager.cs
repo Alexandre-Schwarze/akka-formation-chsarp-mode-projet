@@ -124,6 +124,8 @@ namespace StarWars.Managers
                 object[] parameters = new object[1];
                 parameters[0] = targetabletroop;
                 attackmethod.Invoke(game.PJ, parameters);
+                if (targetabletroop.Remaining_HP <= 0)
+                    this.game.PNJKilledByPlayer++;
             }
             else 
             {

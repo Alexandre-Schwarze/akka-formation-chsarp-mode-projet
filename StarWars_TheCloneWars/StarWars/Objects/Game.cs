@@ -18,6 +18,9 @@ namespace StarWars.Objects
 
         public int Size { get; set; }
 
+        public int PNJKilledByPlayer { get; set; }
+
+
         #endregion       
         #region Ctor
         public Game()
@@ -26,6 +29,7 @@ namespace StarWars.Objects
             this.Troops = new List<IBaseTroop>();
             this.Max_turns = 20;
             this.Current_turn_number = 1;
+            this.PNJKilledByPlayer = 0;
         }
         #endregion        
         #region Methods

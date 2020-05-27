@@ -262,7 +262,7 @@ namespace StarWars.Managers
 		/// </summary>
 		/// <param name="listOfTroops">Liste des troupes</param>
 		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
-		/// <param name="grid">Grille du jeu</param>
+		/// <param name="indexMatrice">Taille de la grille du jeu</param>
 		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
 		public IBaseTroop CheckAroundForTroop(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, int indexMatrice)
 		{
@@ -310,6 +310,7 @@ namespace StarWars.Managers
 		/// </summary>
 		/// <param name="listOfTroops">Liste des troupes</param>
 		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
+		/// <param name="indexMatrice">Taille de la grille du jeu</param>
 		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
 		public Tools.Position CheckAroundForTroopMove(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, int indexMatrice)
 		{
@@ -339,13 +340,13 @@ namespace StarWars.Managers
 		}
 
 		/// <summary>
-		/// Method ??
+		/// Method pour vérifier les posistions valides du joueur
 		/// </summary>
-		/// <param name="listOfTroops"></param>
-		/// <param name="position"></param>
-		/// <param name="key"></param>
-		/// <param name="indexMatrice"></param>
-		/// <returns></returns>
+		/// <param name="listOfTroops">Liste des troupes</param>
+		/// <param name="position">Position actuelle du joueur</param>
+		/// <param name="key">Touche entrée par le joueur</param>
+		/// <param name="indexMatrice">Taille de la grille</param>
+		/// <returns>La position où doit se déplacer le joueur (null si aucune position valide)</returns>
 		public Tools.Position CheckPlayer(List<IBaseTroop> listOfTroops, Tools.Position position, ConsoleKeyInfo key, int indexMatrice)
 		{
 			return Tools.Tools.IsPositionValid(listOfTroops, position, key.Key, indexMatrice);

@@ -64,83 +64,43 @@ namespace StarWars.Tools
             else return false;
         }
 
-		public static Position IsPositionValid(List<IBaseTroop> listOfTroops, Position actualPos, string direction, int indexMatrice)
+		/// <summary>
+		/// Renvoie si une position est valide autour du personnage
+		/// </summary>
+		/// <param name="listOfTroops">Liste des troupes</param>
+		/// <param name="actualPos">Position actuel du personnage</param>
+		/// <param name="key">Touche entrée par le joueur ou l'ordinateur</param>
+		/// <param name="indexMatrice">Taille de la grille</param>
+		/// <returns>Une position valide (null si aucune position trouvée)</returns>
+		public static Position IsPositionValid(List<IBaseTroop> listOfTroops, Position actualPos, ConsoleKey key, int indexMatrice)
 		{
 			int absciss = ConvertFromStringBase26(actualPos.Absciss);
 			int ordinate = actualPos.Ordinate;
 
-			switch (direction)
+			switch (key)
 			{
-				case ("left"):
+				case (ConsoleKey.LeftArrow):
 				{
 					if (absciss - 1 >= 0)
-					{
-						for (int i = 0 ; i < listOfTroops.Count ; i++)
-						{
-							if (listOfTroops[i].Position.Absciss == ConvertToStringBase26(absciss - 1).Replace(" ", "") && listOfTroops[i].Position.Ordinate == ordinate)
-								return null;
-						}
-
-						Position newPos = new Position();
-						newPos.Absciss = ConvertToStringBase26(absciss - 1).Replace(" ", "");
-						newPos.Ordinate = ordinate;
-
-						return newPos;
-					}
+						return SetNewPosition(listOfTroops, absciss - 1, ordinate);
 					break;
 				}
-				case ("right"):
+				case (ConsoleKey.RightArrow):
 				{
 					if (absciss + 1 < indexMatrice)
-					{
-						for (int i = 0 ; i < listOfTroops.Count ; i++)
-						{
-							if (listOfTroops[i].Position.Absciss == ConvertToStringBase26(absciss + 1).Replace(" ", "") && listOfTroops[i].Position.Ordinate == ordinate)
-								return null;
-						}
-
-						Position newPos = new Position();
-						newPos.Absciss = ConvertToStringBase26(absciss + 1).Replace(" ", "");
-						newPos.Ordinate = ordinate;
-
-						return newPos;
-					}
+						return SetNewPosition(listOfTroops, absciss + 1, ordinate);
 					break;
 				}
-				case ("up"):
+				case (ConsoleKey.UpArrow):
 				{
 					if (ordinate - 1 >= 1)
-					{
-						for (int i = 0 ; i < listOfTroops.Count ; i++)
-						{
-							if (listOfTroops[i].Position.Absciss == actualPos.Absciss && listOfTroops[i].Position.Ordinate == ordinate - 1)
-								return null;
-						}
-
-						Position newPos = new Position();
-						newPos.Absciss = actualPos.Absciss;
-						newPos.Ordinate = ordinate - 1;
-
-						return newPos;
-					}
+						return SetNewPosition(listOfTroops, absciss, ordinate - 1);
 					break;
 				}
-				case ("down"):
+				case (ConsoleKey.DownArrow):
 				{
 					if (ordinate + 1 < indexMatrice + 1)
-					{
-						for (int i = 0 ; i < listOfTroops.Count ; i++)
-						{
-							if (listOfTroops[i].Position.Absciss == actualPos.Absciss && listOfTroops[i].Position.Ordinate == ordinate + 1)
-								return null;
-						}
-
-						Position newPos = new Position();
-						newPos.Absciss = actualPos.Absciss;
-						newPos.Ordinate = ordinate + 1;
-
-						return newPos;
-					}
+						return SetNewPosition(listOfTroops, absciss, ordinate + 1);
 					break;
 				}
 				default:
@@ -148,6 +108,28 @@ namespace StarWars.Tools
 			}
 
 			return null;
+		}
+
+		/// <summary>
+		/// Renvoie une nouvelle position
+		/// </summary>
+		/// <param name="listOfTroops">Liste des troupes</param>
+		/// <param name="absciss">Abscisse de la nouvelle position</param>
+		/// <param name="ordinate">Ordonnée de la nouvelle position</param>
+		/// <returns>La nouvelle position (null si la position est occupée)</returns>
+		private static Position SetNewPosition(List<IBaseTroop> listOfTroops, int absciss, int ordinate)
+		{
+			for (int i = 0 ; i < listOfTroops.Count ; i++)
+			{
+				if (listOfTroops[i].Position.Absciss == ConvertToStringBase26(absciss).Replace(" ", "") && listOfTroops[i].Position.Ordinate == ordinate)
+					return null;
+			}
+
+			Position newPos = new Position();
+			newPos.Absciss = ConvertToStringBase26(absciss).Replace(" ", "");
+			newPos.Ordinate = ordinate;
+
+			return newPos;
 		}
 
 		/// <summary>

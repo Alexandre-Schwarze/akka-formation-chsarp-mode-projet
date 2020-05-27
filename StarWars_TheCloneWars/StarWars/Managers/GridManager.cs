@@ -62,6 +62,9 @@ namespace StarWars.Managers
 
 			Grid grid = GenerateGrid(listOfTroops, index, lines);
 
+			string testPlayer = "ASDJWY";
+			string testTrooper = "8O";
+			string testDroid = "#§";
 
 			for (int x = 0 ; x < lines.Count ; x++)
 			{
@@ -69,7 +72,7 @@ namespace StarWars.Managers
 				{
 					if (x == 0 || y == 0 || y == 1)
 						Console.ForegroundColor = ConsoleColor.Blue;
-					else if (lines[x][y] == 'A' || lines[x][y] == 'S' || lines[x][y] == 'D' || lines[x][y] == 'J' || lines[x][y] == 'W' || lines[x][y] == 'Y')
+					else if (testPlayer.Contains(lines[x][y]))
 					{
 						IBaseTroop PJ = listOfTroops.Where(s => s.Icon == lines[x][y]).First();
 
@@ -80,12 +83,12 @@ namespace StarWars.Managers
 
 						Console.ForegroundColor = PJ.color;
 					}
-					else if (lines[x][y] == '8' || lines[x][y] == 'O')
+					else if (testTrooper.Contains(lines[x][y]))
 					{
 						IBaseTroop trooper = listOfTroops.Where(s => s.Icon == lines[x][y]).First();
 						Console.ForegroundColor = trooper.color;
 					}
-					else if (lines[x][y] == '#' || lines[x][y] == '§')
+					else if (testDroid.Contains(lines[x][y]))
 					{
 						IBaseTroop droid = listOfTroops.Where(s => s.Icon == lines[x][y]).First();
 						Console.ForegroundColor = droid.color;
@@ -136,8 +139,6 @@ namespace StarWars.Managers
 		public Grid GenerateGrid(List<IBaseTroop> listOfTroops, int index, List<string> lines)
 		{
 			Grid Grid = new Grid();
-
-			Grid.InitIcons();
 
 			int abscissAxis = (index * 2) + 3;
 			int ordinateAxis = (index * 4) + 5;
@@ -261,7 +262,7 @@ namespace StarWars.Managers
 		/// </summary>
 		/// <param name="listOfTroops">Liste des troupes</param>
 		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
-		/// <param name="grid">Grille du jeu</param>
+		/// <param name="indexMatrice">Taille de la grille du jeu</param>
 		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
 		public IBaseTroop CheckAroundForTroop(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, int indexMatrice)
 		{
@@ -309,15 +310,16 @@ namespace StarWars.Managers
 		/// </summary>
 		/// <param name="listOfTroops">Liste des troupes</param>
 		/// <param name="baseTroop">Troupe qui cherche un ennemi</param>
+		/// <param name="indexMatrice">Taille de la grille du jeu</param>
 		/// <returns>Une troupe ennemie détectée ou null si rien n'est détecté</returns>
 		public Tools.Position CheckAroundForTroopMove(List<IBaseTroop> listOfTroops, IBaseTroop baseTroop, int indexMatrice)
 		{
 			List<Tools.Position> listOfValidPos = new List<Tools.Position>();
 
-			Tools.Position newPosLeft = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, "left", indexMatrice);
-			Tools.Position newPosRight = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, "right", indexMatrice);
-			Tools.Position newPosUp = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, "up", indexMatrice);
-			Tools.Position newPosDown = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, "down", indexMatrice);
+			Tools.Position newPosLeft = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, ConsoleKey.LeftArrow, indexMatrice);
+			Tools.Position newPosRight = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, ConsoleKey.RightArrow, indexMatrice);
+			Tools.Position newPosUp = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, ConsoleKey.UpArrow, indexMatrice);
+			Tools.Position newPosDown = Tools.Tools.IsPositionValid(listOfTroops, baseTroop.Position, ConsoleKey.DownArrow, indexMatrice);
 
 			if (newPosLeft != null)
 				listOfValidPos.Add(newPosLeft);
@@ -338,30 +340,16 @@ namespace StarWars.Managers
 		}
 
 		/// <summary>
-		/// Method ??
+		/// Method pour vérifier les posistions valides du joueur
 		/// </summary>
-		/// <param name="listOfTroops"></param>
-		/// <param name="position"></param>
-		/// <param name="key"></param>
-		/// <param name="indexMatrice"></param>
-		/// <returns></returns>
+		/// <param name="listOfTroops">Liste des troupes</param>
+		/// <param name="position">Position actuelle du joueur</param>
+		/// <param name="key">Touche entrée par le joueur</param>
+		/// <param name="indexMatrice">Taille de la grille</param>
+		/// <returns>La position où doit se déplacer le joueur (null si aucune position valide)</returns>
 		public Tools.Position CheckPlayer(List<IBaseTroop> listOfTroops, Tools.Position position, ConsoleKeyInfo key, int indexMatrice)
 		{
-			switch (key.Key)
-			{
-				case ConsoleKey.LeftArrow:
-					return Tools.Tools.IsPositionValid(listOfTroops, position, "left", indexMatrice);
-				case ConsoleKey.UpArrow:
-					return Tools.Tools.IsPositionValid(listOfTroops, position, "up", indexMatrice);
-				case ConsoleKey.RightArrow:
-					return Tools.Tools.IsPositionValid(listOfTroops, position, "right", indexMatrice);
-				case ConsoleKey.DownArrow:
-					return Tools.Tools.IsPositionValid(listOfTroops, position, "down", indexMatrice);
-				default:
-					break;
-			}
-
-			return null;
+			return Tools.Tools.IsPositionValid(listOfTroops, position, key.Key, indexMatrice);
 		}
 		#endregion
 	}

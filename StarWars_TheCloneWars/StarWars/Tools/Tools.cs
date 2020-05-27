@@ -64,14 +64,14 @@ namespace StarWars.Tools
             else return false;
         }
 
-		public static Position IsPositionValid(List<IBaseTroop> listOfTroops, Position actualPos, string direction, int indexMatrice)
+		public static Position IsPositionValid(List<IBaseTroop> listOfTroops, Position actualPos, ConsoleKey key, int indexMatrice)
 		{
 			int absciss = ConvertFromStringBase26(actualPos.Absciss);
 			int ordinate = actualPos.Ordinate;
 
-			switch (direction)
+			switch (key)
 			{
-				case ("left"):
+				case (ConsoleKey.LeftArrow):
 				{
 					if (absciss - 1 >= 0)
 					{
@@ -89,7 +89,7 @@ namespace StarWars.Tools
 					}
 					break;
 				}
-				case ("right"):
+				case (ConsoleKey.RightArrow):
 				{
 					if (absciss + 1 < indexMatrice)
 					{
@@ -107,7 +107,7 @@ namespace StarWars.Tools
 					}
 					break;
 				}
-				case ("up"):
+				case (ConsoleKey.UpArrow):
 				{
 					if (ordinate - 1 >= 1)
 					{
@@ -125,7 +125,7 @@ namespace StarWars.Tools
 					}
 					break;
 				}
-				case ("down"):
+				case (ConsoleKey.DownArrow):
 				{
 					if (ordinate + 1 < indexMatrice + 1)
 					{

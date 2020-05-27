@@ -21,7 +21,6 @@ namespace StarWars.Objects
 			get; set;
 		}
 
-		public Dictionary<string, char> Icons;
 		#endregion
 
 		#region Ctor
@@ -29,21 +28,7 @@ namespace StarWars.Objects
 		#endregion
 
 		#region Methods
-		/// <summary>
-		/// Method pour initialiser les icones (symboles) des personnages
-		/// </summary>
-		public void InitIcons()
-		{
-			Icons = new Dictionary<string, char>()
-			{
-				{"ObiWan", '8' },
-				{"Anakin", '8' },
-				{"Yoda", 'o' },
-				{"Dooku", 'A' },
-				{"Sidious", 'A' },
-				{"JangoFett", 'M' }
-			};
-		}
+
 		#endregion
 	}
 }
